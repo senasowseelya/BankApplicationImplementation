@@ -107,7 +107,7 @@ namespace BankApp
                             }
                             catch(InsufficientAmountException ex)
                             {
-                                Console.WriteLine(" Insufficient Amount To withdraw", ex.Message);
+                                Console.WriteLine("Insufficient Amount To withdraw", ex.Message);
                             }
                             if (status)
                             {
@@ -133,7 +133,7 @@ namespace BankApp
                             }
                             catch (InsufficientAmountException ex)
                             {
-                                Console.WriteLine(" Insufficient Amount To withdraw", ex.Message);
+                                Console.WriteLine("Insufficient Amount To withdraw", ex.Message);
                             }
                             if (status)
                             {
