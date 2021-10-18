@@ -7,4 +7,3 @@ C:\Users\DELL\source\repos\BankApp.Models\obj\Debug\netcoreapp3.1\BankApp.Models
 C:\Users\DELL\source\repos\BankApp.Models\obj\Debug\netcoreapp3.1\BankApp.Models.csproj.CoreCompileInputs.cache
 C:\Users\DELL\source\repos\BankApp.Models\obj\Debug\netcoreapp3.1\BankApp.Models.dll
 C:\Users\DELL\source\repos\BankApp.Models\obj\Debug\netcoreapp3.1\BankApp.Models.pdb
-C:\Users\DELL\source\repos\BankApp.Models\obj\Debug\netcoreapp3.1\BankApp.Models.csproj.AssemblyReference.cache

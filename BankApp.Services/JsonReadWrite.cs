@@ -2,29 +2,30 @@
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using BankApp.Models;
 
 namespace BankApp.Database
 {
      public class JsonReadWrite
-    {
+     {
         String content;
         public void ReadData()
         {
             content = File.ReadAllText("C:\\Users\\DELL\\source\\repos\\BankApp.Database\\data.json");
-            Data.Customers = JsonConvert.DeserializeObject <Dictionary < String, Customer >> (content);
+            Data.Banks = JsonConvert.DeserializeObject<List<Bank>>(content);
         }
-        public void WriteData(Customer newAcc)
+        public void WriteData(Bank NewBank)
         {
-            Data.Customers.Add(newAcc.accno, newAcc);
-            content = JsonConvert.SerializeObject(Data.Customers, Formatting.Indented);
+            Data.Banks.Add(NewBank);
+            content = JsonConvert.SerializeObject(Data.Banks, Formatting.Indented);
             File.WriteAllText("C:\\Users\\DELL\\source\\repos\\BankApp.Database\\data.json", content);
         }
         public void WriteData()
         {
-            content = JsonConvert.SerializeObject(Data.Customers, Formatting.Indented);
+            content = JsonConvert.SerializeObject(Data.Banks, Formatting.Indented);
             File.WriteAllText("C:\\Users\\DELL\\source\\repos\\BankApp.Database\\data.json", content);
         }
-   
+
 
     }
 }
