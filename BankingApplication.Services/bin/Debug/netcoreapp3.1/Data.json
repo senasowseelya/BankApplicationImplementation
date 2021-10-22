@@ -1,0 +1,241 @@
+[
+  {
+    "Accounts": [
+      {
+        "AccHoldName": "Sena",
+        "Nationality": null,
+        "Religion": null,
+        "Category": null,
+        "FathOrHusbName": null,
+        "Aadhar": null,
+        "AccId": "SBI2021-10-18",
+        "MaritalStatus": null,
+        "Address": null,
+        "Dob": null,
+        "Type": null,
+        "Gender": null,
+        "Town": null,
+        "Dist": null,
+        "State": null,
+        "Accno": "3233236017",
+        "Pin": 0,
+        "Age": 0,
+        "Phno": "9627298999",
+        "Balance": 4180.0,
+        "DateOfIssue": null,
+        "UserName": "Sena",
+        "Password": "Sena@1211",
+        "Transactions": [
+          {
+            "TransId": "TXNSBI2021-10-21 06:58:23",
+            "Sender": "",
+            "Receiver": "",
+            "Amount": 3000.0,
+            "Type": "Deposit"
+          },
+          {
+            "TransId": "TXNSBI2021-10-21 07:01:11",
+            "Sender": "",
+            "Receiver": "",
+            "Amount": 200.0,
+            "Type": "Deposit"
+          },
+          {
+            "TransId": "TXNSBI2021-10-22 12:06:56",
+            "Sender": "",
+            "Receiver": "",
+            "Amount": 200.0,
+            "Type": "Deposit"
+          },
+          {
+            "TransId": "TXNSBI2021-10-22 12:06:56",
+            "Sender": "",
+            "Receiver": "",
+            "Amount": 200.0,
+            "Type": "WithDrawl"
+          },
+          {
+            "TransId": "TXNSBI2021-10-22 12:08:21",
+            "Sender": "",
+            "Receiver": "",
+            "Amount": 300.0,
+            "Type": "Deposit"
+          },
+          {
+            "TransId": "TXNSBI2021-10-22 12:08:21",
+            "Sender": "",
+            "Receiver": "",
+            "Amount": 300.0,
+            "Type": "WithDrawl"
+          },
+          {
+            "TransId": "TXNSBI2021-10-22 12:27:13",
+            "Sender": "",
+            "Receiver": "",
+            "Amount": 300.0,
+            "Type": "Deposit"
+          },
+          {
+            "TransId": "TXNSBI2021-10-22 12:27:13",
+            "Sender": "",
+            "Receiver": "",
+            "Amount": 300.0,
+            "Type": "Deposit"
+          },
+          {
+            "TransId": "TXNSBI2021-10-22 12:30:57",
+            "Sender": "",
+            "Receiver": "",
+            "Amount": 700.0,
+            "Type": "Deposit"
+          },
+          {
+            "TransId": "TXNSBI2021-10-22 12:32:03",
+            "Sender": "",
+            "Receiver": "",
+            "Amount": 500.0,
+            "Type": "Withdrawl"
+          }
+        ]
+      }
+    ],
+    "BankTransactions": [
+      {
+        "TransId": "TXNSBI2021-10-21 06:58:23",
+        "Sender": "3233236017",
+        "Receiver": "3233236017",
+        "Amount": 3000.0,
+        "Type": null
+      },
+      {
+        "TransId": "TXNSBI2021-10-21 07:01:11",
+        "Sender": "3233236017",
+        "Receiver": "3233236017",
+        "Amount": 200.0,
+        "Type": null
+      },
+      {
+        "TransId": "TXNSBI2021-10-22 12:06:56",
+        "Sender": "",
+        "Receiver": "",
+        "Amount": 200.0,
+        "Type": null
+      },
+      {
+        "TransId": "TXNSBI2021-10-22 12:08:21",
+        "Sender": "",
+        "Receiver": "",
+        "Amount": 300.0,
+        "Type": null
+      },
+      {
+        "TransId": "TXNSBI2021-10-22 12:27:13",
+        "Sender": "",
+        "Receiver": "",
+        "Amount": 300.0,
+        "Type": "Deposit"
+      },
+      {
+        "TransId": "TXNSBI2021-10-22 12:30:57",
+        "Sender": "",
+        "Receiver": "",
+        "Amount": 700.0,
+        "Type": "Deposit"
+      },
+      {
+        "TransId": "TXNSBI2021-10-22 12:32:03",
+        "Sender": "",
+        "Receiver": "",
+        "Amount": 500.0,
+        "Type": "Withdrawl"
+      }
+    ],
+    "BankId": "SBI2021-10-18",
+    "Name": "SBI",
+    "Branch": null,
+    "IFSC": null,
+    "RTGS": 0.0,
+    "IMPS": 0.0
+  },
+  {
+    "Accounts": [
+      {
+        "AccHoldName": "Mohith",
+        "Nationality": null,
+        "Religion": null,
+        "Category": null,
+        "FathOrHusbName": null,
+        "Aadhar": null,
+        "AccId": "SBI2021-10-22",
+        "MaritalStatus": null,
+        "Address": null,
+        "Dob": null,
+        "Type": null,
+        "Gender": null,
+        "Town": null,
+        "Dist": null,
+        "State": null,
+        "Accno": "1233236078",
+        "Pin": 0,
+        "Age": 0,
+        "Phno": "9627298999",
+        "Balance": 2700.0,
+        "DateOfIssue": null,
+        "UserName": "Mohith",
+        "Password": "Mohith@123",
+        "Transactions": [
+          {
+            "TransId": "TXNSBI2021-10-22 12:24:11",
+            "Sender": "",
+            "Receiver": "",
+            "Amount": 3000.0,
+            "Type": "Deposit"
+          },
+          {
+            "TransId": "TXNSBI2021-10-22 12:24:11",
+            "Sender": "",
+            "Receiver": "",
+            "Amount": 3000.0,
+            "Type": "Deposit"
+          },
+          {
+            "TransId": "TXNSBI2021-10-22 12:27:13",
+            "Sender": "",
+            "Receiver": "",
+            "Amount": 300.0,
+            "Type": "Withdrawl"
+          },
+          {
+            "TransId": "TXNSBI2021-10-22 12:27:13",
+            "Sender": "",
+            "Receiver": "",
+            "Amount": 300.0,
+            "Type": "Withdrawl"
+          }
+        ]
+      }
+    ],
+    "BankTransactions": [
+      {
+        "TransId": "TXNSBI2021-10-22 12:24:11",
+        "Sender": "",
+        "Receiver": "",
+        "Amount": 3000.0,
+        "Type": "Deposit"
+      },
+      {
+        "TransId": "TXNSBI2021-10-22 12:27:13",
+        "Sender": "",
+        "Receiver": "",
+        "Amount": 300.0,
+        "Type": "Withdrawl"
+      }
+    ],
+    "BankId": "SBI2021-10-21",
+    "Name": "RBI",
+    "Branch": null,
+    "IFSC": null,
+    "RTGS": 0.0,
+    "IMPS": 5.0
+  }
+]

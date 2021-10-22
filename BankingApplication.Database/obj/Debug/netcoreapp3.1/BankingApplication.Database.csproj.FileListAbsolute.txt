@@ -1,0 +1,14 @@
+C:\Users\DELL\source\repos\BankingApplication.Database\bin\Debug\netcoreapp3.1\BankingApplication.Database.deps.json
+C:\Users\DELL\source\repos\BankingApplication.Database\bin\Debug\netcoreapp3.1\BankingApplication.Database.dll
+C:\Users\DELL\source\repos\BankingApplication.Database\bin\Debug\netcoreapp3.1\BankingApplication.Database.pdb
+C:\Users\DELL\source\repos\BankingApplication.Database\bin\Debug\netcoreapp3.1\BankingApplication.Models.dll
+C:\Users\DELL\source\repos\BankingApplication.Database\bin\Debug\netcoreapp3.1\BankingApplication.Models.pdb
+C:\Users\DELL\source\repos\BankingApplication.Database\obj\Debug\netcoreapp3.1\BankingApplication.Database.csproj.AssemblyReference.cache
+C:\Users\DELL\source\repos\BankingApplication.Database\obj\Debug\netcoreapp3.1\BankingApplication.Database.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\DELL\source\repos\BankingApplication.Database\obj\Debug\netcoreapp3.1\BankingApplication.Database.AssemblyInfoInputs.cache
+C:\Users\DELL\source\repos\BankingApplication.Database\obj\Debug\netcoreapp3.1\BankingApplication.Database.AssemblyInfo.cs
+C:\Users\DELL\source\repos\BankingApplication.Database\obj\Debug\netcoreapp3.1\BankingApplication.Database.csproj.CoreCompileInputs.cache
+C:\Users\DELL\source\repos\BankingApplication.Database\obj\Debug\netcoreapp3.1\BankingApplication.Database.csproj.CopyComplete
+C:\Users\DELL\source\repos\BankingApplication.Database\obj\Debug\netcoreapp3.1\BankingApplication.Database.dll
+C:\Users\DELL\source\repos\BankingApplication.Database\obj\Debug\netcoreapp3.1\BankingApplication.Database.pdb
+C:\Users\DELL\source\repos\BankingApplication.Database\bin\Debug\netcoreapp3.1\Data.json

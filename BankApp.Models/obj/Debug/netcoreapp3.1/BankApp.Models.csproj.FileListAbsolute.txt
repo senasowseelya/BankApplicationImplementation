@@ -1,9 +1,0 @@
-C:\Users\DELL\source\repos\BankApp.Models\bin\Debug\netcoreapp3.1\BankApp.Models.deps.json
-C:\Users\DELL\source\repos\BankApp.Models\bin\Debug\netcoreapp3.1\BankApp.Models.dll
-C:\Users\DELL\source\repos\BankApp.Models\bin\Debug\netcoreapp3.1\BankApp.Models.pdb
-C:\Users\DELL\source\repos\BankApp.Models\obj\Debug\netcoreapp3.1\BankApp.Models.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\DELL\source\repos\BankApp.Models\obj\Debug\netcoreapp3.1\BankApp.Models.AssemblyInfoInputs.cache
-C:\Users\DELL\source\repos\BankApp.Models\obj\Debug\netcoreapp3.1\BankApp.Models.AssemblyInfo.cs
-C:\Users\DELL\source\repos\BankApp.Models\obj\Debug\netcoreapp3.1\BankApp.Models.csproj.CoreCompileInputs.cache
-C:\Users\DELL\source\repos\BankApp.Models\obj\Debug\netcoreapp3.1\BankApp.Models.dll
-C:\Users\DELL\source\repos\BankApp.Models\obj\Debug\netcoreapp3.1\BankApp.Models.pdb
