@@ -33,42 +33,47 @@ namespace BankingApplication.Consl
                 {
                     Menu();
                     EnumUserOptions Choice = (EnumUserOptions)Enum.Parse(typeof(EnumUserOptions), Console.ReadLine());
-                    
-                    switch (Choice)
+                    try
                     {
+                        switch (Choice)
+                        {
 
-                        case EnumUserOptions.Deposit:
-                            {
-                                DepositHandler();
-                                break;
-                            }
+                            case EnumUserOptions.Deposit:
+                                {
+                                    DepositHandler();
+                                    break;
+                                }
 
-                        case EnumUserOptions.Withdraw:
-                            {
-                                WithdrawHandler();
-                                break;
-                            }
-                        case EnumUserOptions.Transfer:
-                            {
-                                TransferHandler();
-                                break;
-                            }
+                            case EnumUserOptions.Withdraw:
+                                {
+                                    WithdrawHandler();
+                                    break;
+                                }
+                            case EnumUserOptions.Transfer:
+                                {
+                                    TransferHandler();
+                                    break;
+                                }
 
-                        case EnumUserOptions.DisplayTransactions:
-                            {
-                                DisplayTransactionsHandler();
+                            case EnumUserOptions.DisplayTransactions:
+                                {
+                                    DisplayTransactionsHandler();
+                                    break;
+                                }
+                            case EnumUserOptions.Logout:
+                                {
+                                    Program.Main();
+                                    break;
+                                }
+                            default:
+                                Environment.Exit(0);
                                 break;
-                            }
-                        case EnumUserOptions.Logout:
-                            {
-                                Program.Main();
-                                break;
-                            }
-                        default:
-                            Environment.Exit(0);
-                            break;
+                        }
                     }
-
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                 }
             }
 
@@ -76,16 +81,12 @@ namespace BankingApplication.Consl
         private void DepositHandler()
         {
             status = false;
-            try
-            {
+            
                 accountNumber = ReadAccountNum();
                 amount = ReadAmount();
                 status = new AccountService().Deposit(accountNumber, amount);
-            }
-            catch (AccountDoesntExistException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            
+           
             if (status)
             {
                 Console.WriteLine("Succesfully Deposited {0}", amount);
@@ -95,22 +96,12 @@ namespace BankingApplication.Consl
         private void WithdrawHandler()
         {
             status = false;
-            try
-            {
+            
 
                 accountNumber = ReadAccountNum();
                 amount = ReadAmount();
                 status =new  AccountService().Withdraw(accountNumber, amount);
-            }
-
-            catch (AccountDoesntExistException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            catch (InsufficientAmountException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            
 
             if (status)
             {
@@ -124,18 +115,10 @@ namespace BankingApplication.Consl
             string SendAccNum = ReadAccountNum("From");
             string RecAccNum = ReadAccountNum("To");
             amount = ReadAmount();
-            try
-            {
+            
                 status = new AccountService().TransferAmount(SendAccNum, RecAccNum, amount);
-            }
-            catch (AccountDoesntExistException ex)
-            {
-                Console.WriteLine( ex.Message);
-            }
-            catch (InsufficientAmountException ex)
-            {
-                Console.WriteLine( ex.Message);
-            }
+            
+            
             if (status)
             {
                 Console.WriteLine("Succesfully Transferred {0}", amount);
@@ -145,19 +128,14 @@ namespace BankingApplication.Consl
         {
             status = false;
             accountNumber = ReadAccountNum("");
-            try
-            {
+           
                 List<Transaction> Transactions = new AccountService().DisplayTransactions(accountNumber);
                 foreach (var Transaction in Transactions)
                 {
                     Console.WriteLine(Transaction.TransId + " " + Transaction.Amount + " " + Transaction.Type);
                 }
 
-            }
-            catch (AccountDoesntExistException ex)
-            {
-                Console.WriteLine("Accoutn doesn't exist. Please try with valid account.", ex.Message);
-            }
+            
         }
         private void Menu()
         {

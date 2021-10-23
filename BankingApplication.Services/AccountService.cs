@@ -7,10 +7,10 @@ namespace BankingApplication.Services
 {
     public class AccountService
     {
-
+        List<Bank> banks = new JsonReadWrite().ReadData();
         public bool Deposit(string Accnum, double Amount)
         {
-            var banks=new JsonReadWrite().ReadData();
+            
             foreach (Bank bank in banks)
             {
                 foreach (Account Acc in bank.Accounts)
@@ -29,7 +29,6 @@ namespace BankingApplication.Services
         }
         public bool Withdraw(string Accnum, double Amount)
         {
-             var banks=new JsonReadWrite().ReadData();
             foreach (Bank bank in banks)
             {
                 foreach (Account Acc in bank.Accounts)
@@ -54,7 +53,6 @@ namespace BankingApplication.Services
         public bool TransferAmount(String FromAccNum, string ToAccNum, double Amount)
         {
             string SendBank = null, RecBank = null;
-            var banks=new JsonReadWrite().ReadData();
             foreach (Bank bank in banks)
             {
                 foreach (Account Acc in bank.Accounts)
@@ -78,7 +76,6 @@ namespace BankingApplication.Services
         }
         public List<Transaction> DisplayTransactions(string Accnum)
         {
-            var banks=new JsonReadWrite().ReadData();
             foreach (Bank bank in banks)
             {
                 foreach (Account Acc in bank.Accounts)
