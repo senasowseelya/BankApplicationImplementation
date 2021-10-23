@@ -12,7 +12,7 @@ namespace BankingApplication.Consl
         {
             
             
-            Console.WriteLine("********Welcome To XYZ Banking Service********");
+            Console.WriteLine("********Welcome To ABC Banking Service********");
             Console.WriteLine("1.STAFF\n2.USER\nEnter your choice");
             EnumRole Choice = (EnumRole)Enum.Parse(typeof(EnumRole), Console.ReadLine());
             switch (Choice)
