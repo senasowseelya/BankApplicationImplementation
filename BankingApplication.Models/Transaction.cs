@@ -11,7 +11,7 @@ namespace BankingApplication.Models
         public String Receiver { get; set; }
         public double Amount { get; set; }
          
-        public string Type { get; set; }
+        public EnumTypeofTransactions Type { get; set; }
 
     }
 }

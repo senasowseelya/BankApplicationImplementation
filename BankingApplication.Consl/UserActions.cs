@@ -10,22 +10,20 @@ namespace BankingApplication.Consl
 {
     internal class UserActions
     {
-        
+
         bool status = false;
         string accountNumber;
         double amount = 0.0;
-        bool isValidUser=false;
-
+        bool isValidUser = false;
+        AccountService accountService = new AccountService();
         internal UserActions()
         {
             var userCredentials = new Program().GetCredentials();
             isValidUser = new Program().ValidateAccount(userCredentials);
-            
             if (!isValidUser)
             {
                 Console.WriteLine("Invalid Username or Password ");
                 new UserActions();
-          
             }
             else
             {
@@ -37,13 +35,11 @@ namespace BankingApplication.Consl
                     {
                         switch (Choice)
                         {
-
                             case EnumUserOptions.Deposit:
                                 {
                                     DepositHandler();
                                     break;
                                 }
-
                             case EnumUserOptions.Withdraw:
                                 {
                                     WithdrawHandler();
@@ -70,7 +66,7 @@ namespace BankingApplication.Consl
                                 break;
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
                     }
@@ -81,12 +77,9 @@ namespace BankingApplication.Consl
         private void DepositHandler()
         {
             status = false;
-            
-                accountNumber = ReadAccountNum();
-                amount = ReadAmount();
-                status = new AccountService().Deposit(accountNumber, amount);
-            
-           
+            accountNumber = ReadAccountNum();
+            amount = ReadAmount();
+            status = accountService.Deposit(accountNumber, amount);
             if (status)
             {
                 Console.WriteLine("Succesfully Deposited {0}", amount);
@@ -96,13 +89,9 @@ namespace BankingApplication.Consl
         private void WithdrawHandler()
         {
             status = false;
-            
-
-                accountNumber = ReadAccountNum();
-                amount = ReadAmount();
-                status =new  AccountService().Withdraw(accountNumber, amount);
-            
-
+            accountNumber = ReadAccountNum();
+            amount = ReadAmount();
+            status = accountService.Withdraw(accountNumber, amount);
             if (status)
             {
                 Console.WriteLine("Succesfully Withdrawn {0}", amount);
@@ -112,13 +101,12 @@ namespace BankingApplication.Consl
         private void TransferHandler()
         {
             status = false;
-            string SendAccNum = ReadAccountNum("From");
-            string RecAccNum = ReadAccountNum("To");
+            string sendAccNum =ReadAccountNum("From");
+            string recAccNum = ReadAccountNum("To");
             amount = ReadAmount();
-            
-                status = new AccountService().TransferAmount(SendAccNum, RecAccNum, amount);
-            
-            
+            Console.WriteLine("Choose Mode of Transfer\n1.RTGS\n2.IMPS\n3.exit");
+            EnumModeOfTransfer mode = (EnumModeOfTransfer)Enum.Parse(typeof(EnumModeOfTransfer), Console.ReadLine());
+            status = accountService.TransferAmount(sendAccNum, recAccNum,amount,mode);
             if (status)
             {
                 Console.WriteLine("Succesfully Transferred {0}", amount);
@@ -128,14 +116,14 @@ namespace BankingApplication.Consl
         {
             status = false;
             accountNumber = ReadAccountNum("");
-           
-                List<Transaction> Transactions = new AccountService().DisplayTransactions(accountNumber);
-                foreach (var Transaction in Transactions)
-                {
-                    Console.WriteLine(Transaction.TransId + " " + Transaction.Amount + " " + Transaction.Type);
-                }
 
-            
+            List<Transaction> Transactions = accountService.DisplayTransactions(accountNumber);
+            foreach (var Transaction in Transactions)
+            {
+                Console.WriteLine(Transaction.TransId + " " + Transaction.Amount + " " + Transaction.Type);
+            }
+
+
         }
         private void Menu()
         {
@@ -144,7 +132,7 @@ namespace BankingApplication.Consl
             Console.WriteLine("***************************");
             Console.WriteLine("Enter Choice\n");
         }
-       
+
         private String ReadAccountNum(string S = "")
         {
             Console.WriteLine("Enter {0} Account Number", S);
@@ -159,7 +147,7 @@ namespace BankingApplication.Consl
         }
         public bool CheckBank(String BankName)
         {
-             var banks=new JsonReadWrite().ReadData();
+            var banks = new JsonReadWrite().ReadData();
             if (!banks.Any(e => e.Name == BankName))
                 throw new BankDoesntExistException();
             return true;

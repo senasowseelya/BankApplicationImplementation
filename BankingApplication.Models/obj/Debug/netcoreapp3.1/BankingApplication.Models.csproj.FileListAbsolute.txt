@@ -7,3 +7,4 @@ C:\Users\DELL\source\repos\BankingApplication.Models\obj\Debug\netcoreapp3.1\Ban
 C:\Users\DELL\source\repos\BankingApplication.Models\obj\Debug\netcoreapp3.1\BankingApplication.Models.csproj.CoreCompileInputs.cache
 C:\Users\DELL\source\repos\BankingApplication.Models\obj\Debug\netcoreapp3.1\BankingApplication.Models.dll
 C:\Users\DELL\source\repos\BankingApplication.Models\obj\Debug\netcoreapp3.1\BankingApplication.Models.pdb
+C:\Users\DELL\source\repos\BankingApplication.Models\obj\Debug\netcoreapp3.1\BankingApplication.Models.csproj.AssemblyReference.cache

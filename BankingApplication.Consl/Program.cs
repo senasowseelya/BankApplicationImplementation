@@ -10,8 +10,6 @@ namespace BankingApplication.Consl
     {
         internal static void Main()
         {
-            
-            
             Console.WriteLine("********Welcome To ABC Banking Service********");
             Console.WriteLine("1.STAFF\n2.USER\nEnter your choice");
             EnumRole Choice = (EnumRole)Enum.Parse(typeof(EnumRole), Console.ReadLine());
