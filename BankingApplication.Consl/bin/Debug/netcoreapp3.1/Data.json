@@ -1,45 +1,72 @@
 [
   {
+    "Employees": [
+      {
+        "UserName": "Ram",
+        "Password": "Ram@123",
+        "BankId": "SBI2021-10-18",
+        "Job": "Manager",
+        "EmployeeName": "Ramesh",
+        "Age": 30
+      },
+      {
+        "UserName": "Sita",
+        "Password": "Sita@123",
+        "BankId": "SBI2021-10-18",
+        "Job": "Manager",
+        "EmployeeName": "Sita Kalyani",
+        "Age": 32
+      }
+    ],
     "Accounts": [
       {
         "Transactions": [
           {
-            "TransId": "TXNSBI2021-10-24 11:12:21",
-            "Sender": null,
-            "Receiver": null,
-            "Amount": 2000.0,
-            "Type": 1
-          },
-          {
-            "TransId": "TXNSBI2021-10-24 11:13:06",
-            "Sender": null,
-            "Receiver": null,
-            "Amount": 200.0,
-            "Type": 2
-          },
-          {
-            "TransId": "TXNSBI2021-10-24 11:19:27",
-            "Sender": null,
-            "Receiver": null,
-            "Amount": 200.0,
-            "Type": 1
-          },
-          {
-            "TransId": "TXNSBI2021-10-24 11:23:13",
-            "Sender": null,
-            "Receiver": null,
-            "Amount": 800.0,
-            "Type": 2
-          },
-          {
-            "TransId": "TXNSBI2021-10-24 11:36:17",
-            "Sender": null,
-            "Receiver": null,
+            "TransId": "TXNSBI2021-10-25 05:23:07",
+            "Sender": "62481637256",
+            "Receiver": "62481637256",
             "Amount": 500.0,
-            "Type": 3
+            "Type": 1
+          },
+          {
+            "TransId": "TXNSBI2021-10-25 05:23:49",
+            "Sender": "62481637256",
+            "Receiver": "62481637256",
+            "Amount": 200.0,
+            "Type": 2
           }
         ],
         "IsActive": true,
+        "BankID": "SBI2021-10-18",
+        "AccholderName": "Nagababu",
+        "Nationality": "India",
+        "Religion": "Hindu",
+        "Category": "Oc",
+        "Age": 20,
+        "FathOrHusbName": "Bapaniah",
+        "Type": "Savings",
+        "AccountId": "SBI2021-10-24",
+        "AccountNumber": "62481637256",
+        "Dist": "Guntur",
+        "State": "Ap",
+        "Town": "chavali",
+        "Gender": "Male",
+        "Address": "chavali-Guntur-Ap-522264",
+        "DOB": "12-11-2000",
+        "MaritalStatus": "Single",
+        "Aadhar": "7896541233214",
+        "PhoneNumber": "7894569632",
+        "UserName": "Naga",
+        "Password": "Nag@1211",
+        "Pin": 522264,
+        "Balance": 1012.6,
+        "DateofIssue": "2021-10-24T00:00:00+05:30"
+      }
+    ],
+    "InActiveAccounts": [
+      {
+        "Transactions": [],
+        "IsActive": false,
         "BankID": "SBI2021-10-18",
         "AccholderName": "Sena",
         "Nationality": null,
@@ -62,122 +89,50 @@
         "UserName": "Sena",
         "Password": "Sena@1211",
         "Pin": 0,
-        "Balance": 3300.0
+        "Balance": 0.0,
+        "DateofIssue": "0001-01-01T00:00:00"
       }
     ],
-    "InActiveAccounts": [],
     "BankTransactions": [
       {
-        "TransId": "TXNSBI2021-10-24 11:12:21",
-        "Sender": null,
-        "Receiver": null,
-        "Amount": 2000.0,
-        "Type": 1
-      },
-      {
-        "TransId": "TXNSBI2021-10-24 11:13:06",
-        "Sender": null,
-        "Receiver": null,
-        "Amount": 200.0,
-        "Type": 2
-      },
-      {
-        "TransId": "TXNSBI2021-10-24 11:19:27",
-        "Sender": null,
-        "Receiver": null,
-        "Amount": 200.0,
-        "Type": 1
-      },
-      {
-        "TransId": "TXNSBI2021-10-24 11:23:13",
-        "Sender": null,
-        "Receiver": null,
-        "Amount": 800.0,
-        "Type": 2
-      },
-      {
-        "TransId": "TXNSBI2021-10-24 11:36:17",
-        "Sender": null,
-        "Receiver": null,
+        "TransId": "TXNSBI2021-10-25 05:23:07",
+        "Sender": "62481637256",
+        "Receiver": "62481637256",
         "Amount": 500.0,
-        "Type": 3
+        "Type": 1
+      },
+      {
+        "TransId": "TXNSBI2021-10-25 05:23:49",
+        "Sender": "62481637256",
+        "Receiver": "62481637256",
+        "Amount": 200.0,
+        "Type": 2
+      }
+
+    ],
+    "AcceptedCurrencies": [
+      {
+        "CurrencyName": "USD",
+        "ExchangeRate": 76.0
+      },
+      {
+        "CurrencyName": "INR",
+        "ExchangeRate": 1.0
       }
     ],
     "BankId": "SBI2021-10-18",
     "Name": "SBI",
-    "Branch": null,
+    "Branch": "HYD",
     "Balance": 0.0,
     "IFSC": null,
     "SelfRTGS": 3.5,
-    "SelfIMPS": 0.0,
-    "OtherRTGS": 0.0,
+    "SelfIMPS": 1.0,
+    "OtherRTGS": 2.0,
     "OtherIMPS": 0.0,
-    "BankBalance": 0.0
-  },
-  {
-    "Accounts": [
-      {
-        "Transactions": [
-          {
-            "TransId": "TXNRBI2021-10-24 11:23:13",
-            "Sender": null,
-            "Receiver": null,
-            "Amount": 800.0,
-            "Type": 1
-          },
-          {
-            "TransId": "TXNSBI2021-10-24 11:36:17",
-            "Sender": null,
-            "Receiver": null,
-            "Amount": 500.0,
-            "Type": 3
-          }
-        ],
-        "IsActive": false,
-        "BankID": "RBI2021-10-21",
-        "AccholderName": "Mohith",
-        "Nationality": null,
-        "Religion": null,
-        "Category": null,
-        "Age": 0,
-        "FathOrHusbName": null,
-        "Type": null,
-        "AccountId": null,
-        "AccountNumber": "73672389499",
-        "Dist": null,
-        "State": null,
-        "Town": null,
-        "Gender": null,
-        "Address": null,
-        "DOB": null,
-        "MaritalStatus": null,
-        "Aadhar": null,
-        "PhoneNumber": null,
-        "UserName": "Mohith",
-        "Password": "Mohith@123",
-        "Pin": 0,
-        "Balance": 1400.0
-      }
-    ],
-    "InActiveAccounts": [],
-    "BankTransactions": [
-      {
-        "TransId": "TXNRBI2021-10-24 11:23:13",
-        "Sender": null,
-        "Receiver": null,
-        "Amount": 800.0,
-        "Type": 1
-      }
-    ],
-    "BankId": "RBI2021-10-21",
-    "Name": "RBI",
-    "Branch": null,
-    "Balance": 0.0,
-    "IFSC": null,
-    "SelfRTGS": 0.0,
-    "SelfIMPS": 0.0,
-    "OtherRTGS": 5.0,
-    "OtherIMPS": 4.0,
-    "BankBalance": 0.0
+    "BankBalance": 0.4,
+    "DefaultCurrency": {
+      "CurrencyName": "INR",
+      "ExchangeRate": 1.0
+    }
   }
 ]

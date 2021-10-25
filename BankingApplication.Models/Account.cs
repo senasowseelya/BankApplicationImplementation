@@ -30,6 +30,7 @@ namespace BankingApplication.Models
         public String Password { get; set; }
         public int Pin { get; set; }
         public Double Balance { get; set; }
+        public DateTime DateofIssue { get; set; }
         
         public List<Transaction> Transactions=new List<Transaction>();
     }

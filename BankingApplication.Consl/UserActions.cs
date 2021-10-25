@@ -12,7 +12,7 @@ namespace BankingApplication.Consl
     {
 
         bool status = false;
-        string accountNumber;
+        string accountNumber,currencyName;
         double amount = 0.0;
         bool isValidUser = false;
         AccountService accountService = new AccountService();
@@ -79,19 +79,29 @@ namespace BankingApplication.Consl
             status = false;
             accountNumber = ReadAccountNum();
             amount = ReadAmount();
-            status = accountService.Deposit(accountNumber, amount);
+            currencyName = ReadCurrency();
+            status = accountService.Deposit(accountNumber, amount, currencyName);
             if (status)
             {
                 Console.WriteLine("Succesfully Deposited {0}", amount);
             }
 
         }
+
+        private string ReadCurrency()
+        {
+            Console.WriteLine("Enter Type of Currency");
+            currencyName = Console.ReadLine();
+            return currencyName;
+        }
+
         private void WithdrawHandler()
         {
             status = false;
             accountNumber = ReadAccountNum();
             amount = ReadAmount();
-            status = accountService.Withdraw(accountNumber, amount);
+            currencyName = ReadCurrency();
+            status = accountService.Withdraw(accountNumber, amount,currencyName);
             if (status)
             {
                 Console.WriteLine("Succesfully Withdrawn {0}", amount);
@@ -104,9 +114,10 @@ namespace BankingApplication.Consl
             string sendAccNum =ReadAccountNum("From");
             string recAccNum = ReadAccountNum("To");
             amount = ReadAmount();
+            currencyName = ReadCurrency();
             Console.WriteLine("Choose Mode of Transfer\n1.RTGS\n2.IMPS\n3.exit");
             EnumModeOfTransfer mode = (EnumModeOfTransfer)Enum.Parse(typeof(EnumModeOfTransfer), Console.ReadLine());
-            status = accountService.TransferAmount(sendAccNum, recAccNum,amount,mode);
+            status = accountService.TransferAmount(sendAccNum, recAccNum,amount,mode,currencyName);
             if (status)
             {
                 Console.WriteLine("Succesfully Transferred {0}", amount);
@@ -120,7 +131,7 @@ namespace BankingApplication.Consl
             List<Transaction> Transactions = accountService.DisplayTransactions(accountNumber);
             foreach (var Transaction in Transactions)
             {
-                Console.WriteLine(Transaction.TransId + " " + Transaction.Amount + " " + Transaction.Type);
+                Console.WriteLine($" {Transaction.TransId} {Transaction.Type} {Transaction.Amount}");
             }
 
 

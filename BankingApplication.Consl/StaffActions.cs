@@ -13,9 +13,8 @@ namespace BankingApplication.Consl
         BankService bankService = new BankService();
         internal StaffActions()
         {
-            var userCredentials = new Program().GetCredentials();
-            isValidStaff = new Program().ValidateAccount(userCredentials);
-
+            var staffCredentials = new Program().GetCredentials();
+            isValidStaff = new Program().ValidateStaff(staffCredentials);
             if (!isValidStaff)
             {
                 Console.WriteLine("Invalid Username or Password ");
@@ -51,15 +50,27 @@ namespace BankingApplication.Consl
                                     break;
 
                                 }
+                            case EnumStaffOptions.AcceptNewCurrency:
+                                {
+                                    GetAndCheckBankName();
+                                    AcceptNewCurrencyHandler();
+                                    break;
+                                }
                             case EnumStaffOptions.ViewTransactions:
                                 {
-                                    GetAndCheckBankName(); ;
+                                    GetAndCheckBankName(); 
                                     ViewTransactionHandler();
                                     break;
                                 }
                             case EnumStaffOptions.RevertTransaction:
-                                break;
+                                {
+                                    GetAndCheckBankName();
+                                    RevertTransactionHandler();
+                                    break;
+                                }
+                               
                             case EnumStaffOptions.Logout:
+                                Program.Main();
                                 break;
                             default:
                                 Environment.Exit(0);
@@ -76,6 +87,22 @@ namespace BankingApplication.Consl
 
 
         }
+
+        private void AcceptNewCurrencyHandler()
+        {
+            status = false;
+            Currency newCurrency = new Currency();
+            Console.WriteLine("Enter New Currency Name:");
+            newCurrency.CurrencyName = Console.ReadLine();
+            Console.WriteLine("Enter ExchangeRate:");
+            newCurrency.ExchangeRate = Convert.ToDouble(Console.ReadLine());
+            status=bankService.AcceptNewCurrency(bankName,newCurrency);
+            if(status)
+            {
+                Console.WriteLine("Succesfully added new Currency");
+            }
+        }
+
         private  void Menu()
         {
             Console.WriteLine("****XYZ Banking Service****");
@@ -93,24 +120,41 @@ namespace BankingApplication.Consl
                 switch (Choice)
                 {
                     case EnumServiceCharges.selfRTGS:
-                        Console.WriteLine("Enter  Self RTGS Charge to update");
-                        serviceCharges.SelfRTGS = Convert.ToDouble(Console.ReadLine());
-                        break;
+                        {
+                            Console.WriteLine("Enter  Self RTGS Charge to update");
+                            serviceCharges.SelfRTGS = Convert.ToDouble(Console.ReadLine());
+                            break;
+                        }
                     case EnumServiceCharges.OtherRTGS:
-                        Console.WriteLine("Enter Other RTGS Charge to update");
-                        serviceCharges.OtherRTGS = Convert.ToDouble(Console.ReadLine());
-                        break;
+                        {
+                            Console.WriteLine("Enter Other RTGS Charge to update");
+                            serviceCharges.OtherRTGS = Convert.ToDouble(Console.ReadLine());
+                            break;
+                        }
                     case EnumServiceCharges.selfIMPS:
-                        Console.WriteLine("Enter  Self IMPS Charge to update");
-                        serviceCharges.SelfIMPS = Convert.ToDouble(Console.ReadLine());
-                        break;
+                        {
+                            Console.WriteLine("Enter  Self IMPS Charge to update");
+                            serviceCharges.SelfIMPS = Convert.ToDouble(Console.ReadLine());
+                            break;
+                        }
                     case EnumServiceCharges.OtherIMPS:
-                        Console.WriteLine("Enter  Other IMPS Charge to update");
-                        serviceCharges.OtherIMPS = Convert.ToDouble(Console.ReadLine());
-                        break;
+                        {
+                            Console.WriteLine("Enter  Other IMPS Charge to update");
+                            serviceCharges.OtherIMPS = Convert.ToDouble(Console.ReadLine());
+                            break;
+                        }
+                    default:
+                        {
+                            new StaffActions();
+                            break;
+                        }
 
                 }
                 status=bankService.AddCharges(bankName, serviceCharges);
+                if(status)
+                {
+                    Console.WriteLine("Updated Succesfully");
+                }
             }
         }
         private void CreateAccountHandler()
@@ -119,40 +163,38 @@ namespace BankingApplication.Consl
             Console.WriteLine("Enter Account Holder's Full Name:");
             newAcc.AccholderName = Console.ReadLine();
             //Console.WriteLine("Enter Account Holder's Date of Birth:");
-            //newAcc.dob = Console.ReadLine();
+            //newAcc.DOB = Console.ReadLine();
             //Console.WriteLine("Enter Account Holder's Aadhar Number:");
-            //newAcc.aadhar = (Console.ReadLine());
+            //newAcc.Aadhar = (Console.ReadLine());
             //Console.WriteLine("Enter Phone number:");
-            //newAcc.phno = Convert.ToDouble(Console.ReadLine());
+            //newAcc.PhoneNumber= Console.ReadLine();
             //Console.WriteLine("Enter Type(Savings/Current):");
-            //newAcc.type = Console.ReadLine();
+            //newAcc.Type = Console.ReadLine();
             //Console.WriteLine("Enter Gender:");
-            //newAcc.gender = Console.ReadLine();
+            //newAcc.Gender = Console.ReadLine();
             //Console.WriteLine("Enter Age :");
-            //newAcc.age = Convert.ToDouble(Console.ReadLine());
+            //newAcc.Age = Convert.ToInt32(Console.ReadLine());
             //Console.WriteLine("Enter  Marital Status");
-            //newAcc.maritalStatus = Console.ReadLine();
+            //newAcc.MaritalStatus = Console.ReadLine();
             //Console.WriteLine("Enter Father/Husband name:");
-            //newAcc.fathOrHusbName = Console.ReadLine();
+            //newAcc.FathOrHusbName = Console.ReadLine();
             //Console.WriteLine("Enter Address:");
             //Console.WriteLine("Enter town/village:");
-            //newAcc.town = Console.ReadLine();
+            //newAcc.Town = Console.ReadLine();
             //Console.WriteLine("Enter  District:");
-            //newAcc.dist = Console.ReadLine();
+            //newAcc.Dist = Console.ReadLine();
             //Console.WriteLine("Enter state:");
-            //newAcc.state = Console.ReadLine();
+            //newAcc.State = Console.ReadLine();
             //Console.WriteLine("Enter pin:");
-            //newAcc.pin = Convert.ToDouble(Console.ReadLine());
+            //newAcc.Pin = Convert.ToInt32(Console.ReadLine());
             //Console.WriteLine("Enter Nationality:");
-            //newAcc.nationality = Console.ReadLine();
+            //newAcc.Nationality = Console.ReadLine();
             //Console.WriteLine("Enter Religion:");
-            //newAcc.religion = Console.ReadLine();
+            //newAcc.Religion = Console.ReadLine();
             //Console.WriteLine("Enter category:");
-            //newAcc.category = Console.ReadLine();
-            //newAcc.dateOfIssue = DateTime.Now.ToString();
-            //newAcc.address = newAcc.town + "-" + newAcc.dist + "-" + newAcc.state + "-" + newAcc.pin;
-            
-            
+            //newAcc.Category = Console.ReadLine();
+            //newAcc.DateofIssue = DateTime.Today;
+            //newAcc.Address = newAcc.Town + "-" + newAcc.Dist + "-" + newAcc.State + "-" + newAcc.Pin;
             status = bankService.CreateAccountService(bankName, newAcc);
             if (status)
             {
@@ -179,13 +221,24 @@ namespace BankingApplication.Consl
             {
                 foreach (var transaction in Transactions)
                 {
-                    Console.WriteLine(transaction);
+                    Console.WriteLine(transaction.TransId+" "+transaction.Amount+" "+transaction.Type);
                 }
             }
             else
             {
                 Console.WriteLine("No Transactions");
             }
+        }
+        private void RevertTransactionHandler()
+        {
+            Console.WriteLine("Enter TransactionId to revert:");
+            String TransactionId = Console.ReadLine();
+            status = bankService.RevertTransaction(bankName,TransactionId);
+            if (status)
+            {
+                Console.WriteLine("Reverted");
+            }
+
         }
         private void GetAndCheckBankName()
         {

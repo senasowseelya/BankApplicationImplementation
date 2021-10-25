@@ -9,38 +9,62 @@ namespace BankingApplication.Services
     
     {
         List<Bank> banks = new JsonReadWrite().ReadData();
-        public bool Deposit(string accNum, double amount)
+        Currency currency = new Currency();
+        public bool Deposit(string accNum, double amount,String currencyName)
         {
             Account account = FetchAccount(accNum);
+            Console.WriteLine(amount);
+            Bank bank = FetchBank(account.BankID);
+            currency = GetCurrencyobject(bank,currencyName);
+            amount = amount * currency.ExchangeRate;
             account.Balance += amount;
             Transaction NewTransaction = GenerateTransaction(account,account,amount, EnumTypeofTransactions.Credited);
             new JsonReadWrite().WriteData(banks);
             return true;
         }
-        public bool Withdraw(string Accnum, double Amount)
+
+        private Currency GetCurrencyobject(Bank bank,String name)
         {
-            Account account = FetchAccount(Accnum);
-            if (account.Balance >= Amount)
+            foreach(Currency currency in bank.AcceptedCurrencies)
             {
-                account.Balance -= Amount;
-                Transaction NewTransaction = GenerateTransaction(account,account, Amount, EnumTypeofTransactions.Debited);
+                if(currency.CurrencyName==name)
+                {
+                    return currency;
+                }
+            }
+            throw new CurrencyNotSupportedException();
+            
+        }
+
+        public bool Withdraw(string accnum, double amount,string currencyName)
+        {
+            Account account = FetchAccount(accnum);
+            Bank bank = FetchBank(account.BankID);
+            currency = GetCurrencyobject(bank, currencyName);
+            amount = amount * currency.ExchangeRate;
+            if (account.Balance >= amount)
+            {
+                account.Balance -= amount;
+                Transaction NewTransaction = GenerateTransaction(account,account, amount, EnumTypeofTransactions.Debited);
                 new JsonReadWrite().WriteData(banks);
                 return true;
             }
             else
                 throw new InsufficientAmountException();
         }
-        public bool TransferAmount(String fromAccNum, string toAccNum, double amount,EnumModeOfTransfer mode )
+        public bool TransferAmount(String fromAccNum, string toAccNum, double amount,EnumModeOfTransfer mode,string currencyName )
         {
             Account senderAccount =FetchAccount(fromAccNum);
             Bank senderBank = FetchBank(senderAccount.BankID);
             Account receiverAccount = FetchAccount(toAccNum);
             Bank receiverBank = FetchBank(receiverAccount.BankID);
+            currency = GetCurrencyobject(senderBank, currencyName);
+            amount = amount * currency.ExchangeRate;
             Double charge = CalculateCharges(senderBank,receiverBank,amount,mode);
-            if (receiverAccount.Balance >= amount)
+            if (senderAccount.Balance >= amount+charge)
             {
-                receiverAccount.Balance -= amount;
-                senderAccount.Balance += amount;
+                receiverAccount.Balance += amount;
+                senderAccount.Balance -= (amount+charge);
                 GenerateTransaction(senderAccount,receiverAccount, amount, EnumTypeofTransactions.Transfer);
                 senderBank.BankBalance +=charge;
                 new JsonReadWrite().WriteData(banks);
@@ -59,9 +83,9 @@ namespace BankingApplication.Services
 
             Transaction NewTransaction = new Transaction();
             Bank bank = FetchBank(senderAccount.BankID);
-            NewTransaction.TransId = "TXN" + bank.BankId.Substring(0, 3) + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
-            NewTransaction.Sender = senderAccount.AccholderName;
-            NewTransaction.Receiver = recAccount.AccholderName;
+            NewTransaction.TransId = $"TXN{bank.BankId.Substring(0, 3)}{DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")}";
+            NewTransaction.Sender = senderAccount.AccountNumber;
+            NewTransaction.Receiver =recAccount.AccountNumber;
             NewTransaction.Type = type;
             NewTransaction.Amount = Amount;
             senderAccount.Transactions.Add(NewTransaction);
@@ -73,7 +97,7 @@ namespace BankingApplication.Services
             return NewTransaction;
 
         }
-        private Account FetchAccount(String accountNumber)
+        public Account FetchAccount(String accountNumber)
         {
             foreach (Bank bank in banks)
             {
@@ -87,7 +111,7 @@ namespace BankingApplication.Services
             }
             throw new AccountDoesntExistException();
         }
-        private Bank FetchBank(String bankId)
+        public Bank FetchBank(String bankId)
         {
             foreach (Bank bank in banks)
             {
@@ -99,6 +123,7 @@ namespace BankingApplication.Services
             }
             throw new BankDoesntExistException();
         }
+        
         private Double CalculateCharges(Bank senderBank,Bank receiverBank,Double amount,EnumModeOfTransfer mode)
         {
             Double charge = 0.0;

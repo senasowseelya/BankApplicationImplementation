@@ -17,10 +17,16 @@ namespace BankingApplication.Models
         public Double OtherIMPS { get; set;}
         public Double BankBalance { get; set; }
 
+
+        public List<Employee> Employees = new List<Employee>();
+
         public List<Account> Accounts = new List<Account>();
 
         public List<Account> InActiveAccounts = new List<Account>();
 
         public List<Transaction> BankTransactions = new List<Transaction>();
+        public Currency DefaultCurrency { get; set; }
+
+        public List<Currency> AcceptedCurrencies = new List<Currency>();
     }
 }

@@ -21,8 +21,13 @@ namespace BankingApplication.Consl
                 case EnumRole.User:
                     new UserActions();
                     break;
+                default:
+                    Environment.Exit(0);
+                    break;
             }
         }
+
+
         internal Credentials GetCredentials()
         {
             Credentials userCredentials=new Credentials();
@@ -49,5 +54,23 @@ namespace BankingApplication.Consl
             return false;
 
         }
+        internal bool ValidateStaff(Credentials staffCredentials)
+        {
+            var banks = new JsonReadWrite().ReadData();
+            foreach (Bank bank in banks)
+            {
+                foreach (Employee employee in bank.Employees)
+                {
+                    if (employee.UserName == staffCredentials.UserName && employee.Password == staffCredentials.Password)
+                    {
+                        return true;
+
+                    }
+                }
+            }
+            return false;
+
+        }
+
     }
 }
