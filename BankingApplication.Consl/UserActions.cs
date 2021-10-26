@@ -12,15 +12,15 @@ namespace BankingApplication.Consl
     {
 
         bool status = false;
-        string accountNumber,currencyName;
+        String currencyName;
         double amount = 0.0;
-        bool isValidUser = false;
+        Account userAccount;
         AccountService accountService = new AccountService();
         internal UserActions()
         {
             var userCredentials = new Program().GetCredentials();
-            isValidUser = new Program().ValidateAccount(userCredentials);
-            if (!isValidUser)
+            userAccount = new Program().GetUserAccount(userCredentials);
+            if (userAccount==null)
             {
                 Console.WriteLine("Invalid Username or Password ");
                 new UserActions();
@@ -77,11 +77,10 @@ namespace BankingApplication.Consl
         private void DepositHandler()
         {
             status = false;
-            accountNumber = ReadAccountNum();
             amount = ReadAmount();
             currencyName = ReadCurrency();
-            status = accountService.Deposit(accountNumber, amount, currencyName);
-            if (status)
+            status = accountService.Deposit(userAccount, amount, currencyName);
+            if(status)
             {
                 Console.WriteLine("Succesfully Deposited {0}", amount);
             }
@@ -98,10 +97,9 @@ namespace BankingApplication.Consl
         private void WithdrawHandler()
         {
             status = false;
-            accountNumber = ReadAccountNum();
             amount = ReadAmount();
             currencyName = ReadCurrency();
-            status = accountService.Withdraw(accountNumber, amount,currencyName);
+            status = accountService.Withdraw(userAccount, amount,currencyName);
             if (status)
             {
                 Console.WriteLine("Succesfully Withdrawn {0}", amount);
@@ -111,13 +109,13 @@ namespace BankingApplication.Consl
         private void TransferHandler()
         {
             status = false;
-            string sendAccNum =ReadAccountNum("From");
-            string recAccNum = ReadAccountNum("To");
+            Console.WriteLine("Enter Receiver Account Number");
+            String recAccNum = Console.ReadLine();
             amount = ReadAmount();
             currencyName = ReadCurrency();
             Console.WriteLine("Choose Mode of Transfer\n1.RTGS\n2.IMPS\n3.exit");
             EnumModeOfTransfer mode = (EnumModeOfTransfer)Enum.Parse(typeof(EnumModeOfTransfer), Console.ReadLine());
-            status = accountService.TransferAmount(sendAccNum, recAccNum,amount,mode,currencyName);
+            status = accountService.TransferAmount(userAccount, recAccNum, amount, mode, currencyName);
             if (status)
             {
                 Console.WriteLine("Succesfully Transferred {0}", amount);
@@ -126,15 +124,11 @@ namespace BankingApplication.Consl
         private void DisplayTransactionsHandler()
         {
             status = false;
-            accountNumber = ReadAccountNum("");
-
-            List<Transaction> Transactions = accountService.DisplayTransactions(accountNumber);
+            List<Transaction> Transactions = accountService.DisplayTransactions(userAccount);
             foreach (var Transaction in Transactions)
             {
-                Console.WriteLine($" {Transaction.TransId} {Transaction.Type} {Transaction.Amount}");
+                Console.WriteLine($" {Transaction.TransId} {Transaction.Type} {Transaction.Amount} {Transaction.CurrencyName}");
             }
-
-
         }
         private void Menu()
         {
@@ -144,25 +138,14 @@ namespace BankingApplication.Consl
             Console.WriteLine("Enter Choice\n");
         }
 
-        private String ReadAccountNum(string S = "")
-        {
-            Console.WriteLine("Enter {0} Account Number", S);
-            String accNum = Console.ReadLine();
-            return accNum;
-        }
+      
         private double ReadAmount()
         {
             Console.WriteLine("Enter Amount");
             double amount = Convert.ToDouble(Console.ReadLine());
             return amount;
         }
-        public bool CheckBank(String BankName)
-        {
-            var banks = new JsonReadWrite().ReadData();
-            if (!banks.Any(e => e.Name == BankName))
-                throw new BankDoesntExistException();
-            return true;
-        }
+        
 
 
     }

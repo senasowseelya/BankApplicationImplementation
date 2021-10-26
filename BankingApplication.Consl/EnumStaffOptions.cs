@@ -6,7 +6,8 @@ namespace BankingApplication.Consl
 {
     internal enum EnumStaffOptions
     {
-        CreateAccount=1,
+        AddBank=1,
+        CreateAccount,
         RemoveAccount,
         AddCharges,
         AcceptNewCurrency,

@@ -1,13 +1,16 @@
 ﻿using BankingApplication.Database;
 using BankingApplication.Models;
 using System;
+using System.Collections.Generic;
 
 namespace BankingApplication.Consl
 {
     class Program
     {
+        
         internal static void Main()
         {
+            
             Console.WriteLine("********Welcome To ABC Banking Service********");
             Console.WriteLine("1.STAFF\n2.USER\nEnter your choice");
             EnumRole Choice = (EnumRole)Enum.Parse(typeof(EnumRole), Console.ReadLine());
@@ -35,33 +38,33 @@ namespace BankingApplication.Consl
             userCredentials.Password = Console.ReadLine();
             return userCredentials;
         }
-        internal bool ValidateAccount(Credentials UserCredentials)
+        internal Account GetUserAccount(Credentials UserCredentials)
         {
-            var banks = new JsonReadWrite().ReadData();
-            foreach (Bank bank in banks)
+            
+            foreach (Bank bank in BankData.banks)
             {
                 foreach (Account Account in bank.Accounts)
                 {
                     if (Account.UserName == UserCredentials.UserName && Account.Password == UserCredentials.Password)
                     {
-                        return true;
+                        return Account;
 
                     }
                 }
             }
-            return false;
+            return null;
 
         }
-        internal string ValidateStaff(Credentials staffCredentials)
+        internal Bank GetStaffBank(Credentials staffCredentials)
         {
-            var banks = new JsonReadWrite().ReadData();
-            foreach (Bank bank in banks)
+            
+            foreach (Bank bank in BankData.banks)
             {
                 foreach (Employee employee in bank.Employees)
                 {
                     if (employee.UserName == staffCredentials.UserName && employee.Password == staffCredentials.Password)
                     {
-                        return bank.Name;
+                        return bank;
 
                     }
                 }
