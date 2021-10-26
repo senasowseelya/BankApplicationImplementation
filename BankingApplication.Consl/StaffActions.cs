@@ -7,15 +7,15 @@ namespace BankingApplication.Consl
 {
     internal class StaffActions
     {
-        bool isValidStaff = false;
+        string bankOfEmployee;
         bool status = false;
         String bankName;
         BankService bankService = new BankService();
         internal StaffActions()
         {
             var staffCredentials = new Program().GetCredentials();
-            isValidStaff = new Program().ValidateStaff(staffCredentials);
-            if (!isValidStaff)
+            bankOfEmployee = new Program().ValidateStaff(staffCredentials);
+            if (bankOfEmployee == null)
             {
                 Console.WriteLine("Invalid Username or Password ");
                 new StaffActions();
@@ -32,40 +32,40 @@ namespace BankingApplication.Consl
                         {
                             case EnumStaffOptions.CreateAccount:
                                 {
-                                    GetAndCheckBankName();
-                                    CreateAccountHandler();
+                                    if(GetAndCheckBankName())
+                                        CreateAccountHandler();
                                     break;
                                 }
                             case EnumStaffOptions.RemoveAccount:
                                 {
-                                    GetAndCheckBankName();
-                                    RemoveAccountHandler();
+                                    if (GetAndCheckBankName())
+                                        RemoveAccountHandler();
                                     break;
                                 }
                                 
                             case EnumStaffOptions.AddCharges:
                                 {
-                                    GetAndCheckBankName();
-                                    AddChargesHandler();
+                                    if (GetAndCheckBankName())
+                                        AddChargesHandler();
                                     break;
 
                                 }
                             case EnumStaffOptions.AcceptNewCurrency:
                                 {
-                                    GetAndCheckBankName();
-                                    AcceptNewCurrencyHandler();
+                                    if (GetAndCheckBankName())
+                                        AcceptNewCurrencyHandler();
                                     break;
                                 }
                             case EnumStaffOptions.ViewTransactions:
                                 {
-                                    GetAndCheckBankName(); 
-                                    ViewTransactionHandler();
+                                    if (GetAndCheckBankName())
+                                        ViewTransactionHandler();
                                     break;
                                 }
                             case EnumStaffOptions.RevertTransaction:
                                 {
-                                    GetAndCheckBankName();
-                                    RevertTransactionHandler();
+                                    if (GetAndCheckBankName())
+                                        RevertTransactionHandler();
                                     break;
                                 }
                                
@@ -240,11 +240,16 @@ namespace BankingApplication.Consl
             }
 
         }
-        private void GetAndCheckBankName()
+        private bool GetAndCheckBankName()
         {
             Console.WriteLine("Enter Bank Name:");
-             bankName = Console.ReadLine();
-            bankService.CheckBank(bankName);
+            bankName = Console.ReadLine();
+            if (!bankName.Equals(bankOfEmployee))
+            {
+                Console.WriteLine("You are not in employees list");
+                return false;
+            }
+            return true;
         }
        }
     }

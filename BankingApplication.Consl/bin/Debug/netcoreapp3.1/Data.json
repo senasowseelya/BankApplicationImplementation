@@ -20,22 +20,7 @@
     ],
     "Accounts": [
       {
-        "Transactions": [
-          {
-            "TransId": "TXNSBI2021-10-25 05:23:07",
-            "Sender": "62481637256",
-            "Receiver": "62481637256",
-            "Amount": 500.0,
-            "Type": 1
-          },
-          {
-            "TransId": "TXNSBI2021-10-25 05:23:49",
-            "Sender": "62481637256",
-            "Receiver": "62481637256",
-            "Amount": 200.0,
-            "Type": 2
-          }
-        ],
+        "Transactions": [],
         "IsActive": true,
         "BankID": "SBI2021-10-18",
         "AccholderName": "Nagababu",
@@ -59,7 +44,7 @@
         "UserName": "Naga",
         "Password": "Nag@1211",
         "Pin": 522264,
-        "Balance": 1012.6,
+        "Balance": 0.0,
         "DateofIssue": "2021-10-24T00:00:00+05:30"
       }
     ],
@@ -93,23 +78,7 @@
         "DateofIssue": "0001-01-01T00:00:00"
       }
     ],
-    "BankTransactions": [
-      {
-        "TransId": "TXNSBI2021-10-25 05:23:07",
-        "Sender": "62481637256",
-        "Receiver": "62481637256",
-        "Amount": 500.0,
-        "Type": 1
-      },
-      {
-        "TransId": "TXNSBI2021-10-25 05:23:49",
-        "Sender": "62481637256",
-        "Receiver": "62481637256",
-        "Amount": 200.0,
-        "Type": 2
-      }
-
-    ],
+    "BankTransactions": [],
     "AcceptedCurrencies": [
       {
         "CurrencyName": "USD",

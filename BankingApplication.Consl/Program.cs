@@ -1,6 +1,4 @@
-﻿
-
-using BankingApplication.Database;
+﻿using BankingApplication.Database;
 using BankingApplication.Models;
 using System;
 
@@ -54,7 +52,7 @@ namespace BankingApplication.Consl
             return false;
 
         }
-        internal bool ValidateStaff(Credentials staffCredentials)
+        internal string ValidateStaff(Credentials staffCredentials)
         {
             var banks = new JsonReadWrite().ReadData();
             foreach (Bank bank in banks)
@@ -63,12 +61,12 @@ namespace BankingApplication.Consl
                 {
                     if (employee.UserName == staffCredentials.UserName && employee.Password == staffCredentials.Password)
                     {
-                        return true;
+                        return bank.Name;
 
                     }
                 }
             }
-            return false;
+            return null;
 
         }
 
