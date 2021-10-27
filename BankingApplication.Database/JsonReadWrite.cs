@@ -16,7 +16,7 @@ namespace BankingApplication.Database
         public List<Bank> ReadData()
         {
             content = File.ReadAllText(filePath);
-            return JsonConvert.DeserializeObject<List<Bank>>(content);
+            return JsonConvert.DeserializeObject<List<Bank>>(content) ?? new List<Bank>();
         }
        
        
