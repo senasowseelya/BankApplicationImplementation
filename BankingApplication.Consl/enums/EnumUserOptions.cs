@@ -6,6 +6,7 @@
         Withdraw,
         Transfer,
         DisplayTransactions,
+        ChangePassword,
         Logout
     }
 }

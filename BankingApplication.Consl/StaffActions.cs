@@ -1,8 +1,9 @@
-﻿using BankingApplication.Models;
+﻿using BankingApplication.Database;
+using BankingApplication.Models;
 using BankingApplication.Services;
 using System;
 using System.Collections.Generic;
-using System.Text;
+
 namespace BankingApplication.Consl
 {
     internal class StaffActions
@@ -12,81 +13,96 @@ namespace BankingApplication.Consl
         BankService bankService = new BankService();
         internal StaffActions()
         {
-            var staffCredentials = new Program().GetCredentials();
-            bankOfEmployee = new Program().GetStaffBank(staffCredentials);
-            
-            
-            if (bankOfEmployee == null)
+            var staffCredentials = new Commonfunctions().GetCredentials();
+            bankOfEmployee = GetStaffBank(staffCredentials);
+            while (bankOfEmployee == null)
             {
-                Console.WriteLine("Invalid Username or Password ");
-                new StaffActions();
-            }
-            else
-            {
-                while (true)
-                {
-                    Menu(); 
-                    EnumStaffOptions Choice = (EnumStaffOptions)Enum.Parse(typeof(EnumStaffOptions), Console.ReadLine());
-                    try
-                    {
-                        switch (Choice)
-                        {
-                            case EnumStaffOptions.AddBank:
-                                {
-                                    Console.WriteLine("Enter Bank Name");
-                                     String bankName = Console.ReadLine();
-                                    bankService.AddBank(bankName);
-                                    break;
-                                }
-                            case EnumStaffOptions.CreateAccount:
-                                {
-                                    CreateAccountHandler();
-                                    break;
-                                }
-                            case EnumStaffOptions.RemoveAccount:
-                                {
-                                    RemoveAccountHandler();
-                                    break;
-                                }
-                                
-                            case EnumStaffOptions.AddCharges:
-                                {
-                                    AddChargesHandler();
-                                    break;
+                Console.WriteLine("Invalid Username or Password");
+                Console.WriteLine("Choose\n1.Login\n2.Exit ");
+                String staffChoice = Console.ReadLine();
+                if (staffChoice == "2")
+                    Environment.Exit(0);
+                staffCredentials = new Commonfunctions().GetCredentials();
+                bankOfEmployee = GetStaffBank(staffCredentials);
 
-                                }
-                            case EnumStaffOptions.AcceptNewCurrency:
-                                {
-                                    AcceptNewCurrencyHandler();
-                                    break;
-                                }
-                            case EnumStaffOptions.ViewTransactions:
-                                {
-                                    ViewTransactionHandler();
-                                    break;
-                                }
-                            case EnumStaffOptions.RevertTransaction:
-                                {
-                                    RevertTransactionHandler();
-                                    break;
-                                }
-                               
-                            case EnumStaffOptions.Logout:
-                                Program.Main();
-                                break;
-                            default:
-                                Environment.Exit(0);
-                                break;
-                        }
-                    }
-                    catch (Exception ex)
+            }
+            while (true)
+            {
+                Menu();
+                EnumStaffOptions Choice = (EnumStaffOptions)Enum.Parse(typeof(EnumStaffOptions), Console.ReadLine());
+                try
+                {
+                    switch (Choice)
                     {
-                        Console.WriteLine(ex.Message);
+                        case EnumStaffOptions.AddBank:
+                            {
+                                Console.WriteLine("Enter Bank Name");
+                                String bankName = Console.ReadLine();
+                                bankService.AddBank(bankName);
+                                break;
+                            }
+                        case EnumStaffOptions.CreateAccount:
+                            {
+                                CreateAccountHandler();
+                                break;
+                            }
+                        case EnumStaffOptions.RemoveAccount:
+                            {
+                                RemoveAccountHandler();
+                                break;
+                            }
+                        case EnumStaffOptions.AddCharges:
+                            {
+                                AddChargesHandler();
+                                break;
+                            }
+                        case EnumStaffOptions.AcceptNewCurrency:
+                            {
+                                AcceptNewCurrencyHandler();
+                                break;
+                            }
+                        case EnumStaffOptions.ViewTransactions:
+                            {
+                                ViewTransactionHandler();
+                                break;
+                            }
+                        case EnumStaffOptions.RevertTransaction:
+                            {
+                                RevertTransactionHandler();
+                                break;
+                            }
+                        case EnumStaffOptions.AddEmployee:
+                            {
+                                AddEmployeeHandler();
+                                break;
+                            }
+                        case EnumStaffOptions.Logout:
+                            Program.Main();
+                            break;
+                        default:
+                            Environment.Exit(0);
+                            break;
                     }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
             }
 
 
+
+
+        }
+
+        private void AddEmployeeHandler()
+        {
+            status = false;
+            Employee employee = new Employee();
+            Console.WriteLine("Enter Name of Employee");
+            employee.EmployeeName = Console.ReadLine();
+            status = bankService.AddEmployee(bankOfEmployee, employee);
+            new Commonfunctions().DisplayStatus(status, "Succesfully added new Employee\nYour username {employee.UserName} \nYour password {employee.Password}");
 
         }
 
@@ -99,29 +115,29 @@ namespace BankingApplication.Consl
             Console.WriteLine("Enter ExchangeRate:");
             newCurrency.ExchangeRate = Convert.ToDouble(Console.ReadLine());
             status = bankService.AcceptNewCurrency(bankOfEmployee, newCurrency);
-            if(status)
-            {
-                Console.WriteLine("Succesfully added new Currency");
-            }
+            new Commonfunctions().DisplayStatus(status, "Succesfully added new Currency");
+
         }
 
-        private  void Menu()
+        private void Menu()
         {
-            Console.WriteLine("****XYZ Banking Service****");
-            Console.WriteLine("\n1.Add Bank\n2.CreateAccount\n3.RemoveAccount\n4.UpdateCharges\n5.Accept New Currency\n6. View Transaction\n7.Revert Transaction\n 8.Logout\nother.Exit");
-            Console.WriteLine("***************************");
+            Console.WriteLine("********XYZ Banking Service********");
+            Console.WriteLine("\n1.Add Bank\n2.CreateAccount\n3.RemoveAccount\n4.UpdateCharges\n5.Accept New Currency\n6. View Transaction\n7.Revert Transaction\n 8.Add Employee\n9.Logout\nother.Exit");
+            Console.WriteLine("-----------------------------------");
             Console.WriteLine("Enter Choice\n");
         }
         private void AddChargesHandler()
         {
             ServiceCharges serviceCharges = new ServiceCharges();
-            while (true){
+            while (true)
+            {
                 Console.WriteLine("1.Self RTGS Charges\n2.Other RTGS Charges\n3.Self IMPS Charges\n4.Other IMPS Charges\n others exit");
                 Console.WriteLine("Enter Choice");
+                ServiceCharges serviceCharge =new ServiceCharges();
                 EnumServiceCharges Choice = (EnumServiceCharges)Enum.Parse(typeof(EnumServiceCharges), Console.ReadLine());
                 switch (Choice)
                 {
-                    case EnumServiceCharges.selfRTGS:
+                    case EnumServiceCharges.SelfRTGS:
                         {
                             Console.WriteLine("Enter  Self RTGS Charge to update");
                             serviceCharges.SelfRTGS = Convert.ToDouble(Console.ReadLine());
@@ -133,7 +149,7 @@ namespace BankingApplication.Consl
                             serviceCharges.OtherRTGS = Convert.ToDouble(Console.ReadLine());
                             break;
                         }
-                    case EnumServiceCharges.selfIMPS:
+                    case EnumServiceCharges.SelfIMPS:
                         {
                             Console.WriteLine("Enter  Self IMPS Charge to update");
                             serviceCharges.SelfIMPS = Convert.ToDouble(Console.ReadLine());
@@ -152,12 +168,9 @@ namespace BankingApplication.Consl
                         }
 
                 }
-                status=bankService.AddCharges(bankOfEmployee, serviceCharges);
-                if(status)
-                {
-                   
-                    Console.WriteLine("Updated Succesfully");
-                }
+                status = bankService.AddCharges(bankOfEmployee, serviceCharges);
+                new Commonfunctions().DisplayStatus(status, "New Services Charges Updated Succesfully");
+
             }
         }
         private void CreateAccountHandler()
@@ -202,20 +215,18 @@ namespace BankingApplication.Consl
             if (status)
             {
                 Console.WriteLine(" Account Created and Your Account Number is {0}", newAcc.AccountNumber);
-                Console.WriteLine("Your username is {0}",newAcc.UserName);
+                Console.WriteLine("Your username is {0}", newAcc.UserName);
                 Console.WriteLine("Password is your accountNumber change it if you wish");
             }
-            
+
         }
         private void RemoveAccountHandler()
         {
             Console.WriteLine("Enter account number :");
-            String  accountNumber =Console.ReadLine();
-            status=bankService.RemoveAccount(bankOfEmployee, accountNumber);
-            if (status)
-            {
-                Console.WriteLine("Your account is Closed ");
-            }
+            String accountNumber = Console.ReadLine();
+            status = bankService.RemoveAccount(bankOfEmployee, accountNumber);
+            new Commonfunctions().DisplayStatus(status, "Your Account is Closed and you can't perform any actions on this acoount..");
+
         }
         private void ViewTransactionHandler()
         {
@@ -224,7 +235,7 @@ namespace BankingApplication.Consl
             {
                 foreach (var transaction in Transactions)
                 {
-                    Console.WriteLine(transaction.TransId+" "+transaction.Amount+" "+transaction.Type);
+                    Console.WriteLine($"{transaction.TransId} {transaction.Amount} {transaction.Type}");
                 }
             }
             else
@@ -236,14 +247,28 @@ namespace BankingApplication.Consl
         {
             Console.WriteLine("Enter TransactionId to revert:");
             String TransactionId = Console.ReadLine();
-            status = bankService.RevertTransaction(bankOfEmployee,TransactionId);
-            if (status)
-            {
-                Console.WriteLine("Reverted Transaction");
-            }
+            status = bankService.RevertTransaction(bankOfEmployee, TransactionId);
+            new Commonfunctions().DisplayStatus(status, "Transaction is Reverted successfully");
 
         }
-        
-       }
+        private Bank GetStaffBank(Credentials staffCredentials)
+        {
+
+            foreach (Bank bank in BankData.banks)
+            {
+                foreach (Employee employee in bank.Employees)
+                {
+                    if (employee.UserName == staffCredentials.UserName && employee.Password == staffCredentials.Password)
+                    {
+                        return bank;
+
+                    }
+                }
+            }
+            return null;
+
+        }
+
     }
+}
 

@@ -13,6 +13,7 @@ namespace BankingApplication.Consl
         AcceptNewCurrency,
         ViewTransactions,
         RevertTransaction,
+        AddEmployee,
         Logout
 
     }

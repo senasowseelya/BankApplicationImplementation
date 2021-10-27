@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using BankingApplication.Models;
 using BankingApplication.Database;
+using System.Reflection;
 
 namespace BankingApplication.Services
 {
@@ -75,6 +76,13 @@ namespace BankingApplication.Services
         {
             return userAccount.Transactions;
         }
+        public bool ChangePassword(Account account ,String newPassword)
+        {
+            PropertyInfo myProp = account.GetType().GetProperty("Password");
+            myProp.SetValue(account, newPassword, null);
+            new JsonReadWrite().WriteData(BankData.banks);
+            return true;
+        }
         private Transaction GenerateTransaction(Account senderAccount,Account recAccount, Double Amount,EnumTypeofTransactions type,String currencyName)
         {
 
@@ -131,11 +139,11 @@ namespace BankingApplication.Services
                     {
                         if (senderBank == receiverBank)
                         {
-                            charge = amount * (senderBank.SelfIMPS / 100);
+                            charge = amount * (senderBank.ServiceCharges.SelfIMPS / 100);
                         }
                         else
                         {
-                            charge = amount * (senderBank.OtherIMPS / 100);
+                            charge = amount * (senderBank.ServiceCharges.OtherIMPS / 100);
                         }
                         break;
                     }
@@ -143,11 +151,11 @@ namespace BankingApplication.Services
                     {
                         if (senderBank == receiverBank)
                         {
-                            charge = amount * (senderBank.SelfRTGS / 100);
+                            charge = amount * (senderBank.ServiceCharges.SelfRTGS / 100);
                         }
                         else
                         {
-                            charge = amount * (senderBank.OtherRTGS / 100);
+                            charge = amount * (senderBank.ServiceCharges.OtherRTGS / 100);
                         }
                         break;
                     }

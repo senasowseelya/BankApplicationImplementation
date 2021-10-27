@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BankingApplication.Services
+namespace BankingApplication.Models
 {
-    public class ServiceCharges
+    public  class ServiceCharges
     {
-
         public Double SelfRTGS { get; set; }
-        public Double OtherRTGS { get; set; }
         public Double SelfIMPS { get; set; }
+        public Double OtherRTGS { get; set; }
         public Double OtherIMPS { get; set; }
     }
 }

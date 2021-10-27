@@ -24,12 +24,23 @@ namespace BankingApplication.Services
             newCurrency.ExchangeRate = 1.0;
             newBank.AcceptedCurrencies.Add(newCurrency);
             newBank.DefaultCurrency=newCurrency;
-            newBank.SelfIMPS = 5.0;
-            newBank.SelfRTGS = 0.0;
-            newBank.OtherRTGS = 2.0;
-            newBank.OtherIMPS = 6.0;
+            ServiceCharges serviceCharge = new ServiceCharges();
+            serviceCharge.SelfIMPS = 5.0;
+            serviceCharge.SelfRTGS = 0.0;
+            serviceCharge.OtherRTGS = 2.4;
+            serviceCharge.OtherIMPS = 6.5;
+            newBank.ServiceCharges = serviceCharge;
             BankData.banks.Add(newBank);
             new JsonReadWrite().WriteData(BankData.banks);
+            return true;
+        }
+        public bool AddEmployee(Bank bank,Employee newEmployee)
+        {   
+            newEmployee.EmpID= $"{newEmployee.BankId}{newEmployee.EmployeeName}";
+            newEmployee.UserName = $"{newEmployee.EmployeeName.Substring(0, 3)}{newEmployee.EmpID.Substring(4,3)}";
+            newEmployee.Password = $"{newEmployee.EmpID}";
+            bank.Employees.Add(newEmployee);
+            new  JsonReadWrite().WriteData(BankData.banks);
             return true;
         }
         public bool CreateAccountService(Bank bank, Account newAcc)
@@ -49,19 +60,14 @@ namespace BankingApplication.Services
 
             Account account = FetchAccount(accountNumber);
             account.IsActive = false;
-            bank.Accounts.Remove(account);
-            bank.InActiveAccounts.Add(account);
             new JsonReadWrite().WriteData(BankData.banks);
             return true;
 
         }
         public bool AddCharges(Bank bank, ServiceCharges serviceCharges)
         {
-            
-            bank.SelfIMPS = serviceCharges.SelfIMPS;
-            bank.SelfRTGS = serviceCharges.SelfRTGS;
-            bank.OtherIMPS = serviceCharges.OtherIMPS;
-            bank.OtherRTGS = serviceCharges.OtherRTGS;
+
+            bank.ServiceCharges = serviceCharges;
             new JsonReadWrite().WriteData(BankData.banks);
             return true;
         }
