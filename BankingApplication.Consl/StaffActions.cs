@@ -3,6 +3,7 @@ using BankingApplication.Models;
 using BankingApplication.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BankingApplication.Consl
 {
@@ -11,28 +12,30 @@ namespace BankingApplication.Consl
         Bank bankOfEmployee;
         bool status = false;
         BankService bankService = new BankService();
+        CommonFunctions commonFunctions = new CommonFunctions();
         internal StaffActions()
         {
-            var staffCredentials = new Commonfunctions().GetCredentials();
+            var staffCredentials =  commonFunctions.GetCredentials();
             bankOfEmployee = GetStaffBank(staffCredentials);
             while (bankOfEmployee == null)
             {
+                Console.WriteLine("-----------------------------------------------");
                 Console.WriteLine("Invalid Username or Password");
                 Console.WriteLine("Choose\n1.Login\n2.Exit ");
+                Console.WriteLine("-----------------------------------------------");
                 String staffChoice = Console.ReadLine();
                 if (staffChoice == "2")
-                    Environment.Exit(0);
-                staffCredentials = new Commonfunctions().GetCredentials();
+                    Program.Main();
+                staffCredentials = commonFunctions.GetCredentials();
                 bankOfEmployee = GetStaffBank(staffCredentials);
 
             }
             while (true)
             {
                 Menu();
-                EnumStaffOptions Choice = (EnumStaffOptions)Enum.Parse(typeof(EnumStaffOptions), Console.ReadLine());
                 try
                 {
-                    switch (Choice)
+                    switch ((EnumStaffOptions)Convert.ToInt32(Console.ReadLine()))
                     {
                         case EnumStaffOptions.AddBank:
                             {
@@ -102,7 +105,7 @@ namespace BankingApplication.Consl
             Console.WriteLine("Enter Name of Employee");
             employee.EmployeeName = Console.ReadLine();
             status = bankService.AddEmployee(bankOfEmployee, employee);
-            new Commonfunctions().DisplayStatus(status, "Succesfully added new Employee\nYour username {employee.UserName} \nYour password {employee.Password}");
+            commonFunctions.DisplayStatus(status, "Succesfully added new Employee\nYour username {employee.UserName} \nYour password {employee.Password}");
 
         }
 
@@ -115,7 +118,7 @@ namespace BankingApplication.Consl
             Console.WriteLine("Enter ExchangeRate:");
             newCurrency.ExchangeRate = Convert.ToDouble(Console.ReadLine());
             status = bankService.AcceptNewCurrency(bankOfEmployee, newCurrency);
-            new Commonfunctions().DisplayStatus(status, "Succesfully added new Currency");
+            commonFunctions.DisplayStatus(status, "Succesfully added new Currency");
 
         }
 
@@ -133,13 +136,11 @@ namespace BankingApplication.Consl
             {
                 Console.WriteLine("1.Self RTGS Charges\n2.Other RTGS Charges\n3.Self IMPS Charges\n4.Other IMPS Charges\n others exit");
                 Console.WriteLine("Enter Choice");
-                ServiceCharges serviceCharge =new ServiceCharges();
-                EnumServiceCharges Choice = (EnumServiceCharges)Enum.Parse(typeof(EnumServiceCharges), Console.ReadLine());
-                switch (Choice)
+                switch ((EnumServiceCharges)Convert.ToInt32(Console.ReadLine()))
                 {
                     case EnumServiceCharges.SelfRTGS:
                         {
-                            Console.WriteLine("Enter  Self RTGS Charge to update");
+                            Console.WriteLine("Enter Self RTGS Charge to update");
                             serviceCharges.SelfRTGS = Convert.ToDouble(Console.ReadLine());
                             break;
                         }
@@ -163,13 +164,13 @@ namespace BankingApplication.Consl
                         }
                     default:
                         {
-                            new StaffActions();
-                            break;
+                            return;
+                            
                         }
 
                 }
                 status = bankService.AddCharges(bankOfEmployee, serviceCharges);
-                new Commonfunctions().DisplayStatus(status, "New Services Charges Updated Succesfully");
+                commonFunctions.DisplayStatus(status, "New Services Charges Updated Succesfully");
 
             }
         }
@@ -225,7 +226,7 @@ namespace BankingApplication.Consl
             Console.WriteLine("Enter account number :");
             String accountNumber = Console.ReadLine();
             status = bankService.RemoveAccount(bankOfEmployee, accountNumber);
-            new Commonfunctions().DisplayStatus(status, "Your Account is Closed and you can't perform any actions on this acoount..");
+            commonFunctions.DisplayStatus(status, "Your Account is Closed and you can't perform any actions on this acoount..");
 
         }
         private void ViewTransactionHandler()
@@ -248,7 +249,7 @@ namespace BankingApplication.Consl
             Console.WriteLine("Enter TransactionId to revert:");
             String TransactionId = Console.ReadLine();
             status = bankService.RevertTransaction(bankOfEmployee, TransactionId);
-            new Commonfunctions().DisplayStatus(status, "Transaction is Reverted successfully");
+            commonFunctions.DisplayStatus(status, "Transaction is Reverted successfully");
 
         }
         private Bank GetStaffBank(Credentials staffCredentials)
@@ -256,14 +257,9 @@ namespace BankingApplication.Consl
 
             foreach (Bank bank in BankData.banks)
             {
-                foreach (Employee employee in bank.Employees)
-                {
-                    if (employee.UserName == staffCredentials.UserName && employee.Password == staffCredentials.Password)
-                    {
-                        return bank;
+                if (bank.Employees.Any(emp => emp.UserName.Equals(staffCredentials.UserName) && emp.Password.Equals(staffCredentials.Password)))
+                    return bank;
 
-                    }
-                }
             }
             return null;
 

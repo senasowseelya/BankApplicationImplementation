@@ -1,19 +1,16 @@
 ﻿using System;
 using BankingApplication.Database;
 using BankingApplication.Models;
-
-
 namespace BankingApplication.Consl
 {
     class Program
     {
         internal static void Main()
         {
-            Console.WriteLine("*********Welcome To ABC Banking Service********");
+            Console.WriteLine("---------Welcome To ABC Banking Service--------");
             Console.WriteLine("1.STAFF\n2.USER\nEnter your choice");
             Console.WriteLine("-----------------------------------------------");
-            EnumRole Choice = (EnumRole)Enum.Parse(typeof(EnumRole), Console.ReadLine());
-            switch (Choice)
+            switch((EnumRole)Convert.ToInt32(Console.ReadLine()))
             {
                 case EnumRole.Staff:
                     new StaffActions();
@@ -26,10 +23,5 @@ namespace BankingApplication.Consl
                     break;
             }
         }
-        
-       
-
-
-
     }
 }

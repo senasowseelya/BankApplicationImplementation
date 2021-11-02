@@ -37,6 +37,30 @@
             "Amount": 15200.0,
             "CurrencyName": "USD",
             "Type": 3
+          },
+          {
+            "TransId": "TXNUNI20211101061052",
+            "Sender": "3517351036",
+            "Receiver": "3517351036",
+            "Amount": 1.0,
+            "CurrencyName": "INR",
+            "Type": 1
+          },
+          {
+            "TransId": "TXNUNI20211101061118",
+            "Sender": "3517351036",
+            "Receiver": "3517351036",
+            "Amount": 300.0,
+            "CurrencyName": "INR",
+            "Type": 2
+          },
+          {
+            "TransId": "TXNUNI20211101061247",
+            "Sender": "3517351036",
+            "Receiver": "6236657261",
+            "Amount": 600.0,
+            "CurrencyName": "INR",
+            "Type": 3
           }
         ],
         "IsActive": true,
@@ -60,9 +84,9 @@
         "Aadhar": null,
         "PhoneNumber": null,
         "UserName": "Naga",
-        "Password": "Nag@1211",
+        "Password": "Nag@1219",
         "Pin": 0,
-        "Balance": 661696.0,
+        "Balance": 660797.0,
         "DateofIssue": "0001-01-01T00:00:00"
       }
     ],
@@ -97,6 +121,30 @@
         "Receiver": "4745267248",
         "Amount": 15200.0,
         "CurrencyName": "USD",
+        "Type": 3
+      },
+      {
+        "TransId": "TXNUNI20211101061052",
+        "Sender": "3517351036",
+        "Receiver": "3517351036",
+        "Amount": 1.0,
+        "CurrencyName": "INR",
+        "Type": 1
+      },
+      {
+        "TransId": "TXNUNI20211101061118",
+        "Sender": "3517351036",
+        "Receiver": "3517351036",
+        "Amount": 300.0,
+        "CurrencyName": "INR",
+        "Type": 2
+      },
+      {
+        "TransId": "TXNUNI20211101061247",
+        "Sender": "3517351036",
+        "Receiver": "6236657261",
+        "Amount": 600.0,
+        "CurrencyName": "INR",
         "Type": 3
       }
     ],
@@ -148,6 +196,14 @@
             "Amount": 5000.0,
             "CurrencyName": "INR",
             "Type": 1
+          },
+          {
+            "TransId": "TXNUNI20211101061247",
+            "Sender": "3517351036",
+            "Receiver": "6236657261",
+            "Amount": 600.0,
+            "CurrencyName": "INR",
+            "Type": 3
           }
         ],
         "IsActive": false,
@@ -173,7 +229,7 @@
         "UserName": "Raju",
         "Password": "Raj@123",
         "Pin": 0,
-        "Balance": 5000.0,
+        "Balance": 5600.0,
         "DateofIssue": "0001-01-01T00:00:00"
       },
       {
@@ -212,6 +268,34 @@
         "Pin": 0,
         "Balance": 5000.0,
         "DateofIssue": "0001-01-01T00:00:00"
+      },
+      {
+        "Transactions": [],
+        "IsActive": false,
+        "BankID": "SBI2021-10-26",
+        "AccholderName": "gita",
+        "Nationality": null,
+        "Religion": null,
+        "Category": null,
+        "Age": 0,
+        "FathOrHusbName": null,
+        "Type": null,
+        "AccountId": "SBI2021-11-01",
+        "AccountNumber": "3153158581",
+        "Dist": null,
+        "State": null,
+        "Town": null,
+        "Gender": null,
+        "Address": null,
+        "DOB": null,
+        "MaritalStatus": null,
+        "Aadhar": null,
+        "PhoneNumber": null,
+        "UserName": "gita",
+        "Password": "3153158581",
+        "Pin": 0,
+        "Balance": 0.0,
+        "DateofIssue": "0001-01-01T00:00:00"
       }
     ],
     "BankTransactions": [
@@ -240,6 +324,10 @@
       {
         "CurrencyName": "EU",
         "ExchangeRate": 101.0
+      },
+      {
+        "CurrencyName": "AUD",
+        "ExchangeRate": 10.0
       }
     ],
     "BankId": "SBI2021-10-26",
@@ -251,6 +339,37 @@
       "CurrencyName": "INR",
       "ExchangeRate": 1.0
     },
-    "ServiceCharges": null
+    "ServiceCharges": {
+      "SelfRTGS": 0.0,
+      "SelfIMPS": 0.0,
+      "OtherRTGS": 0.0,
+      "OtherIMPS": 1.0
+    }
+  },
+  {
+    "Employees": [],
+    "Accounts": [],
+    "BankTransactions": [],
+    "AcceptedCurrencies": [
+      {
+        "CurrencyName": "INR",
+        "ExchangeRate": 1.0
+      }
+    ],
+    "BankId": "God20211101061458",
+    "Name": "Godavari",
+    "Branch": null,
+    "IFSC": "01061458avari",
+    "BankBalance": 0.0,
+    "DefaultCurrency": {
+      "CurrencyName": "INR",
+      "ExchangeRate": 1.0
+    },
+    "ServiceCharges": {
+      "SelfRTGS": 0.0,
+      "SelfIMPS": 5.0,
+      "OtherRTGS": 2.4,
+      "OtherIMPS": 6.5
+    }
   }
 ]

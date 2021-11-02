@@ -10,28 +10,14 @@ namespace BankingApplication.Services
 {
     public class BankService
     {
-        
+        JsonReadWrite dataReadWrite = new JsonReadWrite();
         public bool AddBank(String name)
         {
-            if (BankData.banks.Any(e => e.Name == name))
+            if (BankData.banks.Any(e => e.Name.Equals(name,StringComparison.OrdinalIgnoreCase)))
                 throw new BankAlreadyExistsException();
-            Bank newBank = new Bank();
-            newBank.BankId = name.Substring(0, 3) + DateTime.Now.ToString("yyyy-MM-dd"); ;
-            newBank.Name = name;
-            newBank.IFSC = newBank.BankId + GenerateAccountNumber();
-            Currency newCurrency = new Currency();
-            newCurrency.CurrencyName = "INR";
-            newCurrency.ExchangeRate = 1.0;
-            newBank.AcceptedCurrencies.Add(newCurrency);
-            newBank.DefaultCurrency=newCurrency;
-            ServiceCharges serviceCharge = new ServiceCharges();
-            serviceCharge.SelfIMPS = 5.0;
-            serviceCharge.SelfRTGS = 0.0;
-            serviceCharge.OtherRTGS = 2.4;
-            serviceCharge.OtherIMPS = 6.5;
-            newBank.ServiceCharges = serviceCharge;
+            Bank newBank = new Bank(name);
             BankData.banks.Add(newBank);
-            new JsonReadWrite().WriteData(BankData.banks);
+            dataReadWrite.WriteData(BankData.banks);
             return true;
         }
         public bool AddEmployee(Bank bank,Employee newEmployee)
@@ -52,23 +38,29 @@ namespace BankingApplication.Services
                     newAcc.Password = newAcc.AccountNumber;
                     newAcc.IsActive = true;
                     bank.Accounts.Add(newAcc);
-                    new JsonReadWrite().WriteData(BankData.banks);
+                    dataReadWrite.WriteData(BankData.banks);
             return true;
         }
-        public bool RemoveAccount(Bank bank, String accountNumber)
+
+        public bool RemoveAccount(Bank bank,String accountNumber)
         {
 
-            Account account = FetchAccount(accountNumber);
-            account.IsActive = false;
-            new JsonReadWrite().WriteData(BankData.banks);
-            return true;
+            Account account = bank.Accounts.SingleOrDefault(acc => acc.AccountNumber.Equals(accountNumber));
+            if (account != null)
+            {
+                account.IsActive = false;
+                dataReadWrite.WriteData(BankData.banks);
+                return true;
+            }
+            throw new AccountDoesntExistException();
 
         }
         public bool AddCharges(Bank bank, ServiceCharges serviceCharges)
         {
 
+
             bank.ServiceCharges = serviceCharges;
-            new JsonReadWrite().WriteData(BankData.banks);
+            dataReadWrite.WriteData(BankData.banks);
             return true;
         }
         public List<Transaction> ViewTransaction(Bank bank)
@@ -90,7 +82,7 @@ namespace BankingApplication.Services
                 else if (transaction.Type.Equals(EnumTypeofTransactions.Debited))
                     senderAccount.Balance += transaction.Amount;
                 senderAccount.Transactions.Remove(sendtrans);
-                new JsonReadWrite().WriteData(BankData.banks);
+                dataReadWrite.WriteData(BankData.banks);
                 return true;
             }
             else
@@ -99,7 +91,7 @@ namespace BankingApplication.Services
                 senderAccount.Transactions.Remove(sendtrans);
                 receiverAccount.Balance -= transaction.Amount;
                 receiverAccount.Transactions.Remove(rectrans);
-                new JsonReadWrite().WriteData(BankData.banks);
+                dataReadWrite.WriteData(BankData.banks);
                 return true;
             }
             throw new InvalidTransactionException();
@@ -108,8 +100,11 @@ namespace BankingApplication.Services
         }
         public bool AcceptNewCurrency(Bank bank, Currency newCurrency)
         {
+            Currency currency = bank.AcceptedCurrencies.SingleOrDefault(acc=>acc.CurrencyName.Equals(newCurrency.CurrencyName));
+            if (currency != null)
+                throw new DuplicateCurrencyException();
             bank.AcceptedCurrencies.Add(newCurrency);
-            new JsonReadWrite().WriteData(BankData.banks);
+            dataReadWrite.WriteData(BankData.banks);
             return true;
         }
         
@@ -117,13 +112,9 @@ namespace BankingApplication.Services
         {
             foreach (Bank bank in BankData.banks)
             {
-                foreach (Account account in bank.Accounts)
-                {
-                    if (account.AccountNumber == accountNumber)
-                    {
-                        return account;
-                    }
-                }
+                Account account = bank.Accounts.SingleOrDefault(acc => acc.AccountNumber.Equals(accountNumber) && acc.IsActive);
+                if (account != null)
+                    return account;
             }
             throw new AccountDoesntExistException();
         }

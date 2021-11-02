@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BankingApplication.Consl
 {
-    internal class Commonfunctions
+    internal class CommonFunctions
     {
         internal Credentials GetCredentials()
         {
