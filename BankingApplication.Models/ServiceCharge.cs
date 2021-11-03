@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BankingApplication.Models
 {
-    public  class ServiceCharges
+    public  class ServiceCharge
     {
         public Double SelfRTGS { get; set; }
         public Double SelfIMPS { get; set; }

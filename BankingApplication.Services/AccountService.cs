@@ -19,7 +19,7 @@ namespace BankingApplication.Services
             currency = GetCurrencyobject(bank,currencyName);
             amount = amount * currency.ExchangeRate;
             userAccount.Balance += amount;
-            GenerateTransaction(userAccount,userAccount,amount, EnumTypeofTransactions.Credited,currencyName);
+            GenerateTransaction(userAccount,userAccount,amount, TransactionType.Credited,currencyName);
             new JsonReadWrite().WriteData(BankData.banks);
             return true;
         }
@@ -41,14 +41,14 @@ namespace BankingApplication.Services
             if (userAccount.Balance >= amount)
             {
                 userAccount.Balance -= amount;
-                GenerateTransaction(userAccount,userAccount, amount, EnumTypeofTransactions.Debited,currencyName);
+                GenerateTransaction(userAccount,userAccount, amount, TransactionType.Debited,currencyName);
                 new JsonReadWrite().WriteData(BankData.banks);
                 return true;
             }
             else
                 throw new InsufficientAmountException();
         }
-        public bool TransferAmount(Account senderAccount, string toAccNum, double amount,EnumModeOfTransfer mode)
+        public bool TransferAmount(Account senderAccount, string toAccNum, double amount,ModeOfTransfer mode)
         {
             Bank senderBank = FetchBank(senderAccount.BankID);
             Account receiverAccount =new BankService().FetchAccount(toAccNum);
@@ -59,7 +59,8 @@ namespace BankingApplication.Services
             {
                 receiverAccount.Balance += amount;
                 senderAccount.Balance -= (amount+charge);
-                GenerateTransaction(senderAccount,receiverAccount, amount, EnumTypeofTransactions.Transfer, senderBank.DefaultCurrency.CurrencyName);
+                GenerateTransaction(senderAccount,receiverAccount, amount, TransactionType.Transfer, senderBank.DefaultCurrency.CurrencyName);
+                GenerateTransaction(senderAccount, receiverAccount, charge, TransactionType.ServiceCharges, senderBank.DefaultCurrency.CurrencyName);
                 senderBank.BankBalance +=charge;
                 new JsonReadWrite().WriteData(BankData.banks);
             }
@@ -73,12 +74,11 @@ namespace BankingApplication.Services
         }
         public bool ChangePassword(Account account ,String newPassword)
         {
-            PropertyInfo myProp = account.GetType().GetProperty("Password");
-            myProp.SetValue(account,newPassword, null);
+            account.User.Password = newPassword;
             new JsonReadWrite().WriteData(BankData.banks);
             return true;
         }
-        private void GenerateTransaction(Account senderAccount,Account recAccount, Double Amount,EnumTypeofTransactions type,String currencyName)
+        private void GenerateTransaction(Account senderAccount,Account recAccount, Double Amount,TransactionType type,String currencyName)
         {
             Bank bank = FetchBank(senderAccount.BankID);
             Transaction NewTransaction = new Transaction(bank);
@@ -103,12 +103,12 @@ namespace BankingApplication.Services
             throw new BankDoesntExistException();
         }
         
-        private Double CalculateCharges(Bank senderBank,Bank receiverBank,Double amount,EnumModeOfTransfer mode)
+        private Double CalculateCharges(Bank senderBank,Bank receiverBank,Double amount,ModeOfTransfer mode)
         {
             Double charge = 0.0;
             switch (mode)
             {
-                case EnumModeOfTransfer.IMPS:
+                case ModeOfTransfer.IMPS:
                     {
                         if (senderBank.BankId.Equals(receiverBank.BankId))
                         {
@@ -120,7 +120,7 @@ namespace BankingApplication.Services
                         }
                         break;
                     }
-                case EnumModeOfTransfer.RTGS:
+                case ModeOfTransfer.RTGS:
                     {
                         if (senderBank.BankId.Equals(receiverBank.BankId))
                         {

@@ -13,6 +13,16 @@ namespace BankingApplication.Models
         public String Job { get; set; }
         public String EmployeeName { get; set; }
         public int Age { get; set;}
+        public Employee()
+        {
+
+            UserName = "Mahita";
+            Password = "Mahi@123";
+            Job = "Manager";
+            EmployeeName = "Mahita";
+            Age = 35;
+      
+        }
 
     }
 }

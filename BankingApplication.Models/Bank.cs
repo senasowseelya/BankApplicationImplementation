@@ -14,7 +14,7 @@ namespace BankingApplication.Models
         public String IFSC { get; set; }
         public Double BankBalance { get; set; }
         public Currency DefaultCurrency { get;set; }
-        public ServiceCharges ServiceCharges { get; set; }
+        public ServiceCharge ServiceCharges { get; set; }
         public List<Employee> Employees = new List<Employee>();
         public List<Account> Accounts = new List<Account>();
         public List<Transaction> BankTransactions = new List<Transaction>();
@@ -27,7 +27,7 @@ namespace BankingApplication.Models
             Currency newCurrency = new Currency();
             AcceptedCurrencies.Add(newCurrency);
             DefaultCurrency = newCurrency;
-            ServiceCharges serviceCharge = new ServiceCharges
+            ServiceCharge serviceCharge = new ServiceCharge
             {
                 SelfIMPS = 5.0,
                 SelfRTGS = 0.0,

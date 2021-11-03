@@ -13,36 +13,38 @@ namespace BankingApplication.Services
         JsonReadWrite dataReadWrite = new JsonReadWrite();
         public bool AddBank(String name)
         {
-            if (BankData.banks.Any(e => e.Name.Equals(name,StringComparison.OrdinalIgnoreCase)))
+            if (BankData.banks.Any(e => e.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
                 throw new BankAlreadyExistsException();
             Bank newBank = new Bank(name);
+            newBank.Employees.Add(new Employee());
             BankData.banks.Add(newBank);
             dataReadWrite.WriteData(BankData.banks);
             return true;
         }
-        public bool AddEmployee(Bank bank,Employee newEmployee)
-        {   
-            newEmployee.EmpID= $"{newEmployee.BankId}{newEmployee.EmployeeName}";
-            newEmployee.UserName = $"{newEmployee.EmployeeName.Substring(0, 3)}{newEmployee.EmpID.Substring(4,3)}";
+        public bool AddEmployee(Bank bank, Employee newEmployee)
+        {
+            newEmployee.EmpID = $"{newEmployee.BankId}{newEmployee.EmployeeName}";
+            newEmployee.UserName = $"{newEmployee.EmployeeName.Substring(0, 3)}{newEmployee.EmpID.Substring(4, 3)}";
             newEmployee.Password = $"{newEmployee.EmpID}";
             bank.Employees.Add(newEmployee);
-            new  JsonReadWrite().WriteData(BankData.banks);
+            new JsonReadWrite().WriteData(BankData.banks);
             return true;
         }
-        public bool CreateAccountService(Bank bank, Account newAcc)
+        public bool CreateAccountService(Bank bank, Account newAcc, User newUser)
         {
-                    newAcc.AccountNumber = GenerateAccountNumber();
-                    newAcc.AccountId = GenerateAccId(bank.Name);
-                    newAcc.BankID = bank.BankId;
-                    newAcc.UserName = newAcc.AccholderName.Substring(0, 4);
-                    newAcc.Password = newAcc.AccountNumber;
-                    newAcc.IsActive = true;
-                    bank.Accounts.Add(newAcc);
-                    dataReadWrite.WriteData(BankData.banks);
+            newAcc.AccountNumber = GenerateAccountNumber();
+            newAcc.AccountId = GenerateAccId(bank.Name);
+            newAcc.BankID = bank.BankId;
+            newUser.UserName = newAcc.AccountHolderName.Substring(0, 4);
+            newUser.Password = newAcc.AccountNumber;
+            newAcc.IsActive = true;
+            newAcc.User = newUser;
+            bank.Accounts.Add(newAcc);
+            dataReadWrite.WriteData(BankData.banks);
             return true;
         }
 
-        public bool RemoveAccount(Bank bank,String accountNumber)
+        public bool RemoveAccount(Bank bank, String accountNumber)
         {
 
             Account account = bank.Accounts.SingleOrDefault(acc => acc.AccountNumber.Equals(accountNumber));
@@ -55,10 +57,8 @@ namespace BankingApplication.Services
             throw new AccountDoesntExistException();
 
         }
-        public bool AddCharges(Bank bank, ServiceCharges serviceCharges)
+        public bool AddCharges(Bank bank, ServiceCharge serviceCharges)
         {
-
-
             bank.ServiceCharges = serviceCharges;
             dataReadWrite.WriteData(BankData.banks);
             return true;
@@ -70,27 +70,27 @@ namespace BankingApplication.Services
         public bool RevertTransaction(Bank bank, string transactionId)
         {
             Transaction transaction = bank.BankTransactions.FirstOrDefault(tr => tr.TransId.Equals(transactionId));
-            bank.BankTransactions.Remove(transaction);
-            Account senderAccount =FetchAccount(transaction.Sender);
+            transaction.Type = TransactionType.Revert;
+            Account senderAccount = FetchAccount(transaction.Sender);
             Account receiverAccount = FetchAccount(transaction.Receiver);
-            Transaction sendtrans= senderAccount.Transactions.FirstOrDefault(tr => tr.TransId.Equals(transactionId));
+            Transaction sendtrans = senderAccount.Transactions.FirstOrDefault(tr => tr.TransId.Equals(transactionId));
             Transaction rectrans = receiverAccount.Transactions.FirstOrDefault(tr => tr.TransId.Equals(transactionId));
             if (senderAccount.Equals(receiverAccount))
             {
-                if (transaction.Type.Equals(EnumTypeofTransactions.Credited))
+                if (transaction.Type.Equals(TransactionType.Credited))
                     senderAccount.Balance -= transaction.Amount;
-                else if (transaction.Type.Equals(EnumTypeofTransactions.Debited))
+                else if (transaction.Type.Equals(TransactionType.Debited))
                     senderAccount.Balance += transaction.Amount;
-                senderAccount.Transactions.Remove(sendtrans);
+                sendtrans.Type = TransactionType.Revert;
                 dataReadWrite.WriteData(BankData.banks);
                 return true;
             }
             else
             {
                 senderAccount.Balance += transaction.Amount;
-                senderAccount.Transactions.Remove(sendtrans);
+                sendtrans.Type = TransactionType.Revert;
                 receiverAccount.Balance -= transaction.Amount;
-                receiverAccount.Transactions.Remove(rectrans);
+                sendtrans.Type = TransactionType.Revert;
                 dataReadWrite.WriteData(BankData.banks);
                 return true;
             }
@@ -100,14 +100,14 @@ namespace BankingApplication.Services
         }
         public bool AcceptNewCurrency(Bank bank, Currency newCurrency)
         {
-            Currency currency = bank.AcceptedCurrencies.SingleOrDefault(acc=>acc.CurrencyName.Equals(newCurrency.CurrencyName));
+            Currency currency = bank.AcceptedCurrencies.SingleOrDefault(acc => acc.CurrencyName.Equals(newCurrency.CurrencyName));
             if (currency != null)
                 throw new DuplicateCurrencyException();
             bank.AcceptedCurrencies.Add(newCurrency);
             dataReadWrite.WriteData(BankData.banks);
             return true;
         }
-        
+
         public Account FetchAccount(String accountNumber)
         {
             foreach (Bank bank in BankData.banks)

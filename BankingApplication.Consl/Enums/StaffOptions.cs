@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BankingApplication.Consl
 {
-    internal enum EnumStaffOptions
+    internal enum StaffOptions
     {
         AddBank=1,
         CreateAccount,
@@ -14,7 +14,8 @@ namespace BankingApplication.Consl
         ViewTransactions,
         RevertTransaction,
         AddEmployee,
-        Logout
+        Logout,
+        Exit
 
     }
 }

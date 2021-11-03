@@ -4,7 +4,7 @@
       {
         "UserName": "Mahita",
         "Password": "Mahi@123",
-        "BankId": "UNI2021-10-26",
+        "BankId": null,
         "EmpID": null,
         "Job": "Manager",
         "EmployeeName": "Mahita",
@@ -15,137 +15,190 @@
       {
         "Transactions": [
           {
-            "TransId": "TXNUNI2021-10-26 04:11:44",
-            "Sender": "3517351036",
-            "Receiver": "3517351036",
-            "Amount": 700000.0,
+            "TransId": "TXNHDF20211103083259",
+            "Sender": "6256785748",
+            "Receiver": "6256785748",
+            "Amount": 3000.0,
             "CurrencyName": "INR",
             "Type": 1
           },
           {
-            "TransId": "TXNUNI2021-10-26 04:12:42",
-            "Sender": "3517351036",
-            "Receiver": "3517351036",
-            "Amount": 22800.0,
-            "CurrencyName": "USD",
-            "Type": 2
-          },
-          {
-            "TransId": "TXNUNI2021-10-26 04:13:39",
-            "Sender": "3517351036",
-            "Receiver": "4745267248",
-            "Amount": 15200.0,
-            "CurrencyName": "USD",
-            "Type": 3
-          },
-          {
-            "TransId": "TXNUNI20211101061052",
-            "Sender": "3517351036",
-            "Receiver": "3517351036",
-            "Amount": 1.0,
-            "CurrencyName": "INR",
-            "Type": 1
-          },
-          {
-            "TransId": "TXNUNI20211101061118",
-            "Sender": "3517351036",
-            "Receiver": "3517351036",
-            "Amount": 300.0,
+            "TransId": "TXNHDF20211103083654",
+            "Sender": "6256785748",
+            "Receiver": "6256785748",
+            "Amount": 200.0,
             "CurrencyName": "INR",
             "Type": 2
           },
           {
-            "TransId": "TXNUNI20211101061247",
-            "Sender": "3517351036",
-            "Receiver": "6236657261",
-            "Amount": 600.0,
+            "TransId": "TXNHDF20211103083723",
+            "Sender": "6256785748",
+            "Receiver": "4862142242",
+            "Amount": 500.0,
+            "CurrencyName": "INR",
+            "Type": 5
+          },
+          {
+            "TransId": "TXNHDF20211103091213",
+            "Sender": "4862142242",
+            "Receiver": "6256785748",
+            "Amount": 200.0,
             "CurrencyName": "INR",
             "Type": 3
+          },
+          {
+            "TransId": "TXNHDF20211103091213",
+            "Sender": "4862142242",
+            "Receiver": "6256785748",
+            "Amount": 8.0,
+            "CurrencyName": "INR",
+            "Type": 4
           }
         ],
+        "AccountId": "HDF2021-11-03",
+        "BankID": "HDF20211103082126",
+        "AccountNumber": "6256785748",
+        "AccountHolderName": "Vishnumolakala Sena Sowseelya",
         "IsActive": true,
-        "BankID": "UNI2021-10-26",
-        "AccholderName": "Nagababu",
-        "Nationality": null,
-        "Religion": null,
-        "Category": null,
-        "Age": 0,
-        "FathOrHusbName": null,
-        "Type": null,
-        "AccountId": "UNI2021-10-26",
-        "AccountNumber": "3517351036",
-        "Dist": null,
-        "State": null,
-        "Town": null,
-        "Gender": null,
-        "Address": null,
-        "DOB": null,
-        "MaritalStatus": null,
-        "Aadhar": null,
-        "PhoneNumber": null,
-        "UserName": "Naga",
-        "Password": "Nag@1219",
-        "Pin": 0,
-        "Balance": 660797.0,
-        "DateofIssue": "0001-01-01T00:00:00"
+        "Balance": 2980.0,
+        "DateofIssue": "2021-11-03T00:00:00+05:30",
+        "User": {
+          "UserName": "Vish",
+          "Password": "Sena@1211",
+          "Name": "Vishnumolakala Sena Sowseelya",
+          "FatherOrHusbandName": "SrinivasRao",
+          "Age": 20,
+          "Nationality": "Indian",
+          "Religion": "Hindu",
+          "Gender": "Female",
+          "Address": "Chavali-Vemur-Guntur",
+          "DOB": "19-04-2001",
+          "Aadhar": "789765415",
+          "PhoneNumber": "5465486512"
+        }
+      },
+      {
+        "Transactions": [
+          {
+            "TransId": "TXNHDF20211103083723",
+            "Sender": "6256785748",
+            "Receiver": "4862142242",
+            "Amount": 500.0,
+            "CurrencyName": "INR",
+            "Type": 3
+          },
+          {
+            "TransId": "TXNHDF20211103091140",
+            "Sender": "4862142242",
+            "Receiver": "4862142242",
+            "Amount": 3000.0,
+            "CurrencyName": "INR",
+            "Type": 1
+          },
+          {
+            "TransId": "TXNHDF20211103091148",
+            "Sender": "4862142242",
+            "Receiver": "4862142242",
+            "Amount": 100.0,
+            "CurrencyName": "INR",
+            "Type": 5
+          },
+          {
+            "TransId": "TXNHDF20211103091213",
+            "Sender": "4862142242",
+            "Receiver": "6256785748",
+            "Amount": 200.0,
+            "CurrencyName": "INR",
+            "Type": 3
+          },
+          {
+            "TransId": "TXNHDF20211103091213",
+            "Sender": "4862142242",
+            "Receiver": "6256785748",
+            "Amount": 8.0,
+            "CurrencyName": "INR",
+            "Type": 4
+          }
+        ],
+        "AccountId": "HDF2021-11-03",
+        "BankID": "HDF20211103082126",
+        "AccountNumber": "4862142242",
+        "AccountHolderName": "Nagababu",
+        "IsActive": true,
+        "Balance": 2692.0,
+        "DateofIssue": "2021-11-03T00:00:00+05:30",
+        "User": {
+          "UserName": "Naga",
+          "Password": "Nag@1219",
+          "Name": "Nagababu",
+          "FatherOrHusbandName": "Bapaniah",
+          "Age": 20,
+          "Nationality": "Indian",
+          "Religion": "Hindu",
+          "Gender": "Male",
+          "Address": "Kolluru",
+          "DOB": "11-12-2000",
+          "Aadhar": "54568472135",
+          "PhoneNumber": "6524168554"
+        }
       }
     ],
     "BankTransactions": [
       {
-        "TransId": "TXNUNI2021-10-26 04:06:30",
-        "Sender": "4745267248",
-        "Receiver": "4745267248",
+        "TransId": "TXNHDF20211103083259",
+        "Sender": "6256785748",
+        "Receiver": "6256785748",
+        "Amount": 3000.0,
+        "CurrencyName": "INR",
+        "Type": 1
+      },
+      {
+        "TransId": "TXNHDF20211103083654",
+        "Sender": "6256785748",
+        "Receiver": "6256785748",
+        "Amount": 200.0,
+        "CurrencyName": "INR",
+        "Type": 2
+      },
+      {
+        "TransId": "TXNHDF20211103083723",
+        "Sender": "6256785748",
+        "Receiver": "4862142242",
         "Amount": 500.0,
         "CurrencyName": "INR",
-        "Type": 1
+        "Type": 5
       },
       {
-        "TransId": "TXNUNI2021-10-26 04:11:44",
-        "Sender": "3517351036",
-        "Receiver": "3517351036",
-        "Amount": 700000.0,
+        "TransId": "TXNHDF20211103091140",
+        "Sender": "4862142242",
+        "Receiver": "4862142242",
+        "Amount": 3000.0,
         "CurrencyName": "INR",
         "Type": 1
       },
       {
-        "TransId": "TXNUNI2021-10-26 04:12:42",
-        "Sender": "3517351036",
-        "Receiver": "3517351036",
-        "Amount": 22800.0,
-        "CurrencyName": "USD",
-        "Type": 2
+        "TransId": "TXNHDF20211103091148",
+        "Sender": "4862142242",
+        "Receiver": "4862142242",
+        "Amount": 100.0,
+        "CurrencyName": "INR",
+        "Type": 5
       },
       {
-        "TransId": "TXNUNI2021-10-26 04:13:39",
-        "Sender": "3517351036",
-        "Receiver": "4745267248",
-        "Amount": 15200.0,
-        "CurrencyName": "USD",
+        "TransId": "TXNHDF20211103091213",
+        "Sender": "4862142242",
+        "Receiver": "6256785748",
+        "Amount": 200.0,
+        "CurrencyName": "INR",
         "Type": 3
       },
       {
-        "TransId": "TXNUNI20211101061052",
-        "Sender": "3517351036",
-        "Receiver": "3517351036",
-        "Amount": 1.0,
+        "TransId": "TXNHDF20211103091213",
+        "Sender": "4862142242",
+        "Receiver": "6256785748",
+        "Amount": 8.0,
         "CurrencyName": "INR",
-        "Type": 1
-      },
-      {
-        "TransId": "TXNUNI20211101061118",
-        "Sender": "3517351036",
-        "Receiver": "3517351036",
-        "Amount": 300.0,
-        "CurrencyName": "INR",
-        "Type": 2
-      },
-      {
-        "TransId": "TXNUNI20211101061247",
-        "Sender": "3517351036",
-        "Receiver": "6236657261",
-        "Amount": 600.0,
-        "CurrencyName": "INR",
-        "Type": 3
+        "Type": 4
       }
     ],
     "AcceptedCurrencies": [
@@ -158,214 +211,20 @@
         "ExchangeRate": 76.0
       }
     ],
-    "BankId": "UNI2021-10-26",
-    "Name": "UNION",
+    "BankId": "HDF20211103082126",
+    "Name": "HDFC",
     "Branch": null,
-    "IFSC": "UNI2021-10-261272128501",
-    "BankBalance": 305.0,
+    "IFSC": "03082126C",
+    "BankBalance": 28.0,
     "DefaultCurrency": {
       "CurrencyName": "INR",
       "ExchangeRate": 1.0
     },
     "ServiceCharges": {
-      "SelfRTGS": 1.5,
-      "SelfIMPS": 0.0,
-      "OtherRTGS": 0.0,
-      "OtherIMPS": 0.0
-    }
-  },
-  {
-    "Employees": [
-      {
-        "UserName": "Grahita",
-        "Password": "Grahi@123",
-        "BankId": "SBI2021-10-26",
-        "EmpID": null,
-        "Job": "Manager",
-        "EmployeeName": "Grahita",
-        "Age": 39
-      }
-    ],
-    "Accounts": [
-      {
-        "Transactions": [
-          {
-            "TransId": "TXNSBI2021-10-26 04:19:50",
-            "Sender": "6236657261",
-            "Receiver": "6236657261",
-            "Amount": 5000.0,
-            "CurrencyName": "INR",
-            "Type": 1
-          },
-          {
-            "TransId": "TXNUNI20211101061247",
-            "Sender": "3517351036",
-            "Receiver": "6236657261",
-            "Amount": 600.0,
-            "CurrencyName": "INR",
-            "Type": 3
-          }
-        ],
-        "IsActive": false,
-        "BankID": "SBI2021-10-26",
-        "AccholderName": "Raju",
-        "Nationality": null,
-        "Religion": null,
-        "Category": null,
-        "Age": 0,
-        "FathOrHusbName": null,
-        "Type": null,
-        "AccountId": "SBI2021-10-26",
-        "AccountNumber": "6236657261",
-        "Dist": null,
-        "State": null,
-        "Town": null,
-        "Gender": null,
-        "Address": null,
-        "DOB": null,
-        "MaritalStatus": null,
-        "Aadhar": null,
-        "PhoneNumber": null,
-        "UserName": "Raju",
-        "Password": "Raj@123",
-        "Pin": 0,
-        "Balance": 5600.0,
-        "DateofIssue": "0001-01-01T00:00:00"
-      },
-      {
-        "Transactions": [
-          {
-            "TransId": "TXNSBI2021-10-26 04:37:58",
-            "Sender": "7157628787",
-            "Receiver": "7157628787",
-            "Amount": 5000.0,
-            "CurrencyName": "INR",
-            "Type": 1
-          }
-        ],
-        "IsActive": true,
-        "BankID": "SBI2021-10-26",
-        "AccholderName": "Mohith",
-        "Nationality": null,
-        "Religion": null,
-        "Category": null,
-        "Age": 0,
-        "FathOrHusbName": null,
-        "Type": null,
-        "AccountId": "SBI2021-10-26",
-        "AccountNumber": "7157628787",
-        "Dist": null,
-        "State": null,
-        "Town": null,
-        "Gender": null,
-        "Address": null,
-        "DOB": null,
-        "MaritalStatus": null,
-        "Aadhar": null,
-        "PhoneNumber": null,
-        "UserName": "Mohi",
-        "Password": "7157628787",
-        "Pin": 0,
-        "Balance": 5000.0,
-        "DateofIssue": "0001-01-01T00:00:00"
-      },
-      {
-        "Transactions": [],
-        "IsActive": false,
-        "BankID": "SBI2021-10-26",
-        "AccholderName": "gita",
-        "Nationality": null,
-        "Religion": null,
-        "Category": null,
-        "Age": 0,
-        "FathOrHusbName": null,
-        "Type": null,
-        "AccountId": "SBI2021-11-01",
-        "AccountNumber": "3153158581",
-        "Dist": null,
-        "State": null,
-        "Town": null,
-        "Gender": null,
-        "Address": null,
-        "DOB": null,
-        "MaritalStatus": null,
-        "Aadhar": null,
-        "PhoneNumber": null,
-        "UserName": "gita",
-        "Password": "3153158581",
-        "Pin": 0,
-        "Balance": 0.0,
-        "DateofIssue": "0001-01-01T00:00:00"
-      }
-    ],
-    "BankTransactions": [
-      {
-        "TransId": "TXNSBI2021-10-26 04:19:50",
-        "Sender": "6236657261",
-        "Receiver": "6236657261",
-        "Amount": 5000.0,
-        "CurrencyName": "INR",
-        "Type": 1
-      },
-      {
-        "TransId": "TXNSBI2021-10-26 04:37:58",
-        "Sender": "7157628787",
-        "Receiver": "7157628787",
-        "Amount": 5000.0,
-        "CurrencyName": "INR",
-        "Type": 1
-      }
-    ],
-    "AcceptedCurrencies": [
-      {
-        "CurrencyName": "INR",
-        "ExchangeRate": 1.0
-      },
-      {
-        "CurrencyName": "EU",
-        "ExchangeRate": 101.0
-      }
-    ],
-    "BankId": "SBI2021-10-26",
-    "Name": "SBI",
-    "Branch": null,
-    "IFSC": "SBI2021-10-268231221802",
-    "BankBalance": 0.0,
-    "DefaultCurrency": {
-      "CurrencyName": "INR",
-      "ExchangeRate": 1.0
-    },
-    "ServiceCharges": {
-      "SelfRTGS": 0.0,
-      "SelfIMPS": 0.0,
-      "OtherRTGS": 0.0,
-      "OtherIMPS": 5.0
-    }
-  },
-  {
-    "Employees": [],
-    "Accounts": [],
-    "BankTransactions": [],
-    "AcceptedCurrencies": [
-      {
-        "CurrencyName": "INR",
-        "ExchangeRate": 1.0
-      }
-    ],
-    "BankId": "God20211101061458",
-    "Name": "Godavari",
-    "Branch": null,
-    "IFSC": "01061458avari",
-    "BankBalance": 0.0,
-    "DefaultCurrency": {
-      "CurrencyName": "INR",
-      "ExchangeRate": 1.0
-    },
-    "ServiceCharges": {
-      "SelfRTGS": 0.0,
-      "SelfIMPS": 5.0,
-      "OtherRTGS": 2.4,
-      "OtherIMPS": 6.5
+      "SelfRTGS": 1.0,
+      "SelfIMPS": 4.0,
+      "OtherRTGS": 2.0,
+      "OtherIMPS": 1.6
     }
   }
 ]

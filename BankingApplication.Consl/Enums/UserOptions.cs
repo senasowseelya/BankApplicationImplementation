@@ -1,12 +1,13 @@
 ﻿namespace BankingApplication.Consl
 {
-    internal enum EnumUserOptions
+    internal enum UserOptions
     {
         Deposit=1,
         Withdraw,
         Transfer,
         DisplayTransactions,
         ChangePassword,
-        Logout
+        Logout,
+        Exit
     }
 }

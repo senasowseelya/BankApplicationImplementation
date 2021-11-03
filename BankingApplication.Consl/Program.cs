@@ -7,20 +7,38 @@ namespace BankingApplication.Consl
     {
         internal static void Main()
         {
-            Console.WriteLine("---------Welcome To ABC Banking Service--------");
-            Console.WriteLine("1.STAFF\n2.USER\nEnter your choice");
-            Console.WriteLine("-----------------------------------------------");
-            switch((EnumRole)Convert.ToInt32(Console.ReadLine()))
+            Common common = new Common();
+            while (true)
             {
-                case EnumRole.Staff:
-                    new StaffActions();
-                    break;
-                case EnumRole.User:
-                    new UserActions();
-                    break;
-                default:
-                    Environment.Exit(0);
-                    break;
+                Console.WriteLine("---------Welcome To ABC Banking Service--------");
+                Credentials userCredentials = common.GetCredentials();
+                Console.WriteLine("Enter Role:\n1.Staff\n2.User\n3.Exit");
+                Console.WriteLine("-----------------------------------------------");
+                switch ((Role)Convert.ToInt32(Console.ReadLine()))
+                {
+                    case Role.Staff:
+                        var bankOfEmployee = common.GetBank(userCredentials);
+                        if(bankOfEmployee!=null)
+                            new StaffActions(bankOfEmployee);
+                        else
+                            Console.WriteLine("-------Invalid Credentials----------");
+                        break;
+                    case Role.User:
+                        Account account = common.GetActiveUserAccount(userCredentials);
+                        if (account != null)
+                            new UserActions(account);
+                        else
+                          Console.WriteLine("-------------Invalid Crdentials---------");
+                        break;
+                    case Role.Exit:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("Please Choose from above options only");
+                        break;
+
+
+                }
             }
         }
     }

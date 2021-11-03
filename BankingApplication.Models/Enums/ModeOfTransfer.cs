@@ -4,12 +4,9 @@ using System.Text;
 
 namespace BankingApplication.Models
 {
-    public enum EnumTypeofTransactions
+     public enum ModeOfTransfer
     {
-        Credited=1,
-        Debited,
-        Transfer,
-        ServiceCharges
-
+        RTGS=1,
+        IMPS
     }
 }

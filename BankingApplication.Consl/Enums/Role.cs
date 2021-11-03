@@ -4,12 +4,10 @@ using System.Text;
 
 namespace BankingApplication.Consl
 {
-    public enum EnumServiceCharges
+    internal enum Role
     {
-        SelfRTGS=1,
-        OtherRTGS,
-        SelfIMPS,
-        OtherIMPS
-         
+        Staff=1,
+        User,
+        Exit
     }
 }
