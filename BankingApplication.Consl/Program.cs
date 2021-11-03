@@ -12,23 +12,21 @@ namespace BankingApplication.Consl
             {
                 Console.WriteLine("---------Welcome To ABC Banking Service--------");
                 Credentials userCredentials = common.GetCredentials();
-                Console.WriteLine("Enter Role:\n1.Staff\n2.User\n3.Exit");
-                Console.WriteLine("-----------------------------------------------");
-                switch ((Role)Convert.ToInt32(Console.ReadLine()))
+                switch(userCredentials.role)
                 {
                     case Role.Staff:
-                        var bankOfEmployee = common.GetBank(userCredentials);
-                        if(bankOfEmployee!=null)
-                            new StaffActions(bankOfEmployee);
-                        else
-                            Console.WriteLine("-------Invalid Credentials----------");
+                        if (common.Validate(userCredentials)) 
+                        {
+                            var staffActions = new StaffActions(userCredentials);
+                            staffActions.StaffActivities();
+                        }
                         break;
                     case Role.User:
-                        Account account = common.GetActiveUserAccount(userCredentials);
-                        if (account != null)
-                            new UserActions(account);
-                        else
-                          Console.WriteLine("-------------Invalid Crdentials---------");
+                        if(common.Validate(userCredentials))
+                        {
+                            var userActions = new UserActions(userCredentials);
+                            userActions.UserActivities();
+                        }
                         break;
                     case Role.Exit:
                         Environment.Exit(0);

@@ -16,6 +16,9 @@ namespace BankingApplication.Consl
             userCredentials.UserName = Console.ReadLine();
             Console.WriteLine("Enter Password");
             userCredentials.Password = Console.ReadLine();
+            Console.WriteLine("Enter Role:\n1.Staff\n2.User\n3.Exit");
+            Console.WriteLine("-----------------------------------------------");
+            userCredentials.role = (Role)Convert.ToInt32(Console.ReadLine());
             return userCredentials;
         }
         internal void DisplayStatus(bool status, String message)
@@ -25,38 +28,33 @@ namespace BankingApplication.Consl
             else
                 Console.WriteLine("Action can't be performed..Please contact your Manager");
         }
-        internal Account GetActiveUserAccount(Credentials UserCredentials)
+
+        internal bool Validate(Credentials userCredentials)
         {
-            foreach (Bank bank in BankData.banks)
+            if(userCredentials.role.Equals(Role.Staff))
             {
-                Account account = bank.Accounts.SingleOrDefault(acc => acc.User.UserName.Equals(UserCredentials.UserName) && acc.User.Password == UserCredentials.Password);
-                if (account != null && ValidateAccount(account))
-                    return account;
+                foreach (Bank bank in BankData.banks)
+                {
+                    if (bank.Employees.Any(emp => emp.UserName.Equals(userCredentials.UserName) && emp.Password.Equals(userCredentials.Password)))
+                        return true;
+                }
+                
 
             }
-            return null;
-        }
-
-        private bool ValidateAccount(Account account)
-        {
-            if (account.IsActive.Equals(true))
-                return true;
+            if(userCredentials.role.Equals(Role.User))
+            {
+                foreach (Bank bank in BankData.banks)
+                {
+                    if (bank.Accounts.Any(acc => acc.User.UserName.Equals(userCredentials.UserName) && acc.User.Password == userCredentials.Password && acc.IsActive.Equals(true)))
+                        return true;
+                }
+                
+            }
+            Console.WriteLine("---------Invalid Crdentials-------");
             return false;
-
-
         }
-        internal Bank GetBank(Credentials staffCredentials)
-        {
 
-            foreach (Bank bank in BankData.banks)
-            {
-                if (bank.Employees.Any(emp => emp.UserName.Equals(staffCredentials.UserName) && emp.Password.Equals(staffCredentials.Password)))
-                    return bank;
-
-            }
-            return null;
-
-        }
+       
 
     }
 }

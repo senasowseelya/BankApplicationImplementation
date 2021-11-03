@@ -11,16 +11,22 @@ namespace BankingApplication.Consl
     internal class UserActions
     {
 
+
         
         String currencyName;
         double amount = 0.0;
-        Account userAccount;
-        AccountService accountService = new AccountService();
+        public Account userAccount { get; set; }
+        public AccountService accountService { get; set; }
         Common commonFunctions = new Common();
 
-        internal UserActions(Account userAccount)
-        {  
-           this.userAccount = userAccount;
+        internal UserActions(Credentials userCredentials)
+        {
+            userAccount=GetActiveUserAccount(userCredentials);
+            accountService = new AccountService();
+
+        }
+        public void UserActivities()
+        { 
            while (true)
                 {
                     Menu();
@@ -157,6 +163,26 @@ namespace BankingApplication.Consl
             currencyName = Console.ReadLine();
             return currencyName;
         }
-       
+        private Account GetActiveUserAccount(Credentials UserCredentials)
+        {
+            foreach (Bank bank in BankData.banks)
+            {
+                Account account = bank.Accounts.SingleOrDefault(acc => acc.User.UserName.Equals(UserCredentials.UserName) && acc.User.Password == UserCredentials.Password);
+                if (account != null && ValidateAccount(account))
+                    return account;
+
+            }
+            return null;
+        }
+
+        private bool ValidateAccount(Account account)
+        {
+            if (account.IsActive.Equals(true))
+                return true;
+            return false;
+
+
+        }
+
     }
 }

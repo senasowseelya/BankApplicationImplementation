@@ -36,7 +36,23 @@
             "Receiver": "4862142242",
             "Amount": 500.0,
             "CurrencyName": "INR",
+            "Type": 5
+          },
+          {
+            "TransId": "TXNHDF20211103091213",
+            "Sender": "4862142242",
+            "Receiver": "6256785748",
+            "Amount": 200.0,
+            "CurrencyName": "INR",
             "Type": 3
+          },
+          {
+            "TransId": "TXNHDF20211103091213",
+            "Sender": "4862142242",
+            "Receiver": "6256785748",
+            "Amount": 8.0,
+            "CurrencyName": "INR",
+            "Type": 4
           }
         ],
         "AccountId": "HDF2021-11-03",
@@ -44,7 +60,7 @@
         "AccountNumber": "6256785748",
         "AccountHolderName": "Vishnumolakala Sena Sowseelya",
         "IsActive": true,
-        "Balance": 2280.0,
+        "Balance": 2980.0,
         "DateofIssue": "2021-11-03T00:00:00+05:30",
         "User": {
           "UserName": "Vish",
@@ -70,6 +86,38 @@
             "Amount": 500.0,
             "CurrencyName": "INR",
             "Type": 3
+          },
+          {
+            "TransId": "TXNHDF20211103091140",
+            "Sender": "4862142242",
+            "Receiver": "4862142242",
+            "Amount": 3000.0,
+            "CurrencyName": "INR",
+            "Type": 1
+          },
+          {
+            "TransId": "TXNHDF20211103091148",
+            "Sender": "4862142242",
+            "Receiver": "4862142242",
+            "Amount": 100.0,
+            "CurrencyName": "INR",
+            "Type": 5
+          },
+          {
+            "TransId": "TXNHDF20211103091213",
+            "Sender": "4862142242",
+            "Receiver": "6256785748",
+            "Amount": 200.0,
+            "CurrencyName": "INR",
+            "Type": 3
+          },
+          {
+            "TransId": "TXNHDF20211103091213",
+            "Sender": "4862142242",
+            "Receiver": "6256785748",
+            "Amount": 8.0,
+            "CurrencyName": "INR",
+            "Type": 4
           }
         ],
         "AccountId": "HDF2021-11-03",
@@ -77,11 +125,11 @@
         "AccountNumber": "4862142242",
         "AccountHolderName": "Nagababu",
         "IsActive": true,
-        "Balance": 500.0,
+        "Balance": 2692.0,
         "DateofIssue": "2021-11-03T00:00:00+05:30",
         "User": {
           "UserName": "Naga",
-          "Password": "4862142242",
+          "Password": "Nag@1219",
           "Name": "Nagababu",
           "FatherOrHusbandName": "Bapaniah",
           "Age": 20,
@@ -118,7 +166,39 @@
         "Receiver": "4862142242",
         "Amount": 500.0,
         "CurrencyName": "INR",
+        "Type": 5
+      },
+      {
+        "TransId": "TXNHDF20211103091140",
+        "Sender": "4862142242",
+        "Receiver": "4862142242",
+        "Amount": 3000.0,
+        "CurrencyName": "INR",
+        "Type": 1
+      },
+      {
+        "TransId": "TXNHDF20211103091148",
+        "Sender": "4862142242",
+        "Receiver": "4862142242",
+        "Amount": 100.0,
+        "CurrencyName": "INR",
+        "Type": 5
+      },
+      {
+        "TransId": "TXNHDF20211103091213",
+        "Sender": "4862142242",
+        "Receiver": "6256785748",
+        "Amount": 200.0,
+        "CurrencyName": "INR",
         "Type": 3
+      },
+      {
+        "TransId": "TXNHDF20211103091213",
+        "Sender": "4862142242",
+        "Receiver": "6256785748",
+        "Amount": 8.0,
+        "CurrencyName": "INR",
+        "Type": 4
       }
     ],
     "AcceptedCurrencies": [
@@ -135,7 +215,7 @@
     "Name": "HDFC",
     "Branch": null,
     "IFSC": "03082126C",
-    "BankBalance": 20.0,
+    "BankBalance": 28.0,
     "DefaultCurrency": {
       "CurrencyName": "INR",
       "ExchangeRate": 1.0

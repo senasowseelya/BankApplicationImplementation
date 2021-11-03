@@ -11,11 +11,15 @@ namespace BankingApplication.Services
     public class AccountService
     
     {
-         
-        Currency currency = new Currency();
+
+        Currency currency;
+        public AccountService()
+        {
+            currency = new Currency();  
+        }
         public bool Deposit( Account userAccount ,double amount,String currencyName)
         {
-            Bank bank = FetchBank(userAccount.BankID);
+            var bank = FetchBank(userAccount.BankID);
             currency = GetCurrencyobject(bank,currencyName);
             amount = amount * currency.ExchangeRate;
             userAccount.Balance += amount;
@@ -26,7 +30,7 @@ namespace BankingApplication.Services
 
         private Currency GetCurrencyobject(Bank bank,String name)
         {
-            Currency currency = bank.AcceptedCurrencies.SingleOrDefault(cr=>cr.CurrencyName.Equals(name,StringComparison.OrdinalIgnoreCase));
+            var currency = bank.AcceptedCurrencies.SingleOrDefault(cr=>cr.CurrencyName.Equals(name,StringComparison.OrdinalIgnoreCase));
             if (currency != null)
                 return currency;
             throw new CurrencyNotSupportedException();
@@ -35,7 +39,7 @@ namespace BankingApplication.Services
 
         public bool Withdraw(Account userAccount, double amount,string currencyName)
         {
-            Bank bank = FetchBank(userAccount.BankID);
+            var bank = FetchBank(userAccount.BankID);
             currency = GetCurrencyobject(bank, currencyName);
             amount = amount * currency.ExchangeRate;
             if (userAccount.Balance >= amount)
@@ -50,11 +54,11 @@ namespace BankingApplication.Services
         }
         public bool TransferAmount(Account senderAccount, string toAccNum, double amount,ModeOfTransfer mode)
         {
-            Bank senderBank = FetchBank(senderAccount.BankID);
-            Account receiverAccount =new BankService().FetchAccount(toAccNum);
-            Bank receiverBank = FetchBank(receiverAccount.BankID);
+            var senderBank = FetchBank(senderAccount.BankID);
+            var receiverAccount =new BankService().FetchAccount(toAccNum);
+            var receiverBank = FetchBank(receiverAccount.BankID);
             amount = amount * senderBank.DefaultCurrency.ExchangeRate;
-            Double charge = CalculateCharges(senderBank,receiverBank,amount,mode);
+            var charge = CalculateCharges(senderBank,receiverBank,amount,mode);
             if (senderAccount.Balance >= amount+charge)
             {
                 receiverAccount.Balance += amount;
@@ -80,8 +84,8 @@ namespace BankingApplication.Services
         }
         private void GenerateTransaction(Account senderAccount,Account recAccount, Double Amount,TransactionType type,String currencyName)
         {
-            Bank bank = FetchBank(senderAccount.BankID);
-            Transaction NewTransaction = new Transaction(bank);
+            var bank = FetchBank(senderAccount.BankID);
+            var NewTransaction = new Transaction(bank);
             NewTransaction.Sender = senderAccount.AccountNumber;
             NewTransaction.Receiver =recAccount.AccountNumber;
             NewTransaction.Type = type;
@@ -97,7 +101,7 @@ namespace BankingApplication.Services
        
         public Bank FetchBank(String bankId)
         {
-            Bank bank = BankData.banks.FirstOrDefault(bk => bk.BankId == bankId);
+            var bank = BankData.banks.FirstOrDefault(bk => bk.BankId == bankId);
             if (bank != null)
                 return bank;
             throw new BankDoesntExistException();

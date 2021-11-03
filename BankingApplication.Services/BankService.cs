@@ -10,12 +10,16 @@ namespace BankingApplication.Services
 {
     public class BankService
     {
-        JsonReadWrite dataReadWrite = new JsonReadWrite();
+        JsonReadWrite dataReadWrite;
+        public BankService()
+        {
+            dataReadWrite = new JsonReadWrite();
+        }
         public bool AddBank(String name)
         {
             if (BankData.banks.Any(e => e.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
                 throw new BankAlreadyExistsException();
-            Bank newBank = new Bank(name);
+            var newBank = new Bank(name);
             newBank.Employees.Add(new Employee());
             BankData.banks.Add(newBank);
             dataReadWrite.WriteData(BankData.banks);
@@ -47,7 +51,7 @@ namespace BankingApplication.Services
         public bool RemoveAccount(Bank bank, String accountNumber)
         {
 
-            Account account = bank.Accounts.SingleOrDefault(acc => acc.AccountNumber.Equals(accountNumber));
+            var account = bank.Accounts.SingleOrDefault(acc => acc.AccountNumber.Equals(accountNumber));
             if (account != null)
             {
                 account.IsActive = false;
@@ -69,12 +73,12 @@ namespace BankingApplication.Services
         }
         public bool RevertTransaction(Bank bank, string transactionId)
         {
-            Transaction transaction = bank.BankTransactions.FirstOrDefault(tr => tr.TransId.Equals(transactionId));
+            var transaction = bank.BankTransactions.FirstOrDefault(tr => tr.TransId.Equals(transactionId));
             transaction.Type = TransactionType.Revert;
-            Account senderAccount = FetchAccount(transaction.Sender);
-            Account receiverAccount = FetchAccount(transaction.Receiver);
-            Transaction sendtrans = senderAccount.Transactions.FirstOrDefault(tr => tr.TransId.Equals(transactionId));
-            Transaction rectrans = receiverAccount.Transactions.FirstOrDefault(tr => tr.TransId.Equals(transactionId));
+            var senderAccount = FetchAccount(transaction.Sender);
+            var receiverAccount = FetchAccount(transaction.Receiver);
+            var sendtrans = senderAccount.Transactions.FirstOrDefault(tr => tr.TransId.Equals(transactionId));
+            var rectrans = receiverAccount.Transactions.FirstOrDefault(tr => tr.TransId.Equals(transactionId));
             if (senderAccount.Equals(receiverAccount))
             {
                 if (transaction.Type.Equals(TransactionType.Credited))
@@ -100,7 +104,7 @@ namespace BankingApplication.Services
         }
         public bool AcceptNewCurrency(Bank bank, Currency newCurrency)
         {
-            Currency currency = bank.AcceptedCurrencies.SingleOrDefault(acc => acc.CurrencyName.Equals(newCurrency.CurrencyName));
+            var currency = bank.AcceptedCurrencies.SingleOrDefault(acc => acc.CurrencyName.Equals(newCurrency.CurrencyName));
             if (currency != null)
                 throw new DuplicateCurrencyException();
             bank.AcceptedCurrencies.Add(newCurrency);
@@ -112,7 +116,7 @@ namespace BankingApplication.Services
         {
             foreach (Bank bank in BankData.banks)
             {
-                Account account = bank.Accounts.SingleOrDefault(acc => acc.AccountNumber.Equals(accountNumber) && acc.IsActive);
+                var account = bank.Accounts.SingleOrDefault(acc => acc.AccountNumber.Equals(accountNumber) && acc.IsActive);
                 if (account != null)
                     return account;
             }
@@ -120,8 +124,8 @@ namespace BankingApplication.Services
         }
         private String GenerateAccountNumber()
         {
-            Random random = new Random();
-            string r = "";
+            var random = new Random();
+            var r = "";
             int i;
             for (i = 1; i < 11; i++)
             {
@@ -132,7 +136,7 @@ namespace BankingApplication.Services
         }
         private String GenerateAccId(String BankName)
         {
-            string AccID = BankName.Substring(0, 3) + DateTime.Now.ToString("yyyy-MM-dd");
+            var AccID = BankName.Substring(0, 3) + DateTime.Now.ToString("yyyy-MM-dd");
             return AccID;
         }
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BankingApplication.Consl
 {
-    internal enum Role
+    public enum Role
     {
         Staff=1,
         User,
