@@ -3,107 +3,144 @@ using System.Collections.Generic;
 using System.Text;
 using BankingApplication.Models;
 using BankingApplication.Database;
+using System.Reflection;
+using System.Linq;
+
 namespace BankingApplication.Services
 {
     public class AccountService
+    
     {
 
-        public bool Deposit(string Accnum, double Amount)
+        Currency currency;
+        public AccountService()
         {
-            var banks=new JsonReadWrite().ReadData();
-            foreach (Bank bank in banks)
-            {
-                foreach (Account Acc in bank.Accounts)
-                {
-                    if (Acc.AccountNumber == Accnum)
-                    {
-                        Acc.Balance += Amount;
-                        Transaction NewTransaction = GenerateTransaction(bank, Acc, Amount,"Deposit");
-                        bank.BankTransactions.Add(NewTransaction);
-                        new JsonReadWrite().WriteData();
-                        return true;
-                    }
-                }
-            }
-            throw new AccountDoesntExistException();
+            currency = new Currency();  
         }
-        public bool Withdraw(string Accnum, double Amount)
+        public bool Deposit( Account userAccount ,double amount,String currencyName)
         {
-             var banks=new JsonReadWrite().ReadData();
-            foreach (Bank bank in banks)
-            {
-                foreach (Account Acc in bank.Accounts)
-                {
-                    if (Acc.AccountNumber == Accnum)
-                    {
-                        if (Acc.Balance >= Amount)
-                        {
-                            Acc.Balance -= Amount;
-                            Transaction NewTransaction = GenerateTransaction(bank, Acc, Amount,"Withdrawl");
-                            bank.BankTransactions.Add(NewTransaction);
-                            new JsonReadWrite().WriteData();
-                            return true;
-                        }
-                        else
-                            throw new InsufficientAmountException();
-                    }
-                }
-            }
-            throw new AccountDoesntExistException();
-        }
-        public bool TransferAmount(String FromAccNum, string ToAccNum, double Amount)
-        {
-            string SendBank = null, RecBank = null;
-            var banks=new JsonReadWrite().ReadData();
-            foreach (Bank bank in banks)
-            {
-                foreach (Account Acc in bank.Accounts)
-                {
-                    if (Acc.AccountNumber == FromAccNum)
-                        SendBank = bank.Name;
-                    else if (Acc.AccountNumber == ToAccNum)
-                        RecBank = bank.Name;
-                    if ((SendBank != null) && (RecBank != null))
-                    {
-                        Withdraw(FromAccNum, Amount);
-                        Deposit(ToAccNum, Amount);
-                    }
-                }
-            }
-            if (SendBank == null || RecBank == null)
-            {
-                throw new AccountDoesntExistException();
-            }
+            var bank = FetchBank(userAccount.BankID);
+            currency = GetCurrencyobject(bank,currencyName);
+            amount = amount * currency.ExchangeRate;
+            userAccount.Balance += amount;
+            GenerateTransaction(userAccount,userAccount,amount, TransactionType.Credited,currencyName);
+            new JsonReadWrite().WriteData(BankData.banks);
             return true;
         }
-        public List<Transaction> DisplayTransactions(string Accnum)
+
+        private Currency GetCurrencyobject(Bank bank,String name)
         {
-            var banks=new JsonReadWrite().ReadData();
-            foreach (Bank bank in banks)
-            {
-                foreach (Account Acc in bank.Accounts)
-                {
-                    if (Acc.AccountNumber == Accnum)
-                    {
-                        return Acc.Transactions;
-
-                    }
-                }
-            }
-            throw new AccountDoesntExistException();
-
+            var currency = bank.AcceptedCurrencies.SingleOrDefault(cr=>cr.CurrencyName.Equals(name,StringComparison.OrdinalIgnoreCase));
+            if (currency != null)
+                return currency;
+            throw new CurrencyNotSupportedException();
+            
         }
-        private Transaction GenerateTransaction(Bank bank, Account Acc, Double Amount,String type)
-        {
-            Transaction NewTransaction = new Transaction();
-            NewTransaction.TransId = "TXN" + bank.BankId.Substring(0, 3) + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
-            NewTransaction.Sender = "";
-            NewTransaction.Receiver = "";
-            NewTransaction.Type = type;
-            NewTransaction.Amount = Amount;
-            Acc.Transactions.Add(NewTransaction);
-            return NewTransaction;
 
+        public bool Withdraw(Account userAccount, double amount,string currencyName)
+        {
+            var bank = FetchBank(userAccount.BankID);
+            currency = GetCurrencyobject(bank, currencyName);
+            amount = amount * currency.ExchangeRate;
+            if (userAccount.Balance >= amount)
+            {
+                userAccount.Balance -= amount;
+                GenerateTransaction(userAccount,userAccount, amount, TransactionType.Debited,currencyName);
+                new JsonReadWrite().WriteData(BankData.banks);
+                return true;
+            }
+            else
+                throw new InsufficientAmountException();
+        }
+        public bool TransferAmount(Account senderAccount, string toAccNum, double amount,ModeOfTransfer mode)
+        {
+            var senderBank = FetchBank(senderAccount.BankID);
+            var receiverAccount =new BankService().FetchAccount(toAccNum);
+            var receiverBank = FetchBank(receiverAccount.BankID);
+            amount = amount * senderBank.DefaultCurrency.ExchangeRate;
+            var charge = CalculateCharges(senderBank,receiverBank,amount,mode);
+            if (senderAccount.Balance >= amount+charge)
+            {
+                receiverAccount.Balance += amount;
+                senderAccount.Balance -= (amount+charge);
+                GenerateTransaction(senderAccount,receiverAccount, amount, TransactionType.Transfer, senderBank.DefaultCurrency.CurrencyName);
+                GenerateTransaction(senderAccount, receiverAccount, charge, TransactionType.ServiceCharges, senderBank.DefaultCurrency.CurrencyName);
+                senderBank.BankBalance +=charge;
+                new JsonReadWrite().WriteData(BankData.banks);
+            }
+            else
+                throw new InsufficientAmountException();
+            return true;
+        }
+        public List<Transaction> DisplayTransactions(Account userAccount)
+        {
+            return userAccount.Transactions;
+        }
+        public bool ChangePassword(Account account ,String newPassword)
+        {
+            account.User.Password = newPassword;
+            new JsonReadWrite().WriteData(BankData.banks);
+            return true;
+        }
+        private void GenerateTransaction(Account senderAccount,Account recAccount, Double Amount,TransactionType type,String currencyName)
+        {
+            var bank = FetchBank(senderAccount.BankID);
+            var NewTransaction = new Transaction(bank);
+            NewTransaction.Sender = senderAccount.AccountNumber;
+            NewTransaction.Receiver =recAccount.AccountNumber;
+            NewTransaction.Type = type;
+            NewTransaction.CurrencyName = currencyName;
+            NewTransaction.Amount = Amount;
+            senderAccount.Transactions.Add(NewTransaction);
+            if(!senderAccount.AccountNumber.Equals(recAccount.AccountNumber))
+            {
+                recAccount.Transactions.Add(NewTransaction);
+            }
+            bank.BankTransactions.Add(NewTransaction);
+        }
+       
+        public Bank FetchBank(String bankId)
+        {
+            var bank = BankData.banks.FirstOrDefault(bk => bk.BankId == bankId);
+            if (bank != null)
+                return bank;
+            throw new BankDoesntExistException();
+        }
+        
+        private Double CalculateCharges(Bank senderBank,Bank receiverBank,Double amount,ModeOfTransfer mode)
+        {
+            Double charge = 0.0;
+            switch (mode)
+            {
+                case ModeOfTransfer.IMPS:
+                    {
+                        if (senderBank.BankId.Equals(receiverBank.BankId))
+                        {
+                            charge = amount * (senderBank.ServiceCharges.SelfIMPS / 100);
+                        }
+                        else
+                        {
+                            charge = amount * (senderBank.ServiceCharges.OtherIMPS / 100);
+                        }
+                        break;
+                    }
+                case ModeOfTransfer.RTGS:
+                    {
+                        if (senderBank.BankId.Equals(receiverBank.BankId))
+                        {
+                            charge = amount * (senderBank.ServiceCharges.SelfRTGS / 100);
+                        }
+                        else
+                        {
+                            charge = amount * (senderBank.ServiceCharges.OtherRTGS / 100);
+                        }
+                        break;
+                    }
+
+            }
+            return charge;
         }
     }
+
 }
+

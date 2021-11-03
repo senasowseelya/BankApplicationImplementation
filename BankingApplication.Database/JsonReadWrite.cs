@@ -10,27 +10,22 @@ namespace BankingApplication.Database
 {
      public class JsonReadWrite
      {
-        String Content;
-        
+        String content;
+        public static string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
+        public static string filePath = projectDirectory + "\\BankingApplication.Database\\Data.json";
         public List<Bank> ReadData()
         {
-            Content = File.ReadAllText($"{Path.Combine(Directory.GetCurrentDirectory())}/Data.json");
-            return JsonConvert.DeserializeObject<List<Bank>>(Content);
+            content = File.ReadAllText(filePath);
+            return JsonConvert.DeserializeObject<List<Bank>>(content) ?? new List<Bank>();
         }
-        public void WriteData(Bank NewBank)
-        {
-            var banks=ReadData();
-            banks.Add(NewBank);
-            Content = JsonConvert.SerializeObject(banks, Formatting.Indented);
-            File.WriteAllText("~\\Data.json", Content);
-        }
-        public void WriteData()
-        {
-            var banks = ReadData();
-            Content = JsonConvert.SerializeObject(banks, Formatting.Indented);
-            File.WriteAllText("~\\Data.json", Content);
-        }
+       
+       
 
+        public void WriteData(List<Bank> banks)
+        {
+            content = JsonConvert.SerializeObject(banks, Formatting.Indented);
+            File.WriteAllText(filePath, content);
+        }
 
     }
 }

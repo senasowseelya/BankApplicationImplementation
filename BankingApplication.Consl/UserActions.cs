@@ -10,168 +10,145 @@ namespace BankingApplication.Consl
 {
     internal class UserActions
     {
-        
-        bool status = false;
-        string accountNumber;
-        double amount = 0.0;
-        bool isValidUser=false;
 
-        internal UserActions()
+
+        
+        String currencyName;
+        double amount = 0.0;
+        public Account userAccount { get; set; }
+        public AccountService accountService { get; set; }
+        Common commonFunctions = new Common();
+
+        internal UserActions(Credentials userCredentials)
         {
-            var userCredentials = new Program().GetCredentials();
-            isValidUser = new Program().ValidateAccount(userCredentials);
+            userAccount=GetActiveUserAccount(userCredentials);
+            accountService = new AccountService();
+
+        }
+        public void UserActivities()
+        { 
+           while (true)
+                {
+                    Menu();
+                    
+                    try
+                    {
+                        switch ((UserOptions)Convert.ToInt32(Console.ReadLine()))
+                        {
+                            case UserOptions.Deposit:
+                                {
+                                    Deposit();
+                                    break;
+                                }
+                            case UserOptions.Withdraw:
+                                {
+                                    Withdraw();
+                                    break;
+                                }
+                            case UserOptions.Transfer:
+                                {
+                                    Transfer();
+                                    break;
+                                }
+
+                            case UserOptions.DisplayTransactions:
+                                {
+                                    DisplayTransactions();
+                                    break;
+                                }
+                            case UserOptions.ChangePassword:
+                                {
+                                    ChangePassword();
+                                    break;
+                                }
+                            case UserOptions.Logout:
+                                {
+                                return;
+                                }
+                        case UserOptions.Exit:
+                                Environment.Exit(0);
+                                break;
+                        default:
+                            Console.WriteLine("Please choose from above options only");
+                            break;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+
+        private void ChangePassword()
+        {
+            Console.WriteLine("Enter New Password");
+            String newPassword = Console.ReadLine();
             
-            if (!isValidUser)
+            commonFunctions.DisplayStatus(accountService.ChangePassword(userAccount, newPassword), $"Succesfully updated password ");
+
+        }
+
+        private void Deposit()
+        {
+            
+            amount = ReadAmount();
+            if (amount>0)
             {
-                Console.WriteLine("Invalid Username or Password ");
-                new UserActions();
-          
+                currencyName = ReadCurrency();
+                
+                commonFunctions.DisplayStatus(accountService.Deposit(userAccount, amount, currencyName),$"Succesfully Deposited {amount} {currencyName}"); 
             }
             else
             {
-                while (true)
-                {
-                    Menu();
-                    EnumUserOptions Choice = (EnumUserOptions)Enum.Parse(typeof(EnumUserOptions), Console.ReadLine());
-                    
-                    switch (Choice)
-                    {
-
-                        case EnumUserOptions.Deposit:
-                            {
-                                DepositHandler();
-                                break;
-                            }
-
-                        case EnumUserOptions.Withdraw:
-                            {
-                                WithdrawHandler();
-                                break;
-                            }
-                        case EnumUserOptions.Transfer:
-                            {
-                                TransferHandler();
-                                break;
-                            }
-
-                        case EnumUserOptions.DisplayTransactions:
-                            {
-                                DisplayTransactionsHandler();
-                                break;
-                            }
-                        case EnumUserOptions.Logout:
-                            {
-                                Program.Main();
-                                break;
-                            }
-                        default:
-                            Environment.Exit(0);
-                            break;
-                    }
-
-                }
+                Console.WriteLine("You have entered Invalid Amount");
             }
-
         }
-        private void DepositHandler()
+        private void Withdraw()
         {
-            status = false;
-            try
-            {
-                accountNumber = ReadAccountNum();
-                amount = ReadAmount();
-                status = new AccountService().Deposit(accountNumber, amount);
-            }
-            catch (AccountDoesntExistException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            if (status)
-            {
-                Console.WriteLine("Succesfully Deposited {0}", amount);
-            }
-
-        }
-        private void WithdrawHandler()
-        {
-            status = false;
-            try
-            {
-
-                accountNumber = ReadAccountNum();
-                amount = ReadAmount();
-                status =new  AccountService().Withdraw(accountNumber, amount);
-            }
-
-            catch (AccountDoesntExistException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            catch (InsufficientAmountException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            if (status)
-            {
-                Console.WriteLine("Succesfully Withdrawn {0}", amount);
-            }
-
-        }
-        private void TransferHandler()
-        {
-            status = false;
-            string SendAccNum = ReadAccountNum("From");
-            string RecAccNum = ReadAccountNum("To");
+            
             amount = ReadAmount();
-            try
+            if (amount>0)
             {
-                status = new AccountService().TransferAmount(SendAccNum, RecAccNum, amount);
+                currencyName = ReadCurrency();
+                
+                commonFunctions.DisplayStatus(accountService.Withdraw(userAccount, amount, currencyName), $"Succesfully WithDrawn {amount} {currencyName}"); 
             }
-            catch (AccountDoesntExistException ex)
+            else
             {
-                Console.WriteLine( ex.Message);
-            }
-            catch (InsufficientAmountException ex)
-            {
-                Console.WriteLine( ex.Message);
-            }
-            if (status)
-            {
-                Console.WriteLine("Succesfully Transferred {0}", amount);
+                Console.WriteLine("You have entered Invalid Amount");
             }
         }
-        private void DisplayTransactionsHandler()
+        private void Transfer()
         {
-            status = false;
-            accountNumber = ReadAccountNum("");
-            try
+            
+            Console.WriteLine("Enter Receiver Account Number");
+            String recAccNum = Console.ReadLine();
+            amount = ReadAmount();
+            if (amount>0)
             {
-                List<Transaction> Transactions = new AccountService().DisplayTransactions(accountNumber);
-                foreach (var Transaction in Transactions)
-                {
-                    Console.WriteLine(Transaction.TransId + " " + Transaction.Amount + " " + Transaction.Type);
-                }
-
+                Console.WriteLine("Choose Mode of Transfer\n1.RTGS\n2.IMPS\n3.exit");
+                ModeOfTransfer mode = (ModeOfTransfer)Convert.ToInt32(Console.ReadLine());
+                
+                commonFunctions.DisplayStatus(accountService.TransferAmount(userAccount, recAccNum, amount, mode), $"Succesfully Transferred {amount}"); 
             }
-            catch (AccountDoesntExistException ex)
+            else
+                Console.WriteLine(" You have entered Invalid Amount");
+        }
+        private void DisplayTransactions()
+        {
+            List<Transaction> Transactions = accountService.DisplayTransactions(userAccount);
+            foreach (var Transaction in Transactions)
             {
-                Console.WriteLine("Accoutn doesn't exist. Please try with valid account.", ex.Message);
+                Console.WriteLine($" {Transaction.TransId} {Transaction.Type} {Transaction.Amount} {Transaction.CurrencyName}");
             }
         }
         private void Menu()
         {
-            Console.WriteLine("****XYZ Banking Service****");
-            Console.WriteLine("\n1.Deposit\n2.Withdrawl\n3.Transfer Money\n4.Display Transactions\n5.Logout\nOthers:Exit");
-            Console.WriteLine("***************************");
+            Console.WriteLine("----XYZ Banking Service----");
+            Console.WriteLine("\n1.Deposit\n2.Withdrawl\n3.Transfer Money\n4.Display Transactions\n5.Change Password\n6.Logout\n7:Exit");
+            Console.WriteLine("---------------------------");
             Console.WriteLine("Enter Choice\n");
-        }
-       
-        private String ReadAccountNum(string S = "")
-        {
-            Console.WriteLine("Enter {0} Account Number", S);
-            String accNum = Console.ReadLine();
-            return accNum;
         }
         private double ReadAmount()
         {
@@ -179,14 +156,33 @@ namespace BankingApplication.Consl
             double amount = Convert.ToDouble(Console.ReadLine());
             return amount;
         }
-        public bool CheckBank(String BankName)
+        private string ReadCurrency()
         {
-             var banks=new JsonReadWrite().ReadData();
-            if (!banks.Any(e => e.Name == BankName))
-                throw new BankDoesntExistException();
-            return true;
+
+            Console.WriteLine("Enter Type of Currency");
+            currencyName = Console.ReadLine();
+            return currencyName;
+        }
+        private Account GetActiveUserAccount(Credentials UserCredentials)
+        {
+            foreach (Bank bank in BankData.banks)
+            {
+                Account account = bank.Accounts.SingleOrDefault(acc => acc.User.UserName.Equals(UserCredentials.UserName) && acc.User.Password == UserCredentials.Password);
+                if (account != null && ValidateAccount(account))
+                    return account;
+
+            }
+            return null;
         }
 
+        private bool ValidateAccount(Account account)
+        {
+            if (account.IsActive.Equals(true))
+                return true;
+            return false;
+
+
+        }
 
     }
 }

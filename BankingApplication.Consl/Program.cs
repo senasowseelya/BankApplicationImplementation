@@ -1,55 +1,43 @@
-﻿
-
+﻿using System;
 using BankingApplication.Database;
 using BankingApplication.Models;
-using System;
-
 namespace BankingApplication.Consl
 {
     class Program
     {
         internal static void Main()
         {
-            
-            
-            Console.WriteLine("********Welcome To XYZ Banking Service********");
-            Console.WriteLine("1.STAFF\n2.USER\nEnter your choice");
-            EnumRole Choice = (EnumRole)Enum.Parse(typeof(EnumRole), Console.ReadLine());
-            switch (Choice)
+            Common common = new Common();
+            while (true)
             {
-                case EnumRole.Staff:
-                    new StaffActions();
-                    break;
-                case EnumRole.User:
-                    new UserActions();
-                    break;
-            }
-        }
-        internal Credentials GetCredentials()
-        {
-            Credentials userCredentials=new Credentials();
-            Console.WriteLine("Enter Username:");
-            userCredentials.UserName = Console.ReadLine();
-            Console.WriteLine("Enter Password");
-            userCredentials.Password = Console.ReadLine();
-            return userCredentials;
-        }
-        internal bool ValidateAccount(Credentials UserCredentials)
-        {
-            var banks = new JsonReadWrite().ReadData();
-            foreach (Bank bank in banks)
-            {
-                foreach (Account Account in bank.Accounts)
+                Console.WriteLine("---------Welcome To ABC Banking Service--------");
+                Credentials userCredentials = common.GetCredentials();
+                switch(userCredentials.role)
                 {
-                    if (Account.UserName == UserCredentials.UserName && Account.Password == UserCredentials.Password)
-                    {
-                        return true;
+                    case Role.Staff:
+                        if (common.Validate(userCredentials)) 
+                        {
+                            var staffActions = new StaffActions(userCredentials);
+                            staffActions.StaffActivities();
+                        }
+                        break;
+                    case Role.User:
+                        if(common.Validate(userCredentials))
+                        {
+                            var userActions = new UserActions(userCredentials);
+                            userActions.UserActivities();
+                        }
+                        break;
+                    case Role.Exit:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("Please Choose from above options only");
+                        break;
 
-                    }
+
                 }
             }
-            return false;
-
         }
     }
 }

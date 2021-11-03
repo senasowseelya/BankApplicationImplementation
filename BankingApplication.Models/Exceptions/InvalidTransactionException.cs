@@ -4,9 +4,9 @@ using System.Text;
 
 namespace BankingApplication.Models
 {
-     public class InvalidUserException:Exception
+     public class InvalidTransactionException:Exception
     {
-        public InvalidUserException():base("Invalid Username or Password Please check again")
+        public InvalidTransactionException():base("Invalid TransactionId")
         {
 
         }
