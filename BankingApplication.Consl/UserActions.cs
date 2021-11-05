@@ -65,12 +65,9 @@ namespace BankingApplication.Consl
                                 {
                                 return;
                                 }
-                        case UserOptions.Exit:
-                                Environment.Exit(0);
+                            default:
+                                Console.WriteLine("Please choose from above options only");
                                 break;
-                        default:
-                            Console.WriteLine("Please choose from above options only");
-                            break;
                         }
                     }
                     catch (Exception ex)
@@ -96,7 +93,6 @@ namespace BankingApplication.Consl
             if (amount>0)
             {
                 currencyName = ReadCurrency();
-                
                 commonFunctions.DisplayStatus(accountService.Deposit(userAccount, amount, currencyName),$"Succesfully Deposited {amount} {currencyName}"); 
             }
             else
@@ -146,7 +142,7 @@ namespace BankingApplication.Consl
         private void Menu()
         {
             Console.WriteLine("----XYZ Banking Service----");
-            Console.WriteLine("\n1.Deposit\n2.Withdrawl\n3.Transfer Money\n4.Display Transactions\n5.Change Password\n6.Logout\n7:Exit");
+            Console.WriteLine("\n1.Deposit\n2.Withdrawl\n3.Transfer Money\n4.Display Transactions\n5.Change Password\n6.Logout\n");
             Console.WriteLine("---------------------------");
             Console.WriteLine("Enter Choice\n");
         }

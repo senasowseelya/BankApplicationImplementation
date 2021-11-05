@@ -15,11 +15,11 @@ namespace BankingApplication.Models
         public TransactionType Type { get; set; }
         public Transaction()
         {
-
+            TransId = "";
         }
-        public Transaction(Bank bank)
+        public Transaction(String BankId)
         {
-            TransId = $"TXN{bank.BankId.Substring(0, 3)}{DateTime.Now.ToString("yyyyMMddhhmmss")}";
+            TransId = $"TXN{BankId.Substring(0, 3)}{DateTime.Now.ToString("yyyyMMddhhmmss")}";
         }
 
     }

@@ -10,12 +10,12 @@ namespace BankingApplication.Consl
     internal class StaffActions
     {
         
-        private Bank bankOfEmployee { get; set; }
+        private Bank CurrentBank { get; set; }
         private BankService bankService { get; set; }
         Common common =new Common();
         internal StaffActions(Credentials staffCredentials)
         {
-            bankOfEmployee = GetBank(staffCredentials);
+            CurrentBank = GetBank(staffCredentials);
             bankService = new BankService();
 
         }
@@ -30,9 +30,7 @@ namespace BankingApplication.Consl
                     {
                         case StaffOptions.AddBank:
                             {
-                                Console.WriteLine("Enter Bank Name");
-                                var bankName = Console.ReadLine();
-                                bankService.AddBank(bankName);
+                                AddBank();
                                 break;
                             }
                         case StaffOptions.CreateAccount:
@@ -74,12 +72,6 @@ namespace BankingApplication.Consl
                             {
                                 return;
                             }
-                        case StaffOptions.Exit:
-                            {
-                                Environment.Exit(0);
-                                break;
-                            }
-                            
                         default:
                             Console.WriteLine("please choose from available options");
                             break;
@@ -96,14 +88,30 @@ namespace BankingApplication.Consl
 
         }
 
+        private void AddBank()
+        {
+            Console.WriteLine("Enter Bank Name");
+            var bankName = Console.ReadLine();
+            Employee employee = GetEmployeeDetails();
+            bankService.AddBank(bankName,employee);
+        }
+
         private void AddEmployee()
         {
-            
+            Employee employee = GetEmployeeDetails();
+            common.DisplayStatus(bankService.AddEmployee(CurrentBank, employee), "Succesfully added new Employee\nYour username {employee.UserName} \nYour password {employee.Password}");
+        }
+        private Employee GetEmployeeDetails()
+        {
             var employee = new Employee();
             Console.WriteLine("Enter Name of Employee");
             employee.EmployeeName = Console.ReadLine();
-            common.DisplayStatus(bankService.AddEmployee(bankOfEmployee, employee), "Succesfully added new Employee\nYour username {employee.UserName} \nYour password {employee.Password}");
-
+            Console.WriteLine("Enter Employee Age:");
+            employee.Age = Convert.ToInt32(Console.ReadLine());
+            employee.EmpID = $"{employee.EmployeeName}{DateTime.Today:yyyyMMDD}";
+            employee.UserName = $"{employee.EmployeeName.Substring(0, 3)}{employee.EmpID.Substring(4, 3)}";
+            employee.Password = $"{employee.EmpID}";
+            return employee;
         }
 
         private void AcceptNewCurrency()
@@ -114,14 +122,14 @@ namespace BankingApplication.Consl
             newCurrency.CurrencyName = Console.ReadLine();
             Console.WriteLine("Enter ExchangeRate:");
             newCurrency.ExchangeRate = Convert.ToDouble(Console.ReadLine());
-            common.DisplayStatus(bankService.AcceptNewCurrency(bankOfEmployee, newCurrency), "Succesfully added new Currency");
+            common.DisplayStatus(bankService.AcceptNewCurrency(CurrentBank, newCurrency), "Succesfully added new Currency");
 
         }
 
         private void Menu()
         {
             Console.WriteLine("********XYZ Banking Service********");
-            Console.WriteLine("\n1.Add Bank\n2.CreateAccount\n3.RemoveAccount\n4.UpdateCharges\n5.Accept New Currency\n6. View Transaction\n7.Revert Transaction\n 8.Add Employee\n9.Logout\n10.Exit");
+            Console.WriteLine("\n1.Add Bank\n2.CreateAccount\n3.RemoveAccount\n4.UpdateCharges\n5.Accept New Currency\n6. View Transaction\n7.Revert Transaction\n 8.Add Employee\n9.Logout\n");
             Console.WriteLine("-----------------------------------");
             Console.WriteLine("Enter Choice\n");
         }
@@ -166,7 +174,7 @@ namespace BankingApplication.Consl
 
                 }
                 
-                common.DisplayStatus(bankService.AddCharges(bankOfEmployee, serviceCharges), "New Services Charges Updated Succesfully");
+                common.DisplayStatus(bankService.AddCharges(CurrentBank, serviceCharges), "New Services Charges Updated Succesfully");
 
             }
         }
@@ -196,7 +204,7 @@ namespace BankingApplication.Consl
             Console.WriteLine("Enter Religion:");
             newUser.Religion = Console.ReadLine();
             newAccount.DateofIssue = DateTime.Today;
-            if (bankService.CreateAccountService(bankOfEmployee, newAccount,newUser))
+            if (bankService.CreateAccountService(CurrentBank, newAccount,newUser))
             {
                 Console.WriteLine(" Account Created and Your Account Number is {0}", newAccount.AccountNumber);
                 Console.WriteLine("Your username is {0}", newUser.UserName);
@@ -208,32 +216,35 @@ namespace BankingApplication.Consl
         {
             Console.WriteLine("Enter account number :");
             var accountNumber = Console.ReadLine();
-            
-            common.DisplayStatus(bankService.RemoveAccount(bankOfEmployee, accountNumber), "Your Account is Closed and you can't perform any actions on this acoount..");
+            common.DisplayStatus(bankService.RemoveAccount(CurrentBank, accountNumber), "Your Account is Closed and you can't perform any actions on this acoount..");
 
         }
         private void ViewTransaction()
         {
-            var Transactions = bankService.ViewTransaction(bankOfEmployee);
-            if (Transactions != null)
-            {
-                foreach (var transaction in Transactions)
-                {
-                    Console.WriteLine($"{transaction.TransId} {transaction.Amount} {transaction.Type}");
-                }
-            }
-            else
-            {
-                Console.WriteLine("No Transactions");
-            }
+            Console.WriteLine("Enter Account Number");
+            string accountNumber=Console.ReadLine();
+            Account account =CurrentBank.Accounts.SingleOrDefault(acc => acc.AccountNumber.Equals(accountNumber));
+            if (account == null)
+                throw new AccountDoesntExistException();
+            new AccountService().DisplayTransactions(account);
         }
         private void RevertTransaction()
         {
+            Transaction transaction = new Transaction();
             Console.WriteLine("Enter TransactionId to revert:");
-            var TransactionId = Console.ReadLine();
-            
-            common.DisplayStatus(bankService.RevertTransaction(bankOfEmployee, TransactionId), "Transaction is Reverted successfully");
-
+            string  transactionId = Console.ReadLine();
+            Console.WriteLine("Enter Sender Account Number");
+            string accountNumber = Console.ReadLine();
+            foreach (Account account in CurrentBank.Accounts)
+            {
+                transaction = account.Transactions.SingleOrDefault(tr => tr.TransId.Equals(transactionId) && tr.Sender.Equals(accountNumber));
+                if (transaction != null)
+                    break;
+            }
+            if(transaction.TransId.Equals(""))
+                Console.WriteLine("--------Invalid Transaction Id------");
+            else
+                common.DisplayStatus(bankService.RevertTransaction(transaction),"Transaction is Reverted successfully");
         }
         private Bank GetBank(Credentials staffCredentials)
         {

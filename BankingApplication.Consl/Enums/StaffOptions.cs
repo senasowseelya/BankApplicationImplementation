@@ -14,8 +14,8 @@ namespace BankingApplication.Consl
         ViewTransactions,
         RevertTransaction,
         AddEmployee,
-        Logout,
-        Exit
+        Logout
+        
 
     }
 }

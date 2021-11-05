@@ -15,21 +15,18 @@ namespace BankingApplication.Services
         {
             dataReadWrite = new JsonReadWrite();
         }
-        public bool AddBank(String name)
+        public bool AddBank(string name,Employee employee)
         {
             if (BankData.banks.Any(e => e.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
                 throw new BankAlreadyExistsException();
             var newBank = new Bank(name);
-            newBank.Employees.Add(new Employee());
+            AddEmployee(newBank, employee);
             BankData.banks.Add(newBank);
             dataReadWrite.WriteData(BankData.banks);
             return true;
         }
         public bool AddEmployee(Bank bank, Employee newEmployee)
         {
-            newEmployee.EmpID = $"{newEmployee.BankId}{newEmployee.EmployeeName}";
-            newEmployee.UserName = $"{newEmployee.EmployeeName.Substring(0, 3)}{newEmployee.EmpID.Substring(4, 3)}";
-            newEmployee.Password = $"{newEmployee.EmpID}";
             bank.Employees.Add(newEmployee);
             new JsonReadWrite().WriteData(BankData.banks);
             return true;
@@ -67,39 +64,23 @@ namespace BankingApplication.Services
             dataReadWrite.WriteData(BankData.banks);
             return true;
         }
-        public List<Transaction> ViewTransaction(Bank bank)
+        
+        public bool RevertTransaction(Transaction transaction)
         {
-            return bank.BankTransactions;
-        }
-        public bool RevertTransaction(Bank bank, string transactionId)
-        {
-            var transaction = bank.BankTransactions.FirstOrDefault(tr => tr.TransId.Equals(transactionId));
-            transaction.Type = TransactionType.Revert;
+            if(transaction.Sender==null || transaction.Receiver==null)
+            {
+                return false;
+            }
             var senderAccount = FetchAccount(transaction.Sender);
             var receiverAccount = FetchAccount(transaction.Receiver);
-            var sendtrans = senderAccount.Transactions.FirstOrDefault(tr => tr.TransId.Equals(transactionId));
-            var rectrans = receiverAccount.Transactions.FirstOrDefault(tr => tr.TransId.Equals(transactionId));
-            if (senderAccount.Equals(receiverAccount))
-            {
-                if (transaction.Type.Equals(TransactionType.Credited))
-                    senderAccount.Balance -= transaction.Amount;
-                else if (transaction.Type.Equals(TransactionType.Debited))
-                    senderAccount.Balance += transaction.Amount;
-                sendtrans.Type = TransactionType.Revert;
-                dataReadWrite.WriteData(BankData.banks);
-                return true;
-            }
-            else
-            {
-                senderAccount.Balance += transaction.Amount;
-                sendtrans.Type = TransactionType.Revert;
-                receiverAccount.Balance -= transaction.Amount;
-                sendtrans.Type = TransactionType.Revert;
-                dataReadWrite.WriteData(BankData.banks);
-                return true;
-            }
-            throw new InvalidTransactionException();
-
+            var senderTransaction = senderAccount.Transactions.FirstOrDefault(tr => tr.TransId.Equals(transaction.TransId));
+            var receiverTransaction = receiverAccount?.Transactions.FirstOrDefault(tr => tr.TransId.Equals(transaction.TransId));
+            senderAccount.Balance += transaction.Amount;
+            receiverAccount.Balance-= transaction.Amount;
+            senderTransaction.Type = TransactionType.Revert;
+            receiverTransaction.Type= TransactionType.Revert;
+            dataReadWrite.WriteData(BankData.banks);
+            return true;
 
         }
         public bool AcceptNewCurrency(Bank bank, Currency newCurrency)

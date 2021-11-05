@@ -7,7 +7,7 @@
         Transfer,
         DisplayTransactions,
         ChangePassword,
-        Logout,
-        Exit
+        Logout
+        
     }
 }

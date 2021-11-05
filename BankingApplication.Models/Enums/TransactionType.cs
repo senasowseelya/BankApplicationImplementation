@@ -10,7 +10,8 @@ namespace BankingApplication.Models
         Debited,
         Transfer,
         ServiceCharges,
-        Revert
+        Revert,
+        Failed
 
     }
 }

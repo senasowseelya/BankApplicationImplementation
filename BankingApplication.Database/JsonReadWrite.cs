@@ -25,6 +25,7 @@ namespace BankingApplication.Database
         {
             content = JsonConvert.SerializeObject(banks, Formatting.Indented);
             File.WriteAllText(filePath, content);
+        
         }
 
     }

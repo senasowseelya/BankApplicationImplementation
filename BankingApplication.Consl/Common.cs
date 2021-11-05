@@ -9,6 +9,12 @@ namespace BankingApplication.Consl
 {
     internal class Common
     {
+       JsonReadWrite dataReadWrite;
+       internal Common()
+       {
+            dataReadWrite = new JsonReadWrite();
+        }
+    
         internal Credentials GetCredentials()
         {
             Credentials userCredentials = new Credentials();
@@ -50,7 +56,7 @@ namespace BankingApplication.Consl
                 }
                 
             }
-            Console.WriteLine("---------Invalid Crdentials-------");
+            
             return false;
         }
 

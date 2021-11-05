@@ -17,7 +17,7 @@ namespace BankingApplication.Models
         public ServiceCharge ServiceCharges { get; set; }
         public List<Employee> Employees = new List<Employee>();
         public List<Account> Accounts = new List<Account>();
-        public List<Transaction> BankTransactions = new List<Transaction>();
+        
         public List<Currency> AcceptedCurrencies = new List<Currency>();
         public Bank(String name)
         {

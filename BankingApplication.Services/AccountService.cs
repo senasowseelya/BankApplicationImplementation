@@ -20,19 +20,23 @@ namespace BankingApplication.Services
         public bool Deposit( Account userAccount ,double amount,String currencyName)
         {
             var bank = FetchBank(userAccount.BankID);
-            currency = GetCurrencyobject(bank,currencyName);
-            amount = amount * currency.ExchangeRate;
+            amount = amount * GetCurrencyExchangeRate(bank, currencyName) ;
             userAccount.Balance += amount;
-            GenerateTransaction(userAccount,userAccount,amount, TransactionType.Credited,currencyName);
             new JsonReadWrite().WriteData(BankData.banks);
+            Transaction transaction =new Transaction();
+            transaction.Sender = null;
+            transaction.Receiver = userAccount.AccountNumber;
+            transaction.Type = TransactionType.Credited;
+            transaction.Amount = amount;    
+            GenerateTransaction(transaction,currencyName);
             return true;
         }
 
-        private Currency GetCurrencyobject(Bank bank,String name)
+        private Double GetCurrencyExchangeRate(Bank bank,String name)
         {
             var currency = bank.AcceptedCurrencies.SingleOrDefault(cr=>cr.CurrencyName.Equals(name,StringComparison.OrdinalIgnoreCase));
             if (currency != null)
-                return currency;
+                return currency.ExchangeRate;
             throw new CurrencyNotSupportedException();
             
         }
@@ -40,17 +44,26 @@ namespace BankingApplication.Services
         public bool Withdraw(Account userAccount, double amount,string currencyName)
         {
             var bank = FetchBank(userAccount.BankID);
-            currency = GetCurrencyobject(bank, currencyName);
-            amount = amount * currency.ExchangeRate;
+            amount = amount * GetCurrencyExchangeRate(bank, currencyName);
+            Transaction transaction = new Transaction();
+            transaction.Sender = userAccount.AccountNumber;
+            transaction.Receiver = null;
+            transaction.Amount = amount;
             if (userAccount.Balance >= amount)
             {
                 userAccount.Balance -= amount;
-                GenerateTransaction(userAccount,userAccount, amount, TransactionType.Debited,currencyName);
                 new JsonReadWrite().WriteData(BankData.banks);
+                transaction.Type = TransactionType.Debited;
+                GenerateTransaction(transaction, currencyName);
+                
                 return true;
             }
             else
-                throw new InsufficientAmountException();
+            {
+               transaction.Type = TransactionType.Failed;
+               GenerateTransaction(transaction, currencyName);
+               throw new InsufficientAmountException();
+            }
         }
         public bool TransferAmount(Account senderAccount, string toAccNum, double amount,ModeOfTransfer mode)
         {
@@ -63,10 +76,16 @@ namespace BankingApplication.Services
             {
                 receiverAccount.Balance += amount;
                 senderAccount.Balance -= (amount+charge);
-                GenerateTransaction(senderAccount,receiverAccount, amount, TransactionType.Transfer, senderBank.DefaultCurrency.CurrencyName);
-                GenerateTransaction(senderAccount, receiverAccount, charge, TransactionType.ServiceCharges, senderBank.DefaultCurrency.CurrencyName);
-                senderBank.BankBalance +=charge;
+                senderBank.BankBalance += charge;
                 new JsonReadWrite().WriteData(BankData.banks);
+                Transaction transaction = new Transaction();
+                transaction.Sender = senderAccount.AccountNumber;
+                transaction.Receiver = toAccNum;
+                transaction.Type = TransactionType.Transfer;
+                transaction.Amount = amount;
+                GenerateTransaction(transaction, senderBank.DefaultCurrency.CurrencyName);
+                transaction.Type = TransactionType.ServiceCharges;
+                GenerateTransaction(transaction, senderBank.DefaultCurrency.CurrencyName);
             }
             else
                 throw new InsufficientAmountException();
@@ -82,21 +101,36 @@ namespace BankingApplication.Services
             new JsonReadWrite().WriteData(BankData.banks);
             return true;
         }
-        private void GenerateTransaction(Account senderAccount,Account recAccount, Double Amount,TransactionType type,String currencyName)
+        private void GenerateTransaction(Transaction transaction,String currencyName)
         {
-            var bank = FetchBank(senderAccount.BankID);
-            var NewTransaction = new Transaction(bank);
-            NewTransaction.Sender = senderAccount.AccountNumber;
-            NewTransaction.Receiver =recAccount.AccountNumber;
-            NewTransaction.Type = type;
-            NewTransaction.CurrencyName = currencyName;
-            NewTransaction.Amount = Amount;
-            senderAccount.Transactions.Add(NewTransaction);
-            if(!senderAccount.AccountNumber.Equals(recAccount.AccountNumber))
+            var bankService = new BankService();
+            string bankId = "";
+            var senderAccount = new Account();
+            var receiverAccount = new Account();
+            if (transaction.Sender != null)
             {
-                recAccount.Transactions.Add(NewTransaction);
+                 senderAccount = bankService.FetchAccount(transaction.Sender);
+                 bankId = senderAccount.BankID;
             }
-            bank.BankTransactions.Add(NewTransaction);
+            if (transaction.Receiver != null)
+            {
+                 receiverAccount = bankService.FetchAccount(transaction.Receiver);
+                if(bankId=="")
+                    bankId=receiverAccount.BankID;
+            }
+            var NewTransaction = new Transaction(bankId);
+            NewTransaction.Sender = transaction.Sender;
+            NewTransaction.Receiver = transaction.Receiver;
+            NewTransaction.Type = transaction.Type;
+            NewTransaction.CurrencyName = currencyName;
+            NewTransaction.Amount = transaction.Amount;
+            senderAccount.Transactions.Add(NewTransaction);
+            if(receiverAccount!=null)
+            {
+                receiverAccount.Transactions.Add(NewTransaction);
+            }
+            new JsonReadWrite().WriteData(BankData.banks);
+
         }
        
         public Bank FetchBank(String bankId)

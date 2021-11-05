@@ -53,6 +53,30 @@
             "Amount": 8.0,
             "CurrencyName": "INR",
             "Type": 4
+          },
+          {
+            "TransId": "TXNHDF20211105064811",
+            "Sender": "6256785748",
+            "Receiver": null,
+            "Amount": 10.0,
+            "CurrencyName": "INR",
+            "Type": 2
+          },
+          {
+            "TransId": "TXNHDF20211105070402",
+            "Sender": null,
+            "Receiver": "6256785748",
+            "Amount": 799.0,
+            "CurrencyName": "INR",
+            "Type": 1
+          },
+          {
+            "TransId": "TXNHDF20211105070441",
+            "Sender": "6256785748",
+            "Receiver": null,
+            "Amount": 500.0,
+            "CurrencyName": "INR",
+            "Type": 2
           }
         ],
         "AccountId": "HDF2021-11-03",
@@ -60,7 +84,7 @@
         "AccountNumber": "6256785748",
         "AccountHolderName": "Vishnumolakala Sena Sowseelya",
         "IsActive": true,
-        "Balance": 2980.0,
+        "Balance": 5008.0,
         "DateofIssue": "2021-11-03T00:00:00+05:30",
         "User": {
           "UserName": "Vish",
@@ -141,64 +165,6 @@
           "Aadhar": "54568472135",
           "PhoneNumber": "6524168554"
         }
-      }
-    ],
-    "BankTransactions": [
-      {
-        "TransId": "TXNHDF20211103083259",
-        "Sender": "6256785748",
-        "Receiver": "6256785748",
-        "Amount": 3000.0,
-        "CurrencyName": "INR",
-        "Type": 1
-      },
-      {
-        "TransId": "TXNHDF20211103083654",
-        "Sender": "6256785748",
-        "Receiver": "6256785748",
-        "Amount": 200.0,
-        "CurrencyName": "INR",
-        "Type": 2
-      },
-      {
-        "TransId": "TXNHDF20211103083723",
-        "Sender": "6256785748",
-        "Receiver": "4862142242",
-        "Amount": 500.0,
-        "CurrencyName": "INR",
-        "Type": 5
-      },
-      {
-        "TransId": "TXNHDF20211103091140",
-        "Sender": "4862142242",
-        "Receiver": "4862142242",
-        "Amount": 3000.0,
-        "CurrencyName": "INR",
-        "Type": 1
-      },
-      {
-        "TransId": "TXNHDF20211103091148",
-        "Sender": "4862142242",
-        "Receiver": "4862142242",
-        "Amount": 100.0,
-        "CurrencyName": "INR",
-        "Type": 5
-      },
-      {
-        "TransId": "TXNHDF20211103091213",
-        "Sender": "4862142242",
-        "Receiver": "6256785748",
-        "Amount": 200.0,
-        "CurrencyName": "INR",
-        "Type": 3
-      },
-      {
-        "TransId": "TXNHDF20211103091213",
-        "Sender": "4862142242",
-        "Receiver": "6256785748",
-        "Amount": 8.0,
-        "CurrencyName": "INR",
-        "Type": 4
       }
     ],
     "AcceptedCurrencies": [
