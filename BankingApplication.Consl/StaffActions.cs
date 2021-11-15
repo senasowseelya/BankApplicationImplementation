@@ -104,13 +104,9 @@ namespace BankingApplication.Consl
         private Employee GetEmployeeDetails()
         {
             var employee = new Employee();
-            Console.WriteLine("Enter Name of Employee");
-            employee.EmployeeName = Console.ReadLine();
-            Console.WriteLine("Enter Employee Age:");
-            employee.Age = Convert.ToInt32(Console.ReadLine());
-            employee.EmpID = $"{employee.EmployeeName}{DateTime.Today:yyyyMMDD}";
-            employee.UserName = $"{employee.EmployeeName.Substring(0, 3)}{employee.EmpID.Substring(4, 3)}";
-            employee.Password = $"{employee.EmpID}";
+            User user= GetUserDetails();
+            employee.User=user;
+            employee.EmpID = $"{user.Name.Substring(0,4)}{DateTime.Today:yyyyMMDD}";
             return employee;
         }
 
@@ -145,25 +141,25 @@ namespace BankingApplication.Consl
                     case ServiceCharges.SelfRTGS:
                         {
                             Console.WriteLine("Enter Self RTGS Charge to update");
-                            serviceCharges.SelfRTGS = Convert.ToDouble(Console.ReadLine());
+                            CurrentBank.ServiceCharges.Find(val=>val.Name.Equals("SelfRTGS")).Value = Convert.ToDouble(Console.ReadLine());
                             break;
                         }
                     case ServiceCharges.OtherRTGS:
                         {
                             Console.WriteLine("Enter Other RTGS Charge to update");
-                            serviceCharges.OtherRTGS = Convert.ToDouble(Console.ReadLine());
+                            CurrentBank.ServiceCharges.Find(val => val.Name.Equals("OtherRTGS")).Value = Convert.ToDouble(Console.ReadLine());
                             break;
                         }
                     case ServiceCharges.SelfIMPS:
                         {
                             Console.WriteLine("Enter  Self IMPS Charge to update");
-                            serviceCharges.SelfIMPS = Convert.ToDouble(Console.ReadLine());
+                            CurrentBank.ServiceCharges.Find(val => val.Name.Equals("SelfIMPS")).Value = Convert.ToDouble(Console.ReadLine());
                             break;
                         }
                     case ServiceCharges.OtherIMPS:
                         {
                             Console.WriteLine("Enter  Other IMPS Charge to update");
-                            serviceCharges.OtherIMPS = Convert.ToDouble(Console.ReadLine());
+                            CurrentBank.ServiceCharges.Find(val => val.Name.Equals("SelfIMPS")).Value = Convert.ToDouble(Console.ReadLine());
                             break;
                         }
                     default:
@@ -173,36 +169,19 @@ namespace BankingApplication.Consl
                         }
 
                 }
-                
-                common.DisplayStatus(bankService.AddCharges(CurrentBank, serviceCharges), "New Services Charges Updated Succesfully");
+                Console.WriteLine("successfully Updated");
+
+                new JsonReadWrite().WriteData(BankData.banks);
+
+
 
             }
         }
         private void CreateAccount()
         {
-            var newUser =new User();
+            User newUser=GetUserDetails();
             var newAccount = new Account();
-            Console.WriteLine("Enter User's Full Name:");
-            newUser.Name = Console.ReadLine();
             newAccount.AccountHolderName =newUser.Name;
-            Console.WriteLine("Enter Account Holder's Date of Birth:");
-            newUser.DOB = Console.ReadLine();
-            Console.WriteLine("Enter Account Holder's Aadhar Number:");
-            newUser.Aadhar = (Console.ReadLine());
-            Console.WriteLine("Enter Phone number:");
-            newUser.PhoneNumber= Console.ReadLine();
-            Console.WriteLine("Enter Gender:");
-            newUser.Gender = Console.ReadLine();
-            Console.WriteLine("Enter Age :");
-            newUser.Age = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Enter Father/Husband name:");
-            newUser.FatherOrHusbandName = Console.ReadLine();
-            Console.WriteLine("Enter Address:");
-            newUser.Address = Console.ReadLine();
-            Console.WriteLine("Enter Nationality:");
-            newUser.Nationality = Console.ReadLine();
-            Console.WriteLine("Enter Religion:");
-            newUser.Religion = Console.ReadLine();
             newAccount.DateofIssue = DateTime.Today;
             if (bankService.CreateAccountService(CurrentBank, newAccount,newUser))
             {
@@ -210,6 +189,33 @@ namespace BankingApplication.Consl
                 Console.WriteLine("Your username is {0}", newUser.UserName);
                 Console.WriteLine("Password is your accountNumber change it if you wish");
             }
+
+        }
+        private User GetUserDetails()
+        {
+            var newUser = new User();
+            Console.WriteLine("Enter User's Full Name:");
+            newUser.Name = Console.ReadLine();
+            //Console.WriteLine("Enter  Date of Birth:");
+            //newUser.DOB = Console.ReadLine();
+            //Console.WriteLine("Enter  Aadhar Number:");
+            //newUser.Aadhar = (Console.ReadLine());
+            //Console.WriteLine("Enter Phone number:");
+            //newUser.PhoneNumber = Console.ReadLine();
+            //Console.WriteLine("Enter Gender:");
+            //newUser.Gender = Console.ReadLine();
+            //Console.WriteLine("Enter Age :");
+            //newUser.Age = Convert.ToInt32(Console.ReadLine());
+            //Console.WriteLine("Enter Father/Husband name:");
+            //newUser.FatherOrHusbandName = Console.ReadLine();
+            //Console.WriteLine("Enter Address:");
+            //newUser.Address = Console.ReadLine();
+            //Console.WriteLine("Enter Nationality:");
+            //newUser.Nationality = Console.ReadLine();
+            //Console.WriteLine("Enter Religion:");
+            //newUser.Religion = Console.ReadLine();
+            return newUser;
+
 
         }
         private void RemoveAccount()
@@ -251,7 +257,7 @@ namespace BankingApplication.Consl
 
             foreach (Bank bank in BankData.banks)
             {
-                if (bank.Employees.Any(emp => emp.UserName.Equals(staffCredentials.UserName) && emp.Password.Equals(staffCredentials.Password)))
+                if (bank.Employees.Any(emp => emp.User.UserName.Equals(staffCredentials.UserName) && emp.User.Password.Equals(staffCredentials.Password)))
                     return bank;
 
             }

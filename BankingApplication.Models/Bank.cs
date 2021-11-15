@@ -13,11 +13,11 @@ namespace BankingApplication.Models
         public String Branch { get; set; }
         public String IFSC { get; set; }
         public Double BankBalance { get; set; }
-        public Currency DefaultCurrency { get;set; }
-        public ServiceCharge ServiceCharges { get; set; }
+        public Currency DefaultCurrency { get; set; }
+        public List<ServiceCharge> ServiceCharges = new List<ServiceCharge>();
         public List<Employee> Employees = new List<Employee>();
         public List<Account> Accounts = new List<Account>();
-        
+
         public List<Currency> AcceptedCurrencies = new List<Currency>();
         public Bank(String name)
         {
@@ -27,15 +27,35 @@ namespace BankingApplication.Models
             Currency newCurrency = new Currency();
             AcceptedCurrencies.Add(newCurrency);
             DefaultCurrency = newCurrency;
-            ServiceCharge serviceCharge = new ServiceCharge
+            ServiceCharges = new List<ServiceCharge>
             {
-                SelfIMPS = 5.0,
-                SelfRTGS = 0.0,
-                OtherRTGS = 2.4,
-                OtherIMPS = 6.5
-             };
-            ServiceCharges = serviceCharge;
+                new ServiceCharge
+                {
+                    Name="SelfIMPS",
+                    Value=2.0
+                },
+                 new ServiceCharge
+                {
+                    Name="SelfRTGS",
+                    Value=4.0
+                },
+                  new ServiceCharge
+                {
+                    Name="OtherRTGS",
+                    Value=2.4
+                },
+                new ServiceCharge
+                {
+                    Name="OtherIMPS",
+                    Value=1.5
+                }
+
+
+            };
+
+
         }
+
 
     }
 }

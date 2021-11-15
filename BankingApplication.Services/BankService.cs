@@ -38,6 +38,7 @@ namespace BankingApplication.Services
             newAcc.BankID = bank.BankId;
             newUser.UserName = newAcc.AccountHolderName.Substring(0, 4);
             newUser.Password = newAcc.AccountNumber;
+            newUser.UserId = newAcc.AccountId.Substring(0, 4)+newUser.UserName;
             newAcc.IsActive = true;
             newAcc.User = newUser;
             bank.Accounts.Add(newAcc);
@@ -58,12 +59,7 @@ namespace BankingApplication.Services
             throw new AccountDoesntExistException();
 
         }
-        public bool AddCharges(Bank bank, ServiceCharge serviceCharges)
-        {
-            bank.ServiceCharges = serviceCharges;
-            dataReadWrite.WriteData(BankData.banks);
-            return true;
-        }
+       
         
         public bool RevertTransaction(Transaction transaction)
         {

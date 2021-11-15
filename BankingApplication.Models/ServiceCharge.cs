@@ -6,9 +6,7 @@ namespace BankingApplication.Models
 {
     public  class ServiceCharge
     {
-        public Double SelfRTGS { get; set; }
-        public Double SelfIMPS { get; set; }
-        public Double OtherRTGS { get; set; }
-        public Double OtherIMPS { get; set; }
+        public string  Name { get; set; }
+        public double Value { get; set; }
     }
 }

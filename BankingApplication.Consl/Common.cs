@@ -41,7 +41,7 @@ namespace BankingApplication.Consl
             {
                 foreach (Bank bank in BankData.banks)
                 {
-                    if (bank.Employees.Any(emp => emp.UserName.Equals(userCredentials.UserName) && emp.Password.Equals(userCredentials.Password)))
+                    if (bank.Employees.Any(emp => emp.User.UserName.Equals(userCredentials.UserName) && emp.User.Password.Equals(userCredentials.Password)))
                         return true;
                 }
                 

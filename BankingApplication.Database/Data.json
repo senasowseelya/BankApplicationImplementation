@@ -1,14 +1,44 @@
 [
   {
+    "ServiceCharges": [
+      {
+        "Name": "SelfIMPS",
+        "Value": 2.0
+      },
+      {
+        "Name": "SelfRTGS",
+        "Value": 2.8
+      },
+      {
+        "Name": "OtherRTGS",
+        "Value": 1.9
+      },
+      {
+        "Name": "OtherIMPS",
+        "Value": 1.5
+      }
+    ],
     "Employees": [
       {
-        "UserName": "Mahita",
-        "Password": "Mahi@123",
-        "BankId": null,
-        "EmpID": null,
+        "BankId": "HDF20211103082126",
+        "EmpID": "Mahi123",
         "Job": "Manager",
-        "EmployeeName": "Mahita",
-        "Age": 35
+        "User": {
+          "AccountId": null,
+          "UserName": "Mahita",
+          "UserId": null,
+          "Password": "Mahi@1280",
+          "Name": "Mahitha Gurram",
+          "FatherOrHusbandName": "Srinivas",
+          "Age": 40,
+          "Nationality": "Indian",
+          "Religion": "Hindu",
+          "Gender": "Female",
+          "Address": "Chavali-Vemur-Guntur",
+          "DOB": "19-04-1987",
+          "Aadhar": "789765495",
+          "PhoneNumber": "5465486512"
+        }
       }
     ],
     "Accounts": [
@@ -87,7 +117,9 @@
         "Balance": 5008.0,
         "DateofIssue": "2021-11-03T00:00:00+05:30",
         "User": {
+          "AccountId": null,
           "UserName": "Vish",
+          "UserId": null,
           "Password": "Sena@1211",
           "Name": "Vishnumolakala Sena Sowseelya",
           "FatherOrHusbandName": "SrinivasRao",
@@ -152,7 +184,9 @@
         "Balance": 2692.0,
         "DateofIssue": "2021-11-03T00:00:00+05:30",
         "User": {
+          "AccountId": null,
           "UserName": "Naga",
+          "UserId": null,
           "Password": "Nag@1219",
           "Name": "Nagababu",
           "FatherOrHusbandName": "Bapaniah",
@@ -185,12 +219,6 @@
     "DefaultCurrency": {
       "CurrencyName": "INR",
       "ExchangeRate": 1.0
-    },
-    "ServiceCharges": {
-      "SelfRTGS": 1.0,
-      "SelfIMPS": 4.0,
-      "OtherRTGS": 2.0,
-      "OtherIMPS": 1.6
     }
   }
 ]

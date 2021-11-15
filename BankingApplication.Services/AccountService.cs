@@ -17,12 +17,13 @@ namespace BankingApplication.Services
         {
             currency = new Currency();  
         }
+        JsonReadWrite DataReaderWriter =new JsonReadWrite();
         public bool Deposit( Account userAccount ,double amount,String currencyName)
         {
             var bank = FetchBank(userAccount.BankID);
             amount = amount * GetCurrencyExchangeRate(bank, currencyName) ;
             userAccount.Balance += amount;
-            new JsonReadWrite().WriteData(BankData.banks);
+            DataReaderWriter.WriteData(BankData.banks);
             Transaction transaction =new Transaction();
             transaction.Sender = null;
             transaction.Receiver = userAccount.AccountNumber;
@@ -52,7 +53,7 @@ namespace BankingApplication.Services
             if (userAccount.Balance >= amount)
             {
                 userAccount.Balance -= amount;
-                new JsonReadWrite().WriteData(BankData.banks);
+                DataReaderWriter.WriteData(BankData.banks);
                 transaction.Type = TransactionType.Debited;
                 GenerateTransaction(transaction, currencyName);
                 
@@ -77,7 +78,7 @@ namespace BankingApplication.Services
                 receiverAccount.Balance += amount;
                 senderAccount.Balance -= (amount+charge);
                 senderBank.BankBalance += charge;
-                new JsonReadWrite().WriteData(BankData.banks);
+                DataReaderWriter.WriteData(BankData.banks);
                 Transaction transaction = new Transaction();
                 transaction.Sender = senderAccount.AccountNumber;
                 transaction.Receiver = toAccNum;
@@ -98,7 +99,7 @@ namespace BankingApplication.Services
         public bool ChangePassword(Account account ,String newPassword)
         {
             account.User.Password = newPassword;
-            new JsonReadWrite().WriteData(BankData.banks);
+            DataReaderWriter.WriteData(BankData.banks);
             return true;
         }
         private void GenerateTransaction(Transaction transaction,String currencyName)
@@ -129,7 +130,7 @@ namespace BankingApplication.Services
             {
                 receiverAccount.Transactions.Add(NewTransaction);
             }
-            new JsonReadWrite().WriteData(BankData.banks);
+            DataReaderWriter.WriteData(BankData.banks);
 
         }
        
@@ -143,6 +144,7 @@ namespace BankingApplication.Services
         
         private Double CalculateCharges(Bank senderBank,Bank receiverBank,Double amount,ModeOfTransfer mode)
         {
+            Double serviceChargeValue;
             Double charge = 0.0;
             switch (mode)
             {
@@ -150,11 +152,13 @@ namespace BankingApplication.Services
                     {
                         if (senderBank.BankId.Equals(receiverBank.BankId))
                         {
-                            charge = amount * (senderBank.ServiceCharges.SelfIMPS / 100);
+                            serviceChargeValue = senderBank.ServiceCharges.Find(val => val.Name.Equals("SelfIMPS")).Value;
+                            charge = amount * (serviceChargeValue/ 100);
                         }
                         else
                         {
-                            charge = amount * (senderBank.ServiceCharges.OtherIMPS / 100);
+                            serviceChargeValue= senderBank.ServiceCharges.Find(val => val.Name.Equals("OtherIMPS")).Value;
+                            charge = amount * (serviceChargeValue / 100);
                         }
                         break;
                     }
@@ -162,11 +166,13 @@ namespace BankingApplication.Services
                     {
                         if (senderBank.BankId.Equals(receiverBank.BankId))
                         {
-                            charge = amount * (senderBank.ServiceCharges.SelfRTGS / 100);
+                            serviceChargeValue = senderBank.ServiceCharges.Find(val => val.Name.Equals("SelfRTGS")).Value;
+                            charge = amount * (serviceChargeValue / 100);
                         }
                         else
                         {
-                            charge = amount * (senderBank.ServiceCharges.OtherRTGS / 100);
+                            serviceChargeValue = senderBank.ServiceCharges.Find(val => val.Name.Equals("OtherRTGS")).Value;
+                            charge = amount * (serviceChargeValue / 100);
                         }
                         break;
                     }

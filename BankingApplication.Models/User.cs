@@ -6,7 +6,9 @@ namespace BankingApplication.Models
 {
     public class User
     {
-        public String UserName { get; set; }
+        public string AccountId { get; set; }
+        public string UserName { get; set; }            
+        public String UserId { get; set; }
         public String Password { get; set; }
         public String  Name { get; set; }
         public String FatherOrHusbandName { get; set; }
