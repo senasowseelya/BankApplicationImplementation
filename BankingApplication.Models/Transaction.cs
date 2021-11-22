@@ -13,13 +13,17 @@ namespace BankingApplication.Models
         public double Amount { get; set; }
         public string CurrencyName { get; set; }
         public TransactionType Type { get; set; }
+        public DateTime Date { get; set; }
+
         public Transaction()
         {
             TransId = "";
+            Date = DateTime.Today;
         }
         public Transaction(String BankId)
         {
             TransId = $"TXN{BankId.Substring(0, 3)}{DateTime.Now.ToString("yyyyMMddhhmmss")}";
+            Date = DateTime.Today;
         }
 
     }

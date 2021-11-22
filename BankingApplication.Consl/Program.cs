@@ -7,6 +7,7 @@ namespace BankingApplication.Consl
     {
         internal static void Main()
         {
+            
             Common common = new Common();
             while (true)
             {

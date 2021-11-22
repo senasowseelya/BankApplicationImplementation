@@ -21,3 +21,9 @@ C:\Users\DELL\source\repos\BankingApplication.consl\bin\Debug\netcoreapp3.1\Newt
 C:\Users\DELL\source\repos\BankingApplication.consl\bin\Debug\netcoreapp3.1\BankingApplication.Database.dll
 C:\Users\DELL\source\repos\BankingApplication.consl\bin\Debug\netcoreapp3.1\BankingApplication.Database.pdb
 C:\Users\DELL\source\repos\BankingApplication.consl\bin\Debug\netcoreapp3.1\Data.json
+C:\Users\DELL\source\repos\BankingApplication.consl\bin\Debug\netcoreapp3.1\System.Data.SqlClient.dll
+C:\Users\DELL\source\repos\BankingApplication.consl\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
+C:\Users\DELL\source\repos\BankingApplication.consl\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\sni.dll
+C:\Users\DELL\source\repos\BankingApplication.consl\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
+C:\Users\DELL\source\repos\BankingApplication.consl\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\DELL\source\repos\BankingApplication.consl\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll

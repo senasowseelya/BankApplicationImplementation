@@ -7,11 +7,11 @@
       },
       {
         "Name": "SelfRTGS",
-        "Value": 4.0
+        "Value": 2.8
       },
       {
         "Name": "OtherRTGS",
-        "Value": 2.4
+        "Value": 1.9
       },
       {
         "Name": "OtherIMPS",
@@ -39,8 +39,6 @@
           "Aadhar": "789765495",
           "PhoneNumber": "5465486512"
         }
-      
-     
       }
     ],
     "Accounts": [
