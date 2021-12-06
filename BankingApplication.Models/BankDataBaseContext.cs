@@ -7,8 +7,7 @@ namespace BankingApplication.Models
 {
     public partial class BankDataBaseContext : DbContext
     {
-        public BankDataBaseContext()
-            : base("name=BankDataBaseContext")
+        public BankDataBaseContext() : base("name=BankDataBaseContext")
         {
         }
 

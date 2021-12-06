@@ -46,37 +46,37 @@ namespace BankingApplication.Consl
                             }
                         case StaffOptions.CreateAccount:
                             {
-                                //CreateAccount();
+                                CreateAccount();
                                 break;
                             }
                         case StaffOptions.RemoveAccount:
                             {
-                                //RemoveAccount();
+                                RemoveAccount();
                                 break;
                             }
-                        case StaffOptions.AddCharges:
+                        case StaffOptions.ModifyServiceCharges:
                             {
-                                //AddCharges();
+                                ModifyServiceCharges();
                                 break;
                             }
                         case StaffOptions.AcceptNewCurrency:
                             {
-                                //AcceptNewCurrency();
+                                AcceptNewCurrency();
                                 break;
                             }
                         case StaffOptions.ViewTransactions:
                             {
-                                //ViewTransaction();
+                                ViewTransaction();
                                 break;
                             }
                         case StaffOptions.RevertTransaction:
                             {
-                                //RevertTransaction();
+                                RevertTransaction();
                                 break;
                             }
                         case StaffOptions.AddEmployee:
                             {
-                                //AddEmployee();
+                                AddEmployee();
                                 break;
                             }
                         case StaffOptions.Logout:
@@ -99,6 +99,8 @@ namespace BankingApplication.Consl
 
         }
 
+       
+
         private void AddBank()
         {
             Console.WriteLine("Enter Bank Name");
@@ -107,32 +109,91 @@ namespace BankingApplication.Consl
             string branch=Console.ReadLine();
             bankService.AddBank(bankName,branch);
         }
+        private void CreateAccount()
+        {
+            BankUser newUser = GetUserDetails();
+            Console.WriteLine(" Account Created and Your Account Number is {0}", bankService.CreateAccountService(CurrentBank, newUser));
+            Console.WriteLine("Your username and your password is your account number change it later");
+        }
+            
+            
 
-        //        private void AddEmployee()
-        //        {
-        //            Employee employee = GetEmployeeDetails();
-        //            common.DisplayStatus(bankService.AddEmployee(employee), "Succesfully added new Employee\nYour username {employee.UserName} \nYour password {employee.Password}");
-        //        }
-        //        private Employee GetEmployeeDetails()
-        //        {
-        //            var employee = new Employee();
-        //            BankUser user = GetUserDetails();
+        
+        private BankUser GetUserDetails()
+        {
+            var newUser = new BankUser();
+            Console.WriteLine("Enter User's Full Name:");
+            newUser.name = Console.ReadLine();
+            Console.WriteLine("Enter  Date of Birth:");
+            newUser.dob = Convert.ToDateTime(Console.ReadLine()).Date;
+            Console.WriteLine("Enter  Aadhar Number:");
+            newUser.aadharNumber = Convert.ToInt64((Console.ReadLine()));
+            Console.WriteLine("Enter Phone number:");
+            newUser.contactNumber = Console.ReadLine();
+            Console.WriteLine("Enter Age :");
+            newUser.age = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter Nationality:");
+            newUser.nationality = Console.ReadLine();
+            newUser.id = newUser.name.Substring(0, 4);
+            newUser.username = newUser.id ;
+            newUser.password = newUser.username;
+            return newUser;
+        }
+        private void RemoveAccount()
+        {
+            Console.WriteLine("Enter account number :");
+            var accountNumber = Console.ReadLine();
+            common.DisplayStatus(bankService.RemoveAccount(CurrentBank, accountNumber), "Your Account is Closed and you can't perform any actions on this acoount..");
+            
+            
 
-        //            employee.EmpID = $"{user.Name.Substring(0, 4)}{DateTime.Today:yyyyMMDD}";
-        //            return employee;
-        //        }
+        }
+        private void ModifyServiceCharges()
+        {
+            Console.WriteLine("Enter ServiceCharge id:");
+            var serviceChargeId=Console.ReadLine();
+            Console.WriteLine("Enter Modified Value");
+            var serviceChargeValue=Convert.ToDecimal(Console.ReadLine());
+            common.DisplayStatus(bankService.ModifyServiceCharges(CurrentBank,serviceChargeId, serviceChargeValue),"Changed value Successfully");
 
-        //        private void AcceptNewCurrency()
-        //        {
 
-        //            var newCurrency = new Currency();
-        //            Console.WriteLine("Enter New Currency Name:");
-        //            newCurrency.CurrencyName = Console.ReadLine();
-        //            Console.WriteLine("Enter ExchangeRate:");
-        //            newCurrency.ExchangeRate = Convert.ToDouble(Console.ReadLine());
-        //            common.DisplayStatus(bankService.AcceptNewCurrency(CurrentBank, newCurrency), "Succesfully added new Currency");
+        }
+        private void AcceptNewCurrency()
+        {
 
-        //        }
+            var newCurrency = new Currency();
+            Console.WriteLine("Enter currency Id");
+            newCurrency.id = Console.ReadLine();
+            Console.WriteLine("Enter New Currency Name:");
+            newCurrency.name = Console.ReadLine();
+            Console.WriteLine("Enter ExchangeRate:");
+            newCurrency.exchangeRate = Convert.ToDecimal(Console.ReadLine());
+            common.DisplayStatus(bankService.AcceptNewCurrency(CurrentBank, newCurrency), "Succesfully added new Currency");
+
+        }
+        private void ViewTransaction()
+        {
+            Console.WriteLine("Enter Account Number");
+            string accountNumber = Console.ReadLine();
+            List<Transaction> transactions = new List<Transaction>();
+            transactions = bankService.DisplayTransactions(accountNumber);
+            foreach(Transaction  transaction in transactions)
+            {
+                Console.WriteLine(transaction.transid+" "+transaction.transactionAmount+" "+transaction.transactionOn+" "+transaction.senderaccountId+" "+transaction.receiveraccountId);
+            }
+
+        }
+
+
+        private void AddEmployee()
+        {
+            BankUser user = GetUserDetails();
+            bankService.AddEmployee(CurrentBank, user);
+            common.DisplayStatus(true, $"Succesfully added new Employee\nYour username {user.username} \nYour password {user.password}");
+        }
+        
+
+
 
         private void Menu()
         {
@@ -141,141 +202,19 @@ namespace BankingApplication.Consl
             Console.WriteLine("-----------------------------------");
             Console.WriteLine("Enter Choice\n");
         }
-        //        private void AddCharges()
-        //        {
-        //            ServiceCharge serviceCharges = new ServiceCharge();
-        //            while (true)
-        //            {
-        //                Console.WriteLine("1.Self RTGS Charges\n2.Other RTGS Charges\n3.Self IMPS Charges\n4.Other IMPS Charges\n others exit");
-        //                Console.WriteLine("Enter Choice");
-        //                switch ((ServiceCharges)Convert.ToInt32(Console.ReadLine()))
-        //                {
-        //                    case ServiceCharges.SelfRTGS:
-        //                        {
-        //                            Console.WriteLine("Enter Self RTGS Charge to update");
-        //                            CurrentBank.ServiceCharges.Find(val => val.Name.Equals("SelfRTGS")).Value = Convert.ToDouble(Console.ReadLine());
-        //                            break;
-        //                        }
-        //                    case ServiceCharges.OtherRTGS:
-        //                        {
-        //                            Console.WriteLine("Enter Other RTGS Charge to update");
-        //                            CurrentBank.ServiceCharges.Find(val => val.Name.Equals("OtherRTGS")).Value = Convert.ToDouble(Console.ReadLine());
-        //                            break;
-        //                        }
-        //                    case ServiceCharges.SelfIMPS:
-        //                        {
-        //                            Console.WriteLine("Enter  Self IMPS Charge to update");
-        //                            CurrentBank.ServiceCharges.Find(val => val.Name.Equals("SelfIMPS")).Value = Convert.ToDouble(Console.ReadLine());
-        //                            break;
-        //                        }
-        //                    case ServiceCharges.OtherIMPS:
-        //                        {
-        //                            Console.WriteLine("Enter  Other IMPS Charge to update");
-        //                            CurrentBank.ServiceCharges.Find(val => val.Name.Equals("SelfIMPS")).Value = Convert.ToDouble(Console.ReadLine());
-        //                            break;
-        //                        }
-        //                    default:
-        //                        {
-        //                            return;
-
-        //                        }
-
-        //                }
-        //                Console.WriteLine("successfully Updated");
-
-        //                new JsonReadWrite().WriteData(BankData.banks);
 
 
 
-        //            }
-        //        }
-        //        private void CreateAccount()
-        //        {
-        //            User newUser = GetUserDetails();
-        //            var newAccount = new Account();
-        //            newAccount.AccountHolderName = newUser.Name;
-        //            newAccount.DateofIssue = DateTime.Today;
-        //            if (bankService.CreateAccountService(CurrentBank, newAccount, newUser))
-        //            {
-        //                Console.WriteLine(" Account Created and Your Account Number is {0}", newAccount.AccountNumber);
-        //                Console.WriteLine("Your username is {0}", newUser.UserName);
-        //                Console.WriteLine("Password is your accountNumber change it if you wish");
-        //            }
-
-        //        }
-        //        private User GetUserDetails()
-        //        {
-        //            var newUser = new User();
-        //            Console.WriteLine("Enter User's Full Name:");
-        //            newUser.Name = Console.ReadLine();
-        //            //Console.WriteLine("Enter  Date of Birth:");
-        //            //newUser.DOB = Console.ReadLine();
-        //            //Console.WriteLine("Enter  Aadhar Number:");
-        //            //newUser.Aadhar = (Console.ReadLine());
-        //            //Console.WriteLine("Enter Phone number:");
-        //            //newUser.PhoneNumber = Console.ReadLine();
-        //            //Console.WriteLine("Enter Gender:");
-        //            //newUser.Gender = Console.ReadLine();
-        //            //Console.WriteLine("Enter Age :");
-        //            //newUser.Age = Convert.ToInt32(Console.ReadLine());
-        //            //Console.WriteLine("Enter Father/Husband name:");
-        //            //newUser.FatherOrHusbandName = Console.ReadLine();
-        //            //Console.WriteLine("Enter Address:");
-        //            //newUser.Address = Console.ReadLine();
-        //            //Console.WriteLine("Enter Nationality:");
-        //            //newUser.Nationality = Console.ReadLine();
-        //            //Console.WriteLine("Enter Religion:");
-        //            //newUser.Religion = Console.ReadLine();
-        //            return newUser;
-
-
-        //        }
-        //        private void RemoveAccount()
-        //        {
-        //            Console.WriteLine("Enter account number :");
-        //            var accountNumber = Console.ReadLine();
-        //            common.DisplayStatus(bankService.RemoveAccount(CurrentBank, accountNumber), "Your Account is Closed and you can't perform any actions on this acoount..");
-
-        //        }
-        //        private void ViewTransaction()
-        //        {
-        //            Console.WriteLine("Enter Account Number");
-        //            string accountNumber = Console.ReadLine();
-        //            Account account = CurrentBank.Accounts.SingleOrDefault(acc => acc.AccountNumber.Equals(accountNumber));
-        //            if (account == null)
-        //                throw new AccountDoesntExistException();
-        //            new AccountService().DisplayTransactions(account);
-        //        }
-        //        private void RevertTransaction()
-        //        {
-        //            Transaction transaction = new Transaction();
-        //            Console.WriteLine("Enter TransactionId to revert:");
-        //            string transactionId = Console.ReadLine();
-        //            Console.WriteLine("Enter Sender Account Number");
-        //            string accountNumber = Console.ReadLine();
-        //            foreach (Account account in CurrentBank.Accounts)
-        //            {
-        //                transaction = account.Transactions.SingleOrDefault(tr => tr.TransId.Equals(transactionId) && tr.Sender.Equals(accountNumber));
-        //                if (transaction != null)
-        //                    break;
-        //            }
-        //            if (transaction.TransId.Equals(""))
-        //                Console.WriteLine("--------Invalid Transaction Id------");
-        //            else
-        //                common.DisplayStatus(bankService.RevertTransaction(transaction), "Transaction is Reverted successfully");
-        //        }
-        //        private Bank GetBank(Credentials staffCredentials)
-        //        {
-
-        //            foreach (Bank bank in BankData.banks)
-        //            {
-        //                if (bank.Employees.Any(emp => emp.User.UserName.Equals(staffCredentials.UserName) && emp.User.Password.Equals(staffCredentials.Password)))
-        //                    return bank;
-
-        //            }
-        //            return null;
-
-        //        }
+        private void RevertTransaction()
+        {
+            Transaction transaction = new Transaction();
+            Console.WriteLine("Enter TransactionId to revert:");
+            string transactionId = Console.ReadLine();
+            Console.WriteLine("Enter Sender Account Number");
+            string accountNumber = Console.ReadLine();
+            common.DisplayStatus(bankService.RevertTransaction(transactionId,accountNumber), "Transaction is Reverted successfully");
+        }
+        
 
     }
 }

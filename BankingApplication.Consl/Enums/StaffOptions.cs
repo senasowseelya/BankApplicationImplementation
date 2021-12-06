@@ -9,7 +9,7 @@ namespace BankingApplication.Consl
         AddBank=1,
         CreateAccount,
         RemoveAccount,
-        AddCharges,
+        ModifyServiceCharges,
         AcceptNewCurrency,
         ViewTransactions,
         RevertTransaction,
