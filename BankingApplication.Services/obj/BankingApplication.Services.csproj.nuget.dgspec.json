@@ -4,49 +4,6 @@
     "C:\\Users\\senas\\source\\repos\\BankingApplicationWithEF\\BankingApplication.Services\\BankingApplication.Services.csproj": {}
   },
   "projects": {
-    "C:\\Users\\senas\\source\\repos\\BankingApplicationWithEF\\BankingApplication.Database\\BankingApplication.Database.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\senas\\source\\repos\\BankingApplicationWithEF\\BankingApplication.Database\\BankingApplication.Database.csproj",
-        "projectName": "BankingApplication.Database",
-        "projectPath": "C:\\Users\\senas\\source\\repos\\BankingApplicationWithEF\\BankingApplication.Database\\BankingApplication.Database.csproj",
-        "packagesPath": "C:\\Users\\senas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\senas\\source\\repos\\BankingApplicationWithEF\\BankingApplication.Database\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\senas\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net48"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net48": {
-            "targetAlias": "net48",
-            "projectReferences": {
-              "C:\\Users\\senas\\source\\repos\\BankingApplicationWithEF\\BankingApplication.Models\\BankingApplication.Models.csproj": {
-                "projectPath": "C:\\Users\\senas\\source\\repos\\BankingApplicationWithEF\\BankingApplication.Models\\BankingApplication.Models.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net48": {
-          "targetAlias": "net48",
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
     "C:\\Users\\senas\\source\\repos\\BankingApplicationWithEF\\BankingApplication.Models\\BankingApplication.Models.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -120,8 +77,8 @@
           "net48": {
             "targetAlias": "net48",
             "projectReferences": {
-              "C:\\Users\\senas\\source\\repos\\BankingApplicationWithEF\\BankingApplication.Database\\BankingApplication.Database.csproj": {
-                "projectPath": "C:\\Users\\senas\\source\\repos\\BankingApplicationWithEF\\BankingApplication.Database\\BankingApplication.Database.csproj"
+              "C:\\Users\\senas\\source\\repos\\BankingApplicationWithEF\\BankingApplication.Models\\BankingApplication.Models.csproj": {
+                "projectPath": "C:\\Users\\senas\\source\\repos\\BankingApplicationWithEF\\BankingApplication.Models\\BankingApplication.Models.csproj"
               }
             }
           }

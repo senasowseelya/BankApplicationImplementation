@@ -1,4 +1,4 @@
-﻿using BankingApplication.Database;
+﻿
 using BankingApplication.Models;
 using BankingApplication.Services;
 using System;
@@ -15,8 +15,6 @@ namespace BankingApplication.Consl
 
         Common common = new Common();
         BankService bankService = new BankService();
-        
-
         internal StaffActions(Credentials staffCredentials) 
         {
             var bankName = (from emp in dbContext.employees

@@ -167,19 +167,6 @@
           }
         }
       },
-      "BankingApplication.Database/1.0.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.8",
-        "dependencies": {
-          "BankingApplication.Models": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/BankingApplication.Database.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/BankingApplication.Database.dll": {}
-        }
-      },
       "BankingApplication.Models/1.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.8",
@@ -609,11 +596,6 @@
         "system.security.cryptography.x509certificates.nuspec"
       ]
     },
-    "BankingApplication.Database/1.0.0": {
-      "type": "project",
-      "path": "../BankingApplication.Database/BankingApplication.Database.csproj",
-      "msbuildProject": "../BankingApplication.Database/BankingApplication.Database.csproj"
-    },
     "BankingApplication.Models/1.0.0": {
       "type": "project",
       "path": "../BankingApplication.Models/BankingApplication.Models.csproj",
@@ -622,7 +604,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.8": [
-      "BankingApplication.Database >= 1.0.0"
+      "BankingApplication.Models >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -652,8 +634,8 @@
         "net48": {
           "targetAlias": "net48",
           "projectReferences": {
-            "C:\\Users\\senas\\source\\repos\\BankingApplicationWithEF\\BankingApplication.Database\\BankingApplication.Database.csproj": {
-              "projectPath": "C:\\Users\\senas\\source\\repos\\BankingApplicationWithEF\\BankingApplication.Database\\BankingApplication.Database.csproj"
+            "C:\\Users\\senas\\source\\repos\\BankingApplicationWithEF\\BankingApplication.Models\\BankingApplication.Models.csproj": {
+              "projectPath": "C:\\Users\\senas\\source\\repos\\BankingApplicationWithEF\\BankingApplication.Models\\BankingApplication.Models.csproj"
             }
           }
         }
