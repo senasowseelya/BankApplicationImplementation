@@ -171,6 +171,21 @@
           }
         }
       },
+      "BankingApplication.Data/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.8",
+        "dependencies": {
+          "BankingApplication.Models": "1.0.0",
+          "EntityFramework": "6.4.4",
+          "System.Net.Http": "4.3.4"
+        },
+        "compile": {
+          "bin/placeholder/BankingApplication.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BankingApplication.Data.dll": {}
+        }
+      },
       "BankingApplication.Models/1.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.8",
@@ -189,6 +204,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.8",
         "dependencies": {
+          "BankingApplication.Data": "1.0.0",
           "BankingApplication.Models": "1.0.0"
         },
         "compile": {
@@ -325,6 +341,21 @@
           "runtimes/win/lib/net461/System.Security.Cryptography.X509Certificates.dll": {}
         }
       },
+      "BankingApplication.Data/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.8",
+        "dependencies": {
+          "BankingApplication.Models": "1.0.0",
+          "EntityFramework": "6.4.4",
+          "System.Net.Http": "4.3.4"
+        },
+        "compile": {
+          "bin/placeholder/BankingApplication.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BankingApplication.Data.dll": {}
+        }
+      },
       "BankingApplication.Models/1.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.8",
@@ -343,6 +374,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.8",
         "dependencies": {
+          "BankingApplication.Data": "1.0.0",
           "BankingApplication.Models": "1.0.0"
         },
         "compile": {
@@ -793,6 +825,11 @@
         "system.security.cryptography.x509certificates.4.3.0.nupkg.sha512",
         "system.security.cryptography.x509certificates.nuspec"
       ]
+    },
+    "BankingApplication.Data/1.0.0": {
+      "type": "project",
+      "path": "../BankingApplication.Data/BankingApplication.Data.csproj",
+      "msbuildProject": "../BankingApplication.Data/BankingApplication.Data.csproj"
     },
     "BankingApplication.Models/1.0.0": {
       "type": "project",

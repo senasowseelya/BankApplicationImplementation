@@ -1,0 +1,9 @@
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Database\bin\Debug\BankingApplication.Database.dacpac
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Database\bin\Debug\BankingApplication.Database.dll
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Database\bin\Debug\BankingApplication.Database.pdb
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Database\obj\Debug\Model.xml
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Database\obj\Debug\refactor.xml
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Database\obj\Debug\postdeploy.sql
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Database\obj\Debug\predeploy.sql
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Database\obj\Debug\BankingApplication.Database.dll
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Database\obj\Debug\BankingApplication.Database.pdb

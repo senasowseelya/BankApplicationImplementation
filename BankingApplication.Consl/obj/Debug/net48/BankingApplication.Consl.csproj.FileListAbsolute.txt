@@ -22,3 +22,5 @@ C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Consl\bi
 C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Consl\obj\Debug\net48\BankingApplication.Consl.csproj.CopyComplete
 C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Consl\obj\Debug\net48\BankingApplication.Consl.exe
 C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Consl\obj\Debug\net48\BankingApplication.Consl.pdb
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Consl\bin\Debug\net48\BankingApplication.Data.dll
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Consl\bin\Debug\net48\BankingApplication.Data.pdb

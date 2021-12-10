@@ -22,4 +22,3 @@ C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Models\o
 C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Models\obj\Debug\net48\BankingApplication.Models.csproj.CopyComplete
 C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Models\obj\Debug\net48\BankingApplication.Models.dll
 C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Models\obj\Debug\net48\BankingApplication.Models.pdb
-C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Models\obj\Debug\net48\BankingApplication.Models.csproj.AssemblyReference.cache

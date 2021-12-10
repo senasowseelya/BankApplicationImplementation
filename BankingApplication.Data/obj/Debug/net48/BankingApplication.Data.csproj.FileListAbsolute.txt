@@ -1,0 +1,14 @@
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Data\obj\Debug\net48\BankingApplication.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Data\obj\Debug\net48\BankingApplication.Data.AssemblyInfoInputs.cache
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Data\obj\Debug\net48\BankingApplication.Data.AssemblyInfo.cs
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Data\obj\Debug\net48\BankingApplication.Data.csproj.CoreCompileInputs.cache
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Data\bin\Debug\net48\BankingApplication.Data.dll
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Data\bin\Debug\net48\BankingApplication.Data.pdb
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Data\bin\Debug\net48\EntityFramework.SqlServer.dll
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Data\bin\Debug\net48\EntityFramework.dll
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Data\bin\Debug\net48\BankingApplication.Models.dll
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Data\bin\Debug\net48\BankingApplication.Models.pdb
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Data\obj\Debug\net48\BankingApplication.Data.csproj.AssemblyReference.cache
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Data\obj\Debug\net48\BankingApplication.Data.csproj.CopyComplete
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Data\obj\Debug\net48\BankingApplication.Data.dll
+C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Data\obj\Debug\net48\BankingApplication.Data.pdb

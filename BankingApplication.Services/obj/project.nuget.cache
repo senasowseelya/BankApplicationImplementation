@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "dw+pq6U8bzsCl46KQ7A73DqhnjQzqunaTT42aHtpfv8N3lodRXeBWsoyQCCItMVKqkhH5J7T9mx+/s8msa0l3g==",
+  "dgSpecHash": "m8evY6yrqcO55gkyqW63/HUfLEF20qFVkWUDZvr4vqu1XtAWPfEKFeHrgccRvXga28ncY/vCJqHmIBGun8Xp0A==",
   "success": true,
   "projectFilePath": "C:\\Users\\senas\\source\\repos\\BankingApplicationWithEF\\BankingApplication.Services\\BankingApplication.Services.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\senas\\.nuget\\packages\\entityframework\\6.2.0\\entityframework.6.2.0.nupkg.sha512",
+    "C:\\Users\\senas\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\senas\\.nuget\\packages\\system.io\\4.3.0\\system.io.4.3.0.nupkg.sha512",
     "C:\\Users\\senas\\.nuget\\packages\\system.net.http\\4.3.4\\system.net.http.4.3.4.nupkg.sha512",
     "C:\\Users\\senas\\.nuget\\packages\\system.runtime\\4.3.0\\system.runtime.4.3.0.nupkg.sha512",
