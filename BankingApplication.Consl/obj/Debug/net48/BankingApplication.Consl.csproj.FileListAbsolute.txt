@@ -19,7 +19,6 @@ C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Consl\bi
 C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Consl\bin\Debug\net48\BankingApplication.Services.dll
 C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Consl\bin\Debug\net48\BankingApplication.Services.pdb
 C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Consl\bin\Debug\net48\BankingApplication.Models.pdb
-C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Consl\bin\Debug\net48\BankingApplication.Models.dll.config
 C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Consl\obj\Debug\net48\BankingApplication.Consl.csproj.CopyComplete
 C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Consl\obj\Debug\net48\BankingApplication.Consl.exe
 C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Consl\obj\Debug\net48\BankingApplication.Consl.pdb

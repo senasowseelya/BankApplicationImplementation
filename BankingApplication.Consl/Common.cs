@@ -30,26 +30,30 @@ namespace BankingApplication.Consl
 
         internal bool Validate(Credentials userCredentials)
         {
-            
+
 
             if (userCredentials.role.Equals(Role.Staff))
             {
-                var employees = (from emp in dbContext.employees join user in dbContext.bankusers on emp.userId equals user.id where user.username.Equals(userCredentials.UserName) && user.password.Equals(userCredentials.Password)
+                var employees = (from emp in dbContext.employees
+                                 join user in dbContext.bankusers on emp.userId equals user.id
+                                 where user.username.Equals(userCredentials.UserName) && user.password.Equals(userCredentials.Password)
                                  select new
                                  {
-                                     
+
                                  }).ToList();
-                
-                if (employees.Count ==1)
+
+                if (employees.Count == 1)
                     return true;
             }
             else if (userCredentials.role.Equals(Role.User))
             {
-                
+
                 var users = dbContext.bankusers.ToList();
                 if (users.Any(e => e.username.Equals(userCredentials.UserName) && e.password.Equals(userCredentials.Password)))
                     return true;
             }
+            else if (userCredentials.role.Equals(Role.Exit))
+                Environment.Exit(0);
             return false;
 
 

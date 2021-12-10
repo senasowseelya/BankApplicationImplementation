@@ -22,11 +22,8 @@ namespace BankingApplication.Consl
                             staffActions.StaffActivities();
                             break;
                         case Role.User:
-                            //var userActions = new UserActions(userCredentials);
-                            //userActions.UserActivities();
-                            break;
-                        case Role.Exit:
-                            Environment.Exit(0);
+                            var userActions = new UserActions();
+                            userActions.UserActivities();
                             break;
                         default:
                             Console.WriteLine("Please Choose from above options only");

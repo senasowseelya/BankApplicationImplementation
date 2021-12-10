@@ -11,7 +11,6 @@ C:\Users\senas\source\repos\ConsoleApp1\BankingApplication.Models\obj\Debug\net4
 C:\Users\senas\source\repos\ConsoleApp1\BankingApplication.Models\obj\Debug\net48\BankingApplication.Models.dll
 C:\Users\senas\source\repos\ConsoleApp1\BankingApplication.Models\obj\Debug\net48\BankingApplication.Models.pdb
 C:\Users\senas\source\repos\ConsoleApp1\BankingApplication.Models\obj\Debug\net48\BankingApplication.Models.csproj.AssemblyReference.cache
-C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Models\bin\Debug\net48\BankingApplication.Models.dll.config
 C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Models\bin\Debug\net48\BankingApplication.Models.dll
 C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Models\bin\Debug\net48\BankingApplication.Models.pdb
 C:\Users\senas\source\repos\BankingApplicationWithEF\BankingApplication.Models\bin\Debug\net48\EntityFramework.SqlServer.dll

@@ -106,6 +106,7 @@ namespace BankingApplication.Consl
             Console.WriteLine("Enter Branch");
             string branch=Console.ReadLine();
             bankService.AddBank(bankName,branch);
+            Console.WriteLine("Bank Added Succesfully");
         }
         private void CreateAccount()
         {
@@ -171,7 +172,7 @@ namespace BankingApplication.Consl
         }
         private void ViewTransaction()
         {
-            Console.WriteLine("Enter Account Number");
+            Console.WriteLine("Enter Account Id");
             string accountNumber = Console.ReadLine();
             List<Transaction> transactions = new List<Transaction>();
             transactions = bankService.DisplayTransactions(accountNumber);
@@ -208,9 +209,9 @@ namespace BankingApplication.Consl
             Transaction transaction = new Transaction();
             Console.WriteLine("Enter TransactionId to revert:");
             string transactionId = Console.ReadLine();
-            Console.WriteLine("Enter Sender Account Number");
-            string accountNumber = Console.ReadLine();
-            common.DisplayStatus(bankService.RevertTransaction(transactionId,accountNumber), "Transaction is Reverted successfully");
+            Console.WriteLine("Enter Sender Account Id");
+            string accountId = Console.ReadLine();
+            common.DisplayStatus(bankService.RevertTransaction(transactionId,accountId), "Transaction is Reverted successfully");
         }
         
 
