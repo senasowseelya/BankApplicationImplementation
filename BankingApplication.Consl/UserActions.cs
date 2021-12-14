@@ -1,6 +1,6 @@
 ﻿
 
-using BankingApplication.Models;
+using BankingApplication.Data;
 using BankingApplication.Services;
 using System;
 using System.Collections.Generic;
@@ -10,11 +10,14 @@ namespace BankingApplication.Consl
 {
     internal class UserActions
     {
-        decimal amount;
-        string? currencyName;
-        string? accNumber;
-        Common commonFunctions = new Common();
-        AccountService accountService = new AccountService();
+        
+        public Common commonFunctions { get; set; }
+        public AccountService accountService { get; set; }
+        public UserActions()
+        {
+            this.accountService=new AccountService();
+            this.commonFunctions = new Common();
+        }
         public void UserActivities()
         {
             while (true)
@@ -69,7 +72,7 @@ namespace BankingApplication.Consl
 
         private void ChangePassword()
         {
-            accNumber = ReadAccNumber();
+           var  accNumber = ReadAccNumber();
             Console.WriteLine("Enter Current Password");
             string currentPassword = Console.ReadLine();
             Console.WriteLine("Enter New Password");
@@ -84,7 +87,7 @@ namespace BankingApplication.Consl
 
         private void DisplayTransactions()
         {
-            accNumber = ReadAccNumber();
+             var accNumber = ReadAccNumber();
             List<Transaction> transactions= accountService.Displaytransactions(accNumber);
             foreach (Transaction transaction in transactions)
             {
@@ -101,8 +104,9 @@ namespace BankingApplication.Consl
         }
         private void Deposit()
         {
-            accNumber=ReadAccNumber();
-            amount = ReadAmount();
+            var accNumber=ReadAccNumber();
+            var amount = ReadAmount();
+            string currencyName;
             if (amount > 0)
             {
                 currencyName = ReadCurrency();
@@ -129,14 +133,15 @@ namespace BankingApplication.Consl
         {
 
             Console.WriteLine("Enter Type of Currency");
-            currencyName = Console.ReadLine();
+             var currencyName = Console.ReadLine();
             return currencyName;
         }
         private void Withdraw()
         {
-            accNumber = ReadAccNumber();
-            amount = ReadAmount();
-            if(amount>0)
+             var accNumber = ReadAccNumber();
+             var amount = ReadAmount();
+            string currencyName;
+            if (amount>0)
             {
                 currencyName = ReadCurrency();
                 commonFunctions.DisplayStatus(accountService.Withdraw(accNumber, amount, currencyName), $"Succesfully withdrawn {amount} {currencyName}");
@@ -149,10 +154,11 @@ namespace BankingApplication.Consl
         }
         private void Transfer()
         {
-            accNumber = ReadAccNumber();
+            var  accNumber = ReadAccNumber();
             Console.WriteLine("Enter Receiver Account Number");
             String recAccNum = Console.ReadLine();
-            amount = ReadAmount();
+             var amount = ReadAmount();
+            string currencyName;
             currencyName = ReadCurrency();
             if (amount > 0)
             {

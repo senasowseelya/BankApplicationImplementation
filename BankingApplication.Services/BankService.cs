@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Validation;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BankingApplication.Data;
 
-using BankingApplication.Models;
+
+
 
 namespace BankingApplication.Services
 {
     public class BankService
     {
-        BankDataBaseContext dbContext = new BankDataBaseContext();
+        public BankDataBaseContext dbContext { get; set; }
+        public BankService()
+        {
+            this.dbContext = new BankDataBaseContext();
+        }
+        
         public void AddBank(string bankname, string branch)
         {
 
-            Bank newBank = new Bank();
+            Data.Bank newBank = new Data.Bank();
             newBank.name = bankname;
             newBank.balance = 0;
             newBank.branch = branch;
@@ -24,9 +25,9 @@ namespace BankingApplication.Services
             dbContext.banks.Add(newBank);
             dbContext.SaveChanges();
         }
-        public string CreateAccountService(String CurrentBankId, BankUser newUser)
+        public string CreateAccountService(String CurrentBankId, Data.BankUser newUser)
         {
-            Account newAccount = new Account();
+            Data.Account newAccount = new Data.Account();
             newAccount.bankId = CurrentBankId;
             newAccount.accountNumber = GenerateAccountNumber();
             newAccount.accountId = GenerateAccId(CurrentBankId);
@@ -40,7 +41,6 @@ namespace BankingApplication.Services
             dbContext.accounts.Add(newAccount);
             dbContext.bankusers.Add(newUser);
             dbContext.SaveChanges();
-
             return newAccount.accountNumber;
 
 
@@ -64,7 +64,7 @@ namespace BankingApplication.Services
         }
         public bool RemoveAccount(string currentBankId, string accountNumber)
         {
-            Account acc = (from account in dbContext.accounts where account.accountNumber == accountNumber select account).FirstOrDefault();
+            Data.Account acc = (from account in dbContext.accounts where account.accountNumber == accountNumber select account).FirstOrDefault();
             if (acc == null)
                 new AccountDoesntExistException();
             acc.status = "InActive";
@@ -83,22 +83,24 @@ namespace BankingApplication.Services
             return true;
 
         }
-        public bool AcceptNewCurrency(string currentBankId, Currency newCurrency)
+        public bool AcceptNewCurrency(string currentBankId, Models.Currency newCurrency)
         {
             newCurrency.bankid = currentBankId;
-            dbContext.currencies.Add(newCurrency);
+            Data.Currency currency1 = new Data.Currency();
+            currency1.bankid = currentBankId;
+            dbContext.currencies.Add(currency1);
             dbContext.SaveChanges();
             return true;
 
         }
-        public List<Transaction> DisplayTransactions(string accountNumber)
+        public List<Data.Transaction> DisplayTransactions(string accountNumber)
         {
             var transactions = (from transaction in dbContext.transactions where transaction.senderaccountId == accountNumber || transaction.receiveraccountId == accountNumber select transaction).ToList();
             return transactions;
         }
-        public void AddEmployee(string currentBankId, BankUser user)
+        public void AddEmployee(string currentBankId, Models.BankUser user)
         {
-            Employee employee = new Employee();
+            Data.Employee employee = new Data.Employee();
             employee.bankId = currentBankId;
             employee.userId = user.id;
             employee.bankuser = user;
@@ -108,10 +110,11 @@ namespace BankingApplication.Services
             dbContext.SaveChanges();
 
 
+
         }
         public bool RevertTransaction(string transactionId, string senderId)
         {
-            Account reqSenderAccount, reqReceiverAccount;
+            Data.Account reqSenderAccount, reqReceiverAccount;
             var transactionObj = (from transaction in dbContext.transactions where transaction.transid == transactionId && transaction.senderaccountId == senderId select transaction).Single();
             if (transactionObj == null)
                 return false;

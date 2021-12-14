@@ -1,35 +1,31 @@
-﻿using BankingApplication.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-
+﻿using BankingApplication.Data;
 namespace BankingApplication.Services
 {
     public class AccountService
     {
-        BankDataBaseContext dbContext = new BankDataBaseContext();
-        Currency? currencyObj;
-        Account? account;
-        Transaction? transaction;
+        public BankDataBaseContext dbContext { get; set; }
+       
+
+        public AccountService()
+        {
+            this.dbContext = new BankDataBaseContext();
+            
+        }
         public bool Deposit(string accNumber, decimal amount, string currencyName)
         {
-            account = FetchAccount(accNumber);
-            currencyObj = FetchCurrency(account.bankId, currencyName);
+            var account = FetchAccount(accNumber);
+            Data.Currency currencyObj = FetchCurrency(account.bankId, currencyName);
             account.balance += (amount * currencyObj.exchangeRate);
-            transaction = GenerateTransaction(account, account, currencyObj, amount, "1");
+            Data.Transaction transaction = GenerateTransaction(account, account, currencyObj, amount, "1");
             dbContext.transactions.Add(transaction);
             dbContext.SaveChanges();
             return true;
 
         }
 
-        private Transaction? GenerateTransaction(Account sendAccount, Account recAccount, Currency currency, decimal amount, string type)
+        private Data.Transaction? GenerateTransaction(Models.Account sendAccount, Models.Account recAccount, Data.Currency currency, decimal amount, string type)
         {
-            Transaction transaction = new Transaction();
+            Data.Transaction transaction = new Data.Transaction();
             transaction.receiveraccountId = recAccount.accountId;
             transaction.senderaccountId = sendAccount.accountId;
             transaction.transid = $"TXN {sendAccount.bankId} {DateTime.Now.ToString("yyyyMMddhhmmss")}";
@@ -39,55 +35,60 @@ namespace BankingApplication.Services
             transaction.currency = currency.name;
             transaction.currency1 = currency;
             return transaction;
-
-
-
-
-
-
-
         }
 
         public bool Withdraw(string accNumber, decimal amount, string currencyName)
         {
-            account = FetchAccount(accNumber);
-            currencyObj = FetchCurrency(account.bankId, currencyName);
+            var account = FetchAccount(accNumber);
+            Data.Currency currencyObj = FetchCurrency(account.bankId, currencyName);
             if (account.balance >= amount * currencyObj.exchangeRate)
             {
                 account.balance -= amount * currencyObj.exchangeRate;
-                transaction = GenerateTransaction(account, account, currencyObj, amount, "2");
+                Data.Transaction  transaction = GenerateTransaction(account, account, currencyObj, amount, "2");
                 dbContext.transactions.Add(transaction);
                 dbContext.SaveChanges();
                 return true;
             }
             throw new InsufficientAmountException();
         }
-        private Account FetchAccount(string accNumber)
+        private Models.Account FetchAccount(string accNumber)
         {
-            account = (from acc in dbContext.accounts where acc.accountNumber == accNumber && acc.status=="Active" select acc).FirstOrDefault();
+            Data.Account account = (from acc in dbContext.accounts where acc.accountNumber == accNumber && acc.status == "Active" select acc).FirstOrDefault();
             if (account != null)
-                return account;
+            {
+                Models.Account account1 = new Models.Account();
+                account1.bankId = account.bankId;
+                account1.accountNumber = account.accountNumber;
+                account1.balance = account.balance;
+                account1.accountId = account.accountId;
+                return account1;
+            }
             else
                 throw new AccountDoesntExistException();
         }
-        private Currency FetchCurrency(string bankId, string currencyName)
+        private Data.Currency FetchCurrency(string bankId, string currencyName)
         {
-            currencyObj = (from currency in dbContext.currencies where currency.bankid == bankId && currency.name == currencyName.ToUpper() select currency).FirstOrDefault();
+             Data.Currency currencyObj = (from currency in dbContext.currencies where currency.bankid == bankId && currency.name == currencyName.ToUpper() select currency).FirstOrDefault();
             if (currencyObj == null)
                 throw new CurrencyNotSupportedException();
             else
+            {
+                
                 return currencyObj;
+
+            }
+               
         }
-        public List<Transaction> Displaytransactions(string accNumber)
+        public List<Data.Transaction> Displaytransactions(string accNumber)
         {
-            account = FetchAccount(accNumber);
-            List<Transaction> transactions = (from transaction in dbContext.transactions where transaction.receiveraccountId == account.accountId || transaction.senderaccountId == account.accountId select transaction).ToList();
+            var  account = FetchAccount(accNumber);
+            List<Data.Transaction> transactions = (from transaction in dbContext.transactions where transaction.receiveraccountId == account.accountId || transaction.senderaccountId == account.accountId select transaction).ToList();
             return transactions;
         }
         public bool ChangePassword(string accNumber, string oldpassword, string newPassword)
         {
-            account = FetchAccount(accNumber);
-            BankUser bankuser = (from user in dbContext.bankusers where user.id == account.userId && user.password == oldpassword select user).SingleOrDefault();
+            var account = FetchAccount(accNumber);
+            Data.BankUser bankuser = (from user in dbContext.bankusers where user.id == account.userId && user.password == oldpassword select user).SingleOrDefault();
             if (bankuser == null)
                 return false;
             else
@@ -100,10 +101,10 @@ namespace BankingApplication.Services
         public bool TransferAmount(string sendAccNumber, string recAccNumber, decimal amount, string currencyName, string mode)
         {
             decimal charges = 0;
-            Account senderAccount = FetchAccount(sendAccNumber);
-            Account receiverAccount = FetchAccount(recAccNumber);
-            Bank senderBank = (from bank in dbContext.banks where bank.id == senderAccount.bankId select bank).SingleOrDefault();
-            currencyObj = FetchCurrency(senderAccount.bankId, currencyName);
+            Models.Account senderAccount = FetchAccount(sendAccNumber);
+            Models.Account receiverAccount = FetchAccount(recAccNumber);
+            Data.Bank senderBank = (from bank in dbContext.banks where bank.id == senderAccount.bankId select bank).SingleOrDefault();
+            Data.Currency currencyObj = FetchCurrency(senderAccount.bankId, currencyName);
             if (senderAccount.bankId == receiverAccount.bankId)
             {
                 if (mode == "1")
@@ -126,7 +127,7 @@ namespace BankingApplication.Services
                 senderAccount.balance -= amount;
                 receiverAccount.balance += amount;
                 senderBank.balance -= charges;
-                transaction = GenerateTransaction(senderAccount, receiverAccount, currencyObj, amount, "3");
+                Data.Transaction  transaction = GenerateTransaction(senderAccount, receiverAccount, currencyObj, amount, "3");
                 dbContext.transactions.Add(transaction);
                 dbContext.SaveChanges();
                 return true;

@@ -1,22 +1,23 @@
 ﻿
-using BankingApplication.Models;
+using BankingApplication.Data;
 using BankingApplication.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 
 namespace BankingApplication.Consl
 {
     internal class StaffActions
     {
-
-        public string  CurrentBank { get; set; }
-        BankDataBaseContext dbContext = new BankDataBaseContext();
-
-        Common common = new Common();
-        BankService bankService = new BankService();
-        internal StaffActions(Credentials staffCredentials) 
+        public BankDataBaseContext dbContext { get; set; }
+        public string CurrentBank { get; set; }
+        public Common common { get; set; }
+        public BankService bankService { get; set; }
+       
+        
+       internal StaffActions(Credentials staffCredentials) 
         {
+            this.dbContext = new BankDataBaseContext();
+            this.common = new Common();
+            this.bankService = new BankService();
             var bankName = (from emp in dbContext.employees
                             join user in dbContext.bankusers on emp.userId equals user.id
                             where user.username.Equals(staffCredentials.UserName) && user.password.Equals(staffCredentials.Password)
@@ -110,7 +111,7 @@ namespace BankingApplication.Consl
         }
         private void CreateAccount()
         {
-            BankUser newUser = GetUserDetails();
+            Data.BankUser newUser = GetUserDetails();
             Console.WriteLine(" Account Created and Your Account Number is {0}", bankService.CreateAccountService(CurrentBank, newUser));
             Console.WriteLine("Your username and your password is your account number change it later");
         }
@@ -118,9 +119,9 @@ namespace BankingApplication.Consl
             
 
         
-        private BankUser GetUserDetails()
+        private Models.BankUser GetUserDetails()
         {
-            var newUser = new BankUser();
+            var newUser = new Models.BankUser();
             Console.WriteLine("Enter User's Full Name:");
             newUser.name = Console.ReadLine();
             Console.WriteLine("Enter  Date of Birth:");
@@ -160,7 +161,7 @@ namespace BankingApplication.Consl
         private void AcceptNewCurrency()
         {
 
-            var newCurrency = new Currency();
+            var newCurrency = new Models.Currency();
             Console.WriteLine("Enter currency Id");
             newCurrency.id = Console.ReadLine();
             Console.WriteLine("Enter New Currency Name:");
@@ -174,9 +175,9 @@ namespace BankingApplication.Consl
         {
             Console.WriteLine("Enter Account Id");
             string accountNumber = Console.ReadLine();
-            List<Transaction> transactions = new List<Transaction>();
+            List<Data.Transaction> transactions = new List<Data.Transaction>();
             transactions = bankService.DisplayTransactions(accountNumber);
-            foreach(Transaction  transaction in transactions)
+            foreach(Data.Transaction  transaction in transactions)
             {
                 Console.WriteLine(transaction.transid+" "+transaction.transactionAmount+" "+transaction.transactionOn+" "+transaction.senderaccountId+" "+transaction.receiveraccountId);
             }
@@ -186,7 +187,7 @@ namespace BankingApplication.Consl
 
         private void AddEmployee()
         {
-            BankUser user = GetUserDetails();
+            Models.BankUser user = GetUserDetails();
             bankService.AddEmployee(CurrentBank, user);
             common.DisplayStatus(true, $"Succesfully added new Employee\nYour username {user.username} \nYour password {user.password}");
         }

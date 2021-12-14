@@ -1,13 +1,17 @@
 ﻿
-using BankingApplication.Models;
+using BankingApplication.Data;
 
 namespace BankingApplication.Consl
 
 {
     internal class Common
     {
+        public BankDataBaseContext dbContext { get; set; }
 
-        BankDataBaseContext dbContext = new BankDataBaseContext();
+        public Common()
+        {
+            this.dbContext = new BankDataBaseContext();
+        }
         internal Credentials GetCredentials()
         {
             Credentials userCredentials = new Credentials();

@@ -1,9 +1,10 @@
+
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 
-namespace BankingApplication.Models
+namespace BankingApplication.Data
 {
     public partial class BankDataBaseContext : DbContext
     {

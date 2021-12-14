@@ -30,7 +30,27 @@
       "ProjectGuid": "d22f3871-3b4d-45ed-a136-d8058065cd38",
       "DisplayName": "BankingApplication.Services",
       "ColorIndex": 4
+    },
+    "2122c0c3-2eea-42e1-bcb3-7b6363235541": {
+      "ProjectGuid": "2122c0c3-2eea-42e1-bcb3-7b6363235541",
+      "DisplayName": "BankingApplication.Data",
+      "ColorIndex": 5
+    },
+    "be430f17-8a0f-476b-a0bb-b4fce2cf2477": {
+      "ProjectGuid": "be430f17-8a0f-476b-a0bb-b4fce2cf2477",
+      "DisplayName": "BankingApplication.Data",
+      "ColorIndex": 6
+    },
+    "bc9d4fe7-3640-4b93-94d6-3292c2e3c600": {
+      "ProjectGuid": "bc9d4fe7-3640-4b93-94d6-3292c2e3c600",
+      "DisplayName": "BankingApplication.Data",
+      "ColorIndex": 7
+    },
+    "666ffa04-651a-494d-857f-66ef5c28c4d7": {
+      "ProjectGuid": "666ffa04-651a-494d-857f-66ef5c28c4d7",
+      "DisplayName": "BankingApplication.Database",
+      "ColorIndex": 8
     }
   },
-  "NextColorIndex": 5
+  "NextColorIndex": 9
 }
